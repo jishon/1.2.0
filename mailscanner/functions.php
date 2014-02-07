@@ -21,11 +21,11 @@
 */
 
 // Set error level (some distro's have php.ini set to E_ALL)
-error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
+error_reporting(E_ALL ^ E_NOTICE);
 
 // Read in MailWatch configuration file
 if(!(@include_once('conf.php'))==true) {
- die("Cannot read conf.php - please create it by copying conf.php.example and modifying the parameters to suit.\n");
+ die(_("Cannot read conf.php - please create it by copying conf.php.example and modifying the parameters to suit.\n"));
 }
 
 if (SSL_ONLY && (!empty($_SERVER['PHP_SELF']))) {
@@ -45,6 +45,43 @@ ini_set('include_path','.:'.MAILWATCH_HOME.'/pear:'.MAILWATCH_HOME.'/fpdf:'.MAIL
 
 include "postfix.inc";
 
+//i18n
+if (constant("SYSTEM_LOCALE") == NULL) {
+ $locale = 'en_US';
+ //echo "current locale: $locale\n";
+} else {
+ $locale = SYSTEM_LOCALE;
+ //echo "current locale: $locale\n";
+}
+
+if (isset($_GET['locale']) && !empty($_GET['locale'])){
+ $locale = $_GET['locale'];
+ //echo "current locale: $locale\n";
+}
+
+if ($locale) {
+ $possible_locale_list = array($locale.'.utf8', $locale);
+ if (PHP_VERSION_ID >= 40300) {
+  $result = setlocale(LC_MESSAGES, $possible_locale_list);
+ } else {
+  foreach ($possible_locale_list as $l) {
+   $result = setlocale(LC_MESSAGES, $l);
+   if ($result)
+   break;
+  }
+ }
+ if ($result) {
+  $current_locale = setlocale(LC_MESSAGES, 0);
+  //echo "current locale: $current_locale\n";
+ } else {
+  echo "failed to setlocale\n";
+ }
+ putenv("LANG=".SYSTEM_LOCALE.".UTF-8");
+ textdomain("messages");
+ bindtextdomain("messages", './i18n');
+ bind_textdomain_codeset("messages", 'utf-8');
+}
+
 /*
  For reporting of Virus names and statistics a regular expression matching
  the output of your virus scanner is required.  As Virus names vary across
@@ -62,7 +99,7 @@ include "postfix.inc";
 // define('VIRUS_REGEX', '<<your regexp here>>');
 // define('VIRUS_REGEX', '/(\S+) was infected by (\S+)/');
 
-if(!defined('VIRUS_REGEX')) {
+if(!defined(VIRUS_REGEX)) {
  switch($scanner=get_primary_scanner()) {
   case 'none':
    define('VIRUS_REGEX', '/^Dummy$/');
@@ -127,7 +164,7 @@ if(!defined('VIRUS_REGEX')) {
  }
 } else {
  // Have to set manually as running in DISTRIBUTED_MODE
- die("<B>Error:</B><BR>\n&nbsp;You are running MailWatch in distributed mode therefore MailWatch cannot read your MailScanner configuration files to acertain your primary virus scanner - please edit functions.php and manually set the VIRUS_REGEX constant for your primary scanner.\n");
+ die("<B>"._("Error").":</B><BR>\n&nbsp;"._("You are running MailWatch in distributed mode therefore MailWatch cannot read your MailScanner configuration files to acertain your primary virus scanner - please edit functions.php and manually set the VIRUS_REGEX constant for your primary scanner.")."\n");
 }
 
 
@@ -135,281 +172,241 @@ if(!defined('VIRUS_REGEX')) {
 // Functions
 ///////////////////////////////////////////////////////////////////////////////
 
-function html_start($title, $refresh = 0, $cacheable = true, $report = false)
-{
-    if (!$cacheable) {
-        // Cache control (as per PHP website)
-        header("Expires: Sat, 10 May 2003 00:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, M d Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-    } else {
-        // calc an offset of 24 hours
-        $offset = 3600 * 48;
-        // calc the string in GMT not localtime and add the offset
-        $expire = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
-        //output the HTTP header
-        Header($expire);
-        header("Cache-Control: store, cache, must-revalidate, post-check=0, pre-check=1");
-        header("Pragma: cache");
-    }
-    page_creation_timer();
-    echo '<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">' . "\n";
-    echo '<html>' . "\n";
-    echo '<head>' . "\n";
-    echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
-    echo '<link rel="shortcut icon" href="images/favicon.png" >' . "\n";
-    echo '<script type="text/javascript">';
-    echo '' . java_time() . '';
-    //$current_url = "".MAILWATCH_HOME."/status.php";
-    //if($_SERVER['SCRIPT_FILENAME'] == $active_url){
-    echo '' . row_highandclick() . '';
-    echo '</script>';
-    if ($report) {
-        echo '<title>MailWatch Filter Report: ' . $title . ' </title>' . "\n";
-        echo '<link rel="StyleSheet" type="text/css" href="./style.css">' . "\n";
-        if (!isset($_SESSION["filter"])) {
-            require_once('./filter.inc');
-            $filter = new Filter;
-            $_SESSION["filter"] = $filter;
-        } else {
-            // Use existing filters
-            $filter = $_SESSION["filter"];
-        }
-        audit_log('Ran report ' . $title);
+function html_start($title,$refresh=0,$cacheable=true,$report=false) {
+ if (!$cacheable) {
+  // Cache control (as per PHP website)
+  header("Expires: Sat, 10 May 2003 00:00:00 GMT");
+  header("Last-Modified: ".gmdate("D, M d Y H:i:s")." GMT");
+  header("Cache-Control: no-store, no-cache, must-revalidate");
+  header("Cache-Control: post-check=0, pre-check=0", false);
+ }else{
+   // calc an offset of 24 hours
+ $offset = 3600 * 48;
+ // calc the string in GMT not localtime and add the offset
+ $expire = "Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
+ //output the HTTP header
+ Header($expire);
+  header("Cache-Control: store, cache, must-revalidate, post-check=0, pre-check=1");
+  header("Pragma: cache");
+  }
+   page_creation_timer();
+ 	echo '<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">'."\n";
+	echo '<html>'."\n";
+	echo '<head>'."\n";
+    echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'."\n";
+	echo '<script type="text/javascript">';
+	echo ''.java_time().'';
+	//$current_url = "".MAILWATCH_HOME."/status.php";
+	//if($_SERVER['SCRIPT_FILENAME'] == $active_url){
+	echo ''.row_highandclick().'';
+	echo '</script>';
+ if($report){
+	echo '<title>'._("MailWatch Filter Report").': '.$title.' </title>'."\n";
+	echo '<link rel="StyleSheet" type="text/css" href="./style.css">'."\n";
+	if(!isset($_SESSION["filter"])) {
+		require_once('./filter.inc');
+		$filter = new Filter;
+		$_SESSION["filter"] = $filter;
+	} else {
+		// Use existing filters
+		$filter = $_SESSION["filter"];
+	}
+   audit_log('Ran report '.$title);
 
-    } else {
-        echo '<title>Mailwatch for Mailscanner - ' . $title . '</title>' . "\n";
-        echo '<link rel="StyleSheet" type="text/css" href="style.css">' . "\n";
-    }
+	}else{
+echo '<title>Mailwatch for Mailscanner - '.$title.'</title>'."\n";
+echo '<link rel="StyleSheet" type="text/css" href="style.css">'."\n";
+	}
 
-    if ($refresh > 0) {
-        echo '<meta http-equiv="refresh" content="' . $refresh . '">' . "\n";
-    }
-
-    $message_id = $_GET['id'];
-    if (!$message_id) {
-        $message_id = " ";
-    }
-    $message_id = safe_value($message_id);
-    $message_id = htmlentities($message_id);
-    $message_id = trim($message_id, " ");
-    echo '</head>' . "\n";
-    echo '<body onload="updateClock(); setInterval(\'updateClock()\', 1000 )">' . "\n";
-    echo '<table border="0" cellpadding="5" width="100%">' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td>' . "\n";
-    echo '<table border="0" cellpadding="0" cellspacing="0">' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td align="left"><a href="./index.php"><img src="./images/mailwatch-logo.png" alt="MailWatch for MailScanner"></a></td>' . "\n";
-    echo '</tr>' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td valign="bottom" align="left" class="jump">' . "\n";
-    echo '<form action="./detail.php">' . "\n";
-    echo '<p>Jump to message:<input type="text" name="id" value="' . $message_id . '"></p>' . "\n";
-    echo '</form>' . "\n";
-    echo '</table>' . "\n";
-    echo '<table cellspacing="1" class="mail">' . "\n";
-    echo '<tr><td class="heading" align="center">Current User</td><td class="heading" align="center">Current Sytem Time</td></tr>' . "\n";
-    echo '<tr><td>' . $_SESSION['fullname'] . '</td><td><span id="clock">&nbsp;</span></td></tr>' . "\n";
-    echo '</table>' . "\n";
-    echo '</td>' . "\n";
+ if ($refresh > 0) {
+  echo '<meta http-equiv="refresh" content="'.$refresh.'">'."\n";
+ }
+ 
+$message_id=$_GET['id'];
+if(!$message_id){ $message_id =" ";}
+$message_id = safe_value($message_id);
+$message_id = htmlentities($message_id);
+$message_id = trim($message_id, " ");
+echo '</head>'."\n";
+echo '<body onload="updateClock(); setInterval(\'updateClock()\', 1000 )">'."\n";
+echo '<table border="0" cellpadding="5" width="100%">'."\n";
+echo '<tr>'."\n";
+echo '<td>'."\n";
+echo '<table border="0" cellpadding="0" cellspacing="0">'."\n";
+echo '<tr>'."\n";
+echo '<td align="left"><a href="./index.php"><img src="./images/mailwatch-logo.gif" alt="MailWatch for MailScanner"></a></td>'."\n";
+echo '</tr>'."\n";
+echo '<tr>'."\n";
+echo '<td valign="bottom" align="left" class="jump">'."\n";
+echo '<form action="./detail.php">'."\n";
+echo '<p>'._("Jump to message").':<input type="text" name="id" value="'.$message_id.'"></p>'."\n";
+echo '</form>'."\n";
+echo '</table>'."\n";
+echo '<table cellspacing="1" class="mail">'."\n";
+echo '<tr><td class="heading" align="center">'._("Current User").'</td><td class="heading" align="center">'._("Current Sytem Time").'</td></tr>'."\n";
+echo '<tr><td>'.$_SESSION['fullname'].'</td><td><span id="clock">&nbsp;</span></td></tr>'."\n";
+echo '</table>'."\n";
+echo '</td>'."\n";
 
 
-    echo '<td align="left" valign="top">' . "\n";
-    echo '   <table border="0" cellpadding="1" cellspacing="1" class="mail">' . "\n";
-    echo '    <tr> <th colspan="2">Color Codes</th> </tr>' . "\n";
-    echo '    <tr> <td>Bad Content/Infected</TD> <td class="infected"></TD> </TR>' . "\n";
-    echo '    <tr> <td>Spam</td> <td class="spam"></td> </tr>' . "\n";
-    echo '    <tr> <td>High Spam</td> <td class="highspam"></td> </tr>' . "\n";
-    echo '    <tr> <td>MCP</td> <td class="mcp"></td> </tr>' . "\n";
-    echo '    <tr> <td>High MCP</td><td class="highmcp"></td></tr>' . "\n";
-    echo '    <tr> <td>Whitelisted</td> <td class="whitelisted"></td> </tr>' . "\n";
-    echo '    <tr> <td>Blacklisted</td> <td class="blacklisted"></td> </tr>' . "\n";
-    echo '	  <tr> <td>Not Scanned</td> <td class="notscanned"></td> </tr>' . "\n";
-    echo '    <tr> <td>Clean</td> <td></td> </tr>' . "\n";
-    echo '   </table>' . "\n";
-    echo '  </td>' . "\n";
+echo '<td align="left" valign="top">'."\n";
+ 
+echo '   <table border="0" cellpadding="1" cellspacing="1" class="mail">'."\n";
+echo '    <tr> <th colspan="2">'._("Color Codes").'</th> </tr>'."\n";
+echo '    <tr> <td>'._("Bad Content").'/'._("Infected").'</TD> <td class="infected"></TD> </TR>'."\n";
+echo '    <tr> <td>'._("Spam").'</td> <td class="spam"></td> </tr>'."\n";
+echo '    <tr> <td>'._("High Spam").'</td> <td class="highspam"></td> </tr>'."\n";
+echo '    <tr> <td>MCP</td> <td class="mcp"></td> </tr>'."\n";
+echo '    <tr> <td>'._("High MCP").'</td><td class="highmcp"></td></tr>'."\n";
+echo '    <tr> <td>'._("Whitelisted").'</td> <td class="whitelisted"></td> </tr>'."\n";
+echo '    <tr> <td>'._("Blacklisted").'</td> <td class="blacklisted"></td> </tr>'."\n";
+echo '	  <tr> <td>'._("Not Scanned").'</td> <td class="notscanned"></td> </tr>'."\n";
+echo '    <tr> <td>'._("Clean").'</td> <td></td> </tr>'."\n";
 
-    if (!DISTRIBUTED_SETUP && ($_SESSION['user_type'] == 'A' || $_SESSION['user_type'] == 'D')) {
-        echo '  <td align="center" valign="top">' . "\n";
+echo '   </table>'."\n";
+echo '  </td>'."\n";
 
-        // Status table
-        echo '   <table border="0" cellpadding="1" cellspacing="1" class="mail" width="200">' . "\n";
-        echo '    <tr><th colspan="3">Status</th></tr>' . "\n";
+if(!DISTRIBUTED_SETUP && ($_SESSION['user_type'] == 'A' || $_SESSION['user_type'] == 'D')) {
+ echo '  <td align="center" valign="top">'."\n";
 
-        // MailScanner running?
-        if (!DISTRIBUTED_SETUP) {
-            $no = '<span class="yes">&nbsp;NO&nbsp;</span>' . "\n";
-            $yes = '<span class="no">&nbsp;YES&nbsp;</span>' . "\n";
-            $junk = exec("ps ax | grep MailScanner | grep -v grep", $output);
-            if (count($output) > 0) {
-                $running = $yes;
-                $procs = count($output) - 1 . " children";
-            } else {
-                $running = $no;
-                $procs = count($output) . " proc(s)";
-            }
-            echo '     <tr><td>MailScanner:</td><td align="center">' . $running . '</td><td align="right">' . $procs . '</td></tr>' . "\n";
+ // Status table
+ echo '   <table border="0" cellpadding="1" cellspacing="1" class="mail" width="200px">'."\n";
+ echo '    <tr><th colspan="3">'._("Status").'</th></tr>'."\n";
 
-            // is MTA running
-            $output = "";
-            $mta = get_conf_var('mta');
-            $junk = exec("ps ax | grep $mta | grep -v grep | grep -v php", $output);
-            if (count($output) > 0) {
-                $running = $yes;
-            } else {
-                $running = $no;
-            }
-            $procs = count($output) . " proc(s)";
-            echo '    <tr><td>' . ucwords(
-                    $mta
-                ) . ':</td><td align="center">' . $running . '</td><td align="right">' . $procs . '</td></tr>' . "\n";
-        }
+ // MailScanner running?
+ if(!DISTRIBUTED_SETUP) {
+  $no = '<span class="yes">&nbsp;'._("NO").'&nbsp;</span>'."\n";
+  $yes  = '<span class="no">&nbsp;'._("YES").'&nbsp;</span>'."\n";
+  $junk = exec("ps ax | grep MailScanner | grep -v grep",$output);
+  if(count($output)>0) {
+   $running = $yes;
+   $procs = count($output) - 1 . " "._("children");
+  } else {
+   $running = $no;
+   $procs = count($output) . " "._("proc(s)");
+  }
+  echo '     <tr><td>MailScanner:</td><td align="center">'.$running.'</td><td align="right">'.$procs.'</td></tr>'."\n";
 
-        // Load average
-        if (file_exists("/proc/loadavg") && !DISTRIBUTED_SETUP) {
-            $loadavg = file("/proc/loadavg");
-            $loadavg = explode(" ", $loadavg[0]);
-            $la_1m = $loadavg[0];
-            $la_5m = $loadavg[1];
-            $la_15m = $loadavg[2];
-            echo '    <tr><td>Load Average:</td><td align="right" colspan="2"><table width="100%" class="mail" cellpadding="0" cellspacing="0"><tr><td align="center">' . $la_1m . '</td><td align="center">' . $la_5m . '</td><td align="center">' . $la_15m . '</td></tr></table></td>' . "\n";
-        }
+  // is MTA running
+  $output = "";
+  $mta = get_conf_var('mta');
+  $junk = exec("ps ax | grep $mta | grep -v grep | grep -v php",$output);
+  if(count($output)>0) {
+   $running = $yes;
+  } else {
+   $running = $no;
+  }
+  $procs = count($output)." "._("proc(s)");
+  echo '    <tr><td>'.ucwords($mta).':</td><td align="center">'.$running.'</td><td align="right">'.$procs.'</td></tr>'."\n";
+ }
 
-        // Mail Queues display
-        $incomingdir = get_conf_var('incomingqueuedir');
-        $outgoingdir = get_conf_var('outgoingqueuedir');
+ // Load average
+ if(file_exists("/proc/loadavg") && !DISTRIBUTED_SETUP) {
+  $loadavg = file("/proc/loadavg");
+  $loadavg = explode(" ", $loadavg[0]);
+  $la_1m = $loadavg[0];
+  $la_5m = $loadavg[1];
+  $la_15m = $loadavg[2];
+  echo '    <tr><td>'._("Load Average").':</td><td align="right" colspan="2"><table width="100%" class="mail" cellpadding="0" cellspacing="0"><tr><td align="center">'.$la_1m.'</td><td align="center">'.$la_5m.'</td><td align="center">'.$la_15m.'</td></tr></table></td>'."\n";
+ }
+
+ // Mail Queues display
+$incomingdir = get_conf_var('incomingqueuedir');
+$outgoingdir = get_conf_var('outgoingqueuedir');
 
 // Display the MTA queue
 
 // Postfix if mta = postfix
-        if ($mta == 'postfix' && ($_SESSION['user_type'] == 'A')) {
-            if (is_readable($incomingdir) && is_readable($outgoingdir)) {
-                $inq = postfixinq();
-                $outq = postfixallq() - $inq;
-                echo '    <tr><td colspan="3" class="heading" align="center">Mail Queues</td></tr>' . "\n";
-                echo '    <tr><td colspan="2"><a href="postfixmailq.php">Inbound:</a></td><td align="right">' . $inq . '</td>' . "\n";
-                echo '    <tr><td colspan="2"><a href="postfixmailq.php">Outbound:</a></td><td align="right">' . $outq . '</td>' . "\n";
-            } else {
-                echo '    <tr><td colspan="3">Please verify read permissions on ' . $incomingdir . ' and ' . $outgoingdir . '</td></tr>' . "\n";
-            }
-            // else use mailq which is for sendmail
-        } elseif (MAILQ && ($_SESSION['user_type'] == 'A')) {
-            $inq = mysql_result(dbquery("SELECT COUNT(*) FROM inq WHERE " . $_SESSION['global_filter']), 0);
-            $outq = mysql_result(dbquery("SELECT COUNT(*) FROM outq WHERE " . $_SESSION['global_filter']), 0);
-            echo '    <tr><td colspan="3" class="heading" align="center">Mail Queues</td></tr>' . "\n";
-            echo '    <tr><td colspan="2"><a href="mailq.php?queue=inq">Inbound:</a></td><td align="right">' . $inq . '</td>' . "\n";
-            echo '    <tr><td colspan="2"><a href="mailq.php?queue=outq">Outbound:</a></td><td align="right">' . $outq . '</td>' . "\n";
-        }
+ if($mta =='postfix' && ($_SESSION['user_type'] == 'A')){
+	if(is_readable($incomingdir) && is_readable($outgoingdir)){
+         $inq = postfixinq();
+         $outq = postfixallq() - $inq;
+		 echo '    <tr><td colspan="3" class="heading" align="center">'._("Mail Queues").'</td></tr>'."\n";
+         echo '    <tr><td colspan="2"><a href="postfixmailq.php">'._("Inbound").':</a></td><td align="right">'.$inq.'</td>'."\n";
+         echo '    <tr><td colspan="2"><a href="postfixmailq.php">'._("Outbound").':</a></td><td align="right">'.$outq.'</td>'."\n";
+	}else{
+		echo '    <tr><td colspan="3">'.sprintf(_("Please verify read permissions on %s and %s"), $incomingdir, $outgoingdir).'</td></tr>'."\n";
+		 }
+		 // else use mailq which is for sendmail
+ }elseif(MAILQ && ($_SESSION['user_type'] == 'A')) {
+  $inq = mysql_result(dbquery("SELECT COUNT(*) FROM inq WHERE ".$_SESSION['global_filter']),0);
+  $outq = mysql_result(dbquery("SELECT COUNT(*) FROM outq WHERE ".$_SESSION['global_filter']),0);
+  echo '    <tr><td colspan="3" class="heading" align="center">Mail Queues</td></tr>'."\n";
+  echo '    <tr><td colspan="2"><a href="mailq.php?queue=inq">'._("Inbound").':</a></td><td align="right">'.$inq.'</td>'."\n";
+  echo '    <tr><td colspan="2"><a href="mailq.php?queue=outq">'._("Outbound").':</a></td><td align="right">'.$outq.'</td>'."\n";
+  }
 
-        // drive display
-        if ($_SESSION['user_type'] == 'A') {
-            echo '    <tr><td colspan="3" class="heading" align="center">Free Drive Space</td></tr>' . "\n";
+  // drive display
+ if($_SESSION['user_type'] == 'A') {
+   echo '    <tr><td colspan="3" class="heading" align="center">'._("Free Drive Space").'</td></tr>'."\n";
 
-            function formatSize($size)
-            {
-                switch (true) {
-                    case ($size > 1099511627776):
-                        $size /= 1099511627776;
-                        $suffix = 'TB';
-                        break;
-                    case ($size > 1073741824):
-                        $size /= 1073741824;
-                        $suffix = 'GB';
-                        break;
-                    case ($size > 1048576):
-                        $size /= 1048576;
-                        $suffix = 'MB';
-                        break;
-                    case ($size > 1024):
-                        $size /= 1024;
-                        $suffix = 'KB';
-                        break;
-                    default:
-                        $suffix = 'B';
-                }
-                return round($size, 2) . $suffix;
-            }
-
-            function get_disks()
-            {
-                $disks = array();
-                if (php_uname('s') == 'Windows NT') {
-                    // windows
-                    $disks = `fsutil fsinfo drives`;
-                    $disks = str_word_count($disks, 1);
-                    //TODO: won't work on non english installation, we need to find an universal command
-                    if ($disks[0] != 'Drives') {
-                        return '';
-                    }
-                    unset($disks[0]);
-                    foreach ($disks as $key => $disk) {
-                        $disks[]['mountpoint'] = $disk . ':\\';
-                    }
-                } else {
-                    // unix
-                    /*
-                     * Using /proc/mounts as it seem to be standard on unix
-                     *
-                     * http://unix.stackexchange.com/a/24230/33366
-                     * http://unix.stackexchange.com/a/12086/33366
-                     */
-                    if (is_file('/proc/mounts')) {
-                        $mounted_fs = file("/proc/mounts");
-                        foreach ($mounted_fs as $fs_row) {
-                            $drive = preg_split("/[\s]+/", $fs_row);
-                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE)) {
-                                $temp_drive['device'] = $drive[0];
-                                $temp_drive['mountpoint'] = $drive[1];
-                                $disks[] = $temp_drive;
-                                unset($temp_drive);
-                            }
-                            // TODO: list nfs mount (and other relevant fs type) in $disks[]
-                        }
-                    } else {
-                        // fallback to mount command
-                        $data = `mount`;
-                        $data = explode("\n", $data);
-                        foreach ($data as $disk) {
-                            $drive = preg_split("/[\s]+/", $disk);
-                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE)) {
-                                $temp_drive['device'] = $drive[0];
-                                $temp_drive['mountpoint'] = $drive[2];
-                                $disks[] = $temp_drive;
-                                unset($temp_drive);
-                            }
-                        }
-                    }
-                }
-
-                return $disks;
-            }
-
-            foreach (get_disks() as $disk) {
-                $free_space = formatSize(disk_free_space($disk['mountpoint']));
-                $total_space = formatSize(disk_total_space($disk['mountpoint']));
-                if (round($free_space / $total_space, 2) <= 0.1) {
-                    $percent = '<span style="color:red">';
-                } else {
-                    $percent = '<span>';
-                }
-                $percent .= ' [';
-                $percent .= round($free_space / $total_space, 2) * 100;
-                $percent .= '%] ';
-                $percent .= '</span>';
-                echo '    <tr><td>' . $disk['mountpoint'] . '</td><td colspan="2" align="right">' . $free_space . $percent . '</td>' . "\n";
-            }
-
-
-        }
-        echo '  </table>' . "\n";
-        echo '  </td>' . "\n";
+  function formatSize($size){
+    switch (true){
+    case ($size > 1099511627776):
+        $size /= 1099511627776;
+        $suffix = 'TB';
+    break;
+    case ($size > 1073741824):
+        $size /= 1073741824;
+       $suffix = 'GB';
+    break;
+    case ($size > 1048576):
+        $size /= 1048576;
+       $suffix = 'MB';
+    break;
+    case ($size > 1024):
+        $size /= 1024;
+        $suffix = 'KB';
+        break;
+    default:
+        $suffix = 'B';
     }
+    return round($size, 2).$suffix;
+  }
+  function get_disks(){
+    if(php_uname('s')=='Windows NT'){
+        // windows
+        $disks=`fsutil fsinfo drives`;
+        $disks=str_word_count($disks,1);
+        if($disks[0]!='Drives')return '';
+        unset($disks[0]);
+        foreach($disks as $key=>$disk)$disks[$key]=$disk.':\\';
+        return $disks;
+    }else{
+        // unix
+        $data=`mount`;
+        $data=explode("\n",$data);
+        foreach ($data as $disk) {
+                $drive = preg_split("/[\s]+/", $disk);
+               if (substr($drive[0],0,5) == '/dev/')
+                        $disks[] = $drive;
+        }
+        return $disks;
+    }
+  }
+  foreach (get_disks() as $disk) {
+    $free = formatSize(disk_free_space($disk[2]));
+    $used = formatSize(disk_total_space($disk[2]));
+    if (round($free/$used,2) > .1) {
+        $percent ="<span style='color:red'>";
+    }else{
+        $percent = "<span>";
+    }
+    $percent = " [";
+    $percent.= round($free/$used,2) * 100;
+    $percent.= "%] ";
+    echo '    <tr><td>'.$disk[2].'</td><td colspan="2" align="right">'.$free.$percent.'</td>'."\n";
+  }
 
-    echo '<td align="center" valign="top">' . "\n";
 
-    $sql = "
+ }
+ echo '  </table>'."\n";
+ echo '  </td>'."\n";
+}
+
+  echo '<td align="center" valign="top">'."\n";
+  
+$sql = "
  SELECT
   COUNT(*) AS processed,
   SUM(
@@ -578,96 +575,69 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
  WHERE
   date = CURRENT_DATE()
  AND
-  " . $_SESSION['global_filter'] . "
+  ".$_SESSION['global_filter']."
 ";
 
-    $sth = dbquery($sql);
-    while ($row = mysql_fetch_object($sth)) {
-        echo '<table border="0" cellpadding="1" cellspacing="1" class="mail" width="200">' . "\n";
-        echo ' <tr><th align="center" colspan="3">Today\'s Totals</th></tr>' . "\n";
-        echo ' <tr><td>Processed:</td><td align="right">' . number_format($row->processed) . '</td><td align="right">' . format_mail_size(
-                $row->size
-            ) . '</td></tr>' . "\n";
-        echo ' <tr><td>Clean:</td><td align="right">' . number_format(
-                $row->clean
-            ) . '</td><td align="right">' . $row->cleanpercent . '%</td></tr>' . "\n";
-        echo ' <tr><td>Viruses:</td><td align="right">' . number_format(
-                $row->viruses
-            ) . '</td><td align="right">' . $row->viruspercent . '%</tr>' . "\n";
-        echo ' <tr><td>Top Virus:</td><td colspan="2" align="right" style="white-space:nowrap">' . return_todays_top_virus(
-            ) . '</td></tr>' . "\n";
-        echo ' <tr><td>Blocked files:</td><td align="right">' . number_format(
-                $row->blockedfiles
-            ) . '</td><td align="right">' . $row->blockedfilespercent . '%</td></tr>' . "\n";
-        echo ' <tr><td>Others:</td><td align="right">' . number_format(
-                $row->otherinfected
-            ) . '</td><td align="right">' . $row->otherinfectedpercent . '%</td></tr>' . "\n";
-        echo ' <tr><td>Spam:</td><td align="right">' . number_format(
-                $row->spam
-            ) . '</td><td align="right">' . $row->spampercent . '%</td></tr>' . "\n";
-        echo ' <tr><td style="white-space:nowrap">High Scoring Spam:</td><td align="right">' . number_format(
-                $row->highspam
-            ) . '</td><td align="right">' . $row->highspampercent . '%</td></tr>' . "\n";
-        echo ' <tr><td>MCP:</td><td align="right">' . number_format(
-                $row->mcp
-            ) . '</td><td align="right">' . $row->mcppercent . '%</td></tr>' . "\n";
-        echo ' <tr><td style="white-space:nowrap">High Scoring MCP:</td><td align="right">' . number_format(
-                $row->highmcp
-            ) . '</td><td align="right">' . $row->highmcppercent . '%</td></tr>' . "\n";
-        echo '</table>' . "\n";
+$sth = dbquery($sql);
+while($row = mysql_fetch_object($sth)) {
+ echo '<table border="0" cellpadding="1" cellspacing="1" class="mail" width="200px">'."\n";
+ echo ' <tr><th align="center" colspan="3">'._("Today's Totals").'</th></tr>'."\n";
+ echo ' <tr><td>'._("Processed").':</td><td align="right">'.number_format($row->processed).'</td><td align="right">'.format_mail_size($row->size).'</td></tr>'."\n";
+ echo ' <tr><td>'._("Clean").':</td><td align="right">'.number_format($row->clean).'</td><td align="right">'.$row->cleanpercent.'%</td></tr>'."\n";
+ echo ' <tr><td>'._("Viruses").':</td><td align="right">'.number_format($row->viruses).'</td><td align="right">'.$row->viruspercent.'%</tr>'."\n";
+ echo ' <tr><td>'._("Top Virus").':</td><td colspan="2" align="right" style="white-space:nowrap">'.return_todays_top_virus().'</td></tr>'."\n";
+ echo ' <tr><td>'._("Blocked files").':</td><td align="right">'.number_format($row->blockedfiles).'</td><td align="right">'.$row->blockedfilespercent.'%</td></tr>'."\n";
+ echo ' <tr><td>'._("Others").':</td><td align="right">'.number_format($row->otherinfected).'</td><td align="right">'.$row->otherinfectedpercent.'%</td></tr>'."\n";
+ echo ' <tr><td>'._("Spam").':</td><td align="right">'.number_format($row->spam).'</td><td align="right">'.$row->spampercent.'%</td></tr>'."\n";
+ echo ' <tr><td style="white-space:nowrap">'._("High Scoring Spam").':</td><td align="right">'.number_format($row->highspam).'</td><td align="right">'.$row->highspampercent.'%</td></tr>'."\n";
+ echo ' <tr><td>MCP:</td><td align="right">'.number_format($row->mcp).'</td><td align="right">'.$row->mcppercent.'%</td></tr>'."\n";
+ echo ' <tr><td style="white-space:nowrap">'._("High Scoring MCP").':</td><td align="right">'.number_format($row->highmcp).'</td><td align="right">'.$row->highmcppercent.'%</td></tr>'."\n";
+ echo '</table>'."\n";
 
-        // Navigation links - put them into an array to allow them to be switched
-        // on or off as necessary and to allow for the table widths to be calculated.
-        $nav['status.php'] = "Recent Messages";
-        if (LISTS) {
-            $nav['lists.php'] = "Lists";
-        }
-        if (!DISTRIBUTED_SETUP) {
-            $nav['quarantine.php'] = "Quarantine";
-        }
-        $nav['reports.php'] = "Reports";
-        $nav['other.php'] = "Tools/Links";
-        if ($_SESSION['user_type'] === 'A') {
-            $nav['sf_version.php'] = "Software Versions";
-        }
-        if (SHOW_DOC == 'true') {
-            $nav['docs.php'] = "Documentation";
-        }
-        $nav['logout.php'] = "Logout";
-        $table_width = round(100 / count($nav));
-    }
+ // Navigation links - put them into an array to allow them to be switched
+ // on or off as necessary and to allow for the table widths to be calculated.
+ $nav['status.php'] 	= _("Recent Messages");
+ if(LISTS) { $nav['lists.php'] = _("Lists"); }
+ if(!DISTRIBUTED_SETUP) { $nav['quarantine.php'] = _("Quarantine"); }
+ $nav['reports.php'] 	= _("Reports");
+ $nav['other.php'] 	= _("Tools/Links");
+ if($_SESSION['user_type'] === A){$nav['sf_version.php'] = _("Software Versions");}
+ if(SHOW_DOC == 'true'){$nav['docs.php'] = _("Documentation");}
+ $nav['logout.php']	= _("Logout");
+ $table_width = round(100/count($nav));
+}
 
 //Navigation table
-    echo '  </td>' . "\n";
-    echo ' </tr>' . "\n";
-    echo '<tr>' . "\n";
-    echo '<td colspan="4">' . "\n";
+echo '  </td>'."\n";
+echo ' </tr>'."\n";
+echo '<tr>'."\n";
+echo '<td colspan="4">'."\n";
 
-    echo '<ul id="menu" class="yellow">' . "\n";
+echo '<ul id="menu" class="yellow">'."\n";
 
 // Display the different words
-    foreach ($nav as $url => $desc) {
-        $active_url = "" . MAILWATCH_HOME . "/" . $url . "";
-        if ($_SERVER['SCRIPT_FILENAME'] == $active_url) {
-            echo "<li class=\"active\"><a href=\"$url\">$desc</a></li>\n";
-        } else {
-            echo "<li><a href=\"$url\">$desc</a></li>\n";
-        }
-    }
+foreach($nav as $url=>$desc) {
+$active_url = "".MAILWATCH_HOME."/".$url."";
+  if($_SERVER['SCRIPT_FILENAME'] == $active_url){
+   echo "<li class=\"active\"><a href=\"$url\">$desc</a></li>\n";
+   }else{
+   echo "<li><a href=\"$url\">$desc</a></li>\n";
+   }
+}
 
-    echo '
+echo '
  </ul>
  </td>
  </tr>
  <tr>
   <td colspan="4">';
 
-    if ($report) {
-        $return_items = $filter;
-    } else {
-        $return_items = $refresh;
-    }
-    return $return_items;
+  if($report){
+ $return_items = $filter;
+ }else{
+ $return_items = $refresh;
+ }
+ return $return_items;
 }
 
 function java_time(){
@@ -746,8 +716,12 @@ echo '</tr>'."\n";
 echo '</table>'."\n";
 echo $footer;
 echo '<p class="center" style="font-size:13px"><i>'."\n";
-page_creation_timer();
+echo page_creation_timer();
 echo '</i></p>'."\n";
+echo '<p class="center">'."\n";
+echo '        <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+<a href="http://sourceforge.net/projects/mailwatch"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=87163&amp;type=10" width="80" height="15" alt="Get MailWatch for MailScanner at SourceForge.net. Fast, secure and Free Open Source software downloads" ></a>'."\n";
+echo '  </p>'."\n";
 echo '</body>'."\n";
 echo '</html>'."\n";
 
@@ -756,8 +730,8 @@ echo '</html>'."\n";
 
 function dbconn() {
  $link = mysql_connect(DB_HOST,DB_USER,DB_PASS)
-        or die ("Could not connect to database: ".mysql_error());
- mysql_select_db(DB_NAME) or die("Could not select db: ".mysql_error());
+        or die (_("Could not connect to database").": ".mysql_error());
+ mysql_select_db(DB_NAME) or die(_("Could not select db").": ".mysql_error());
  return $link;
 }
 
@@ -773,7 +747,7 @@ function dbquery($sql) {
   echo "<!--\n\n";
   $dbg_sql = "EXPLAIN ".$sql;
   echo "SQL:\n\n$sql\n\n";
-  $result = mysql_query($dbg_sql) or die("Error executing query: " . mysql_errno() . " - " . mysql_error());
+  $result = mysql_query($dbg_sql) or die("Error executing query: ".mysql_error());
   $fields = mysql_num_fields($result);
   $rows = mysql_num_rows($result);
   while($row=mysql_fetch_row($result)) {
@@ -784,26 +758,24 @@ function dbquery($sql) {
   //dbtable("SHOW STATUS");
   echo "\n-->\n\n";
  }
- $result = mysql_query($sql) or die("<B>Error executing query: </B><BR><BR>" . mysql_errno() . ": " . mysql_error() . "<BR><BR><B>SQL:</B><BR><PRE>$sql</PRE>");
+ $result = mysql_query($sql) or die("<B>"._("Error executing query").": </B><BR><BR>".mysql_error()."<BR><BR><B>SQL:</B><BR><PRE>$sql</PRE>");
  return $result;
 }
 
 function quote_smart($value) {
-dbconn();
  if(get_magic_quotes_gpc()) {
   $value = stripslashes($value);
  }
- $value = "'".mysql_real_escape_string($value)."'";
+ $value = "'".mysql_escape_string($value)."'";
  return $value;
 }
 
 
 function safe_value($value) {
-dbconn();
  if(get_magic_quotes_gpc()) {
   $value = stripslashes($value);
  }
- $value = mysql_real_escape_string($value);
+ $value = mysql_escape_string($value);
  return $value;
 }
 
@@ -843,7 +815,7 @@ function format_spam_report($spamreport) {
   }
   // Return the result as an html formatted string
   if(count($output_array)>0) {
-   return '<table class="sa_rules_report" cellspacing="2">'.'<tr><Th>Score</th><th>Matching Rule</th><th>Description</th></tr>'.implode("\n",$output_array).'</table>'."\n";
+   return '<table class="sa_rules_report" cellspacing="2">'.'<tr><th>'._("Score").'</th><th>'._("Matching Rule").'</th><th>'._("Description").'</th></tr>'."\n".implode("\n",$output_array).'</table>'."\n";
   } else {
    return $spamreport;
   }
@@ -903,7 +875,7 @@ function format_mcp_report($mcpreport) {
   }
   // Return the result as an html formatted string
   if(count($output_array)>0) {
-   return '<table class="sa_rules_report" cellspacing="2" width="100%">"."<tr><th>Score</th><th>Matching Rule</th><th>Description</th></tr>'.implode("\n",$output_array).'</table>'."\n";
+   return '<table class="sa_rules_report" cellspacing="2" width="100%">"."<tr><th>'._("Score").'</th><th>'._("Matching Rule").'</th><th>'._("Description").'</th></tr>'.implode("\n",$output_array).'</table>'."\n";
   } else {
    return $mcpreport;
   }
@@ -1051,7 +1023,7 @@ function trim_output($input, $maxlen) {
 }
 
 function get_default_ruleset_value($file) {
- $fh = fopen($file,'r') or die("Cannot open ruleset file $file");
+ $fh = fopen($file,'r') or die(_("Cannot open ruleset file")." $file");
  while(!feof($fh)) {
   $line = rtrim(fgets($fh, filesize($file)));
   if(preg_match('/^([^#]\S+:)\s+(\S+)\s+([^#]\S+)/',$line,$regs)) {
@@ -1095,31 +1067,32 @@ $array_output = $array_output1;
     }
    }
   }
-  die("Cannot find configuration value: $name in $MailScanner_conf_file\n");
+  die(sprintf(_("Cannot find configuration value: %s in %s\n"), $name, $MailScanner_conf_file));
 }
 
-function parse_conf_dir($conf_dir)
-{
-    $array_output1 = array();
-    if ($dh = opendir($conf_dir)) {
-        while (($file = readdir($dh)) !== false) {
-            // remove the . and .. so that it doesn't throw an error when parsing files
-            if ($file !== ".") {
-                if ($file !== "..") {
-                    $file_name = $conf_dir . $file;
-                    if (!is_array($array_output1)) {
+function parse_conf_dir($conf_dir){
+    if($dh = opendir($conf_dir)){
+        while(($file = readdir($dh)) !== false){
+     
+	 // remove the . and .. so that it doesn't throw an error when parsing files
+            if($file !=="."){
+                if($file !==".."){
+                    $file_name = $conf_dir.$file;
+				    if(!is_array($array_output1)){
+				        $array_output1 = array();
                         $array_output1 = parse_conf_file($file_name);
-                    } else {
-                        $array_output2 = parse_conf_file($file_name);
-                        $array_output1 = array_merge($array_output1, $array_output2);
-                    }
+				    }else{
+					    $array_output2 = parse_conf_file($file_name);
+					    $array_output1 = array_merge($array_output1, $array_output2);
+					}
                 }
-            }
+             }
         }
-    }
-    closedir($dh);
-    return ($array_output1);
-}
+		return($array_output1);
+	} 
+  closedir($dh);
+ }
+ 
 
 function get_conf_truefalse($name) {
  if(DISTRIBUTED_SETUP) { return true; }
@@ -1142,7 +1115,6 @@ $array_output = $array_output1;
 }
 	foreach($array_output as $regs[1] => $regs[2]){
 	    $regs[1] = preg_replace('/ */', '', $regs[1]);
-
     if((strtolower($regs[1])) == (strtolower($name))) {
      // Is it a ruleset?
      if(is_readable($regs[2])) {
@@ -1209,55 +1181,57 @@ function get_conf_include_folder() {
    }
   }
   fclose($fh) or die($php_errormsg);
-  die("Cannot find configuration value: $name in $msconfig\n");
+  die(sprintf(_("Cannot find configuration value: %s in %s\n"), $name, $msconfig));
  }
 }
 
 
 // Parse conf files
-function parse_conf_file($name)
-{
-    $array_output = array();
-    // open each file and read it
-    $fh = fopen($name . $file, 'r')
-    or die("Cannot open MailScanner configuration file");
-    while (!feof($fh)) {
+function parse_conf_file($name){
+	
+	// open each file and read it
+	$fh = fopen($name.$file,'r')
+	or die(_("Cannot open MailScanner configuration file"));
+	while (!feof($fh)) {
+ 
+ // read each line to the $line varable
+ $line = rtrim(fgets($fh,4096));
+ 
+ //echo "line: ".$line."\n"; // only use for troubleshooting lines
+ 
+ // find all lines that match
+ if(preg_match("/^([^#].+)\s=\s([^#].*)/",$line,$regs)) {
 
-        // read each line to the $line varable
-        $line = rtrim(fgets($fh, 4096));
+ //Strip trailing comments
+  $regs[2] = preg_replace("/#.*$/","",$regs[2]);
 
-        //echo "line: ".$line."\n"; // only use for troubleshooting lines
+ // store %var% variables
+  if(preg_match("/%.+%/",$regs[1])) {
+  	$var[$regs[1]] = $regs[2];
+  }
 
-        // find all lines that match
-        if (preg_match("/^([^#].+)\s=\s([^#].*)/", $line, $regs)) {
+  # expand %var% variables
+  if(preg_match("/(%.+%)/",$regs[2],$match)) {
+    $regs[2] = preg_replace("/%.+%/",$var[$match[1]],$regs[2]);
+  }
 
-            //Strip trailing comments
-            $regs[2] = preg_replace("/#.*$/", "", $regs[2]);
+ // Remove any html entities from the code
+   $key = htmlentities($regs[1]);
+   $string = htmlentities($regs[2]);
 
-            // store %var% variables
-            if (preg_match("/%.+%/", $regs[1])) {
-                $var[$regs[1]] = $regs[2];
-            }
-
-            # expand %var% variables
-            if (preg_match("/(%.+%)/", $regs[2], $match)) {
-                $regs[2] = preg_replace("/%.+%/", $var[$match[1]], $regs[2]);
-            }
-
-            // Remove any html entities from the code
-            $key = htmlentities($regs[1]);
-            $string = htmlentities($regs[2]);
-
-            // Stuff all of the data to an array
-            $array_output[$key] = $string;
-
-        }
+  // Stuff all of the data to an array
+   $array_output[$key] = $string;
+	
+	 }
     }
-    fclose($fh) or die($php_errormsg);
-    unset($fh);
 
-    return $array_output;
+	return($array_output);
+  fclose($fh) or die($php_errormsg);
+  unset($fh);
 }
+  
+    
+  
 
 function get_primary_scanner() {
  // Might be more than one scanner defined - pick the first as the primary
@@ -1374,7 +1348,7 @@ if($pager) {
 	'delta'			=> 2,
 	'totalItems'	=> $rows,
 	);
-	$pager = @Pager::factory($pager_options);
+	$pager = Pager::factory($pager_options);
 
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
@@ -1383,7 +1357,7 @@ echo '</ul>'."\n";
 
 echo '<table cellspacing="1" class="mail" >
     <tr>
-   <th colspan="5">Displaying page '.$pager->getCurrentPageID().' of '.$pager->numPages().' - Records '.$from.' to '.$to.' of '.$pager->numItems().'</th>
+   <th colspan=5>'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
   <tr>
   <tr>
@@ -1432,7 +1406,7 @@ echo $pager->links;
     $orderable[$f] = false;
     // Set it up not to wrap - tricky way to leach onto the align field
     $align[$f] = "center\" style=\"white-space:nowrap";
-    $fieldname[$f] = "Ops<br><a href=\"javascript:SetRadios('S')\">S</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('H')\">H</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('F')\">F</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('R')\">R</a>";
+    $fieldname[$f] = _("Ops")."<br><a href=\"javascript:SetRadios('S')\">S</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('H')\">H</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('F')\">F</a>&nbsp;&nbsp;&nbsp;<a href=\"javascript:SetRadios('R')\">R</a>";
     continue;
    }
    $display[$f] = true;
@@ -1446,7 +1420,7 @@ echo $pager->links;
    }
    switch($fieldname[$f]=mysql_field_name($sth,$colnum)) {
     case 'host':
-     $fieldname[$f] = "Host";
+     $fieldname[$f] = _("Host");
      if(DISTRIBUTED_SETUP) {
       $display[$f] = true;
      } else {
@@ -1454,11 +1428,11 @@ echo $pager->links;
      }
      break;
     case 'timestamp':
-     $fieldname[$f] = "Date/Time";
+     $fieldname[$f] = _("Date/Time");
      $align[$f] = "center";
      break;
     case 'datetime':
-     $fieldname[$f] = "Date/Time";
+     $fieldname[$f] = _("Date/Time");
      $align[$f] = "center";
      break;
     case 'id':
@@ -1472,17 +1446,17 @@ echo $pager->links;
      $align[$f] = "center";
      break;
     case 'size':
-     $fieldname[$f] = "Size";
+     $fieldname[$f] = _("Size");
      $align[$f] = "right";
      break;
     case 'from_address':
-     $fieldname[$f] = "From";
+     $fieldname[$f] = _("From");
      break;
     case 'to_address':
-     $fieldname[$f] = "To";
+     $fieldname[$f] = _("To");
      break;
     case 'subject':
-     $fieldname[$f] = "Subject";
+     $fieldname[$f] = _("Subject");
      break;
     case 'clientip':
      $display[$f] = true;
@@ -1542,21 +1516,21 @@ echo $pager->links;
      $display[$f] = false;
      break;
     case 'hostname':
-     $fieldname[$f] = 'Host';
+     $fieldname[$f] = _('Host');
      $display[$f] = true;
      break;
     case 'date':
-     $fieldname[$f] = 'Date';
+     $fieldname[$f] = _('Date');
      break;
     case 'time':
-     $fieldname[$f] = 'Time';
+     $fieldname[$f] = _('Time');
      break;
     case 'headers':
      $display[$f] = false;
      break;
     case 'sascore':
      if(get_conf_truefalse('UseSpamAssassin')) {
-      $fieldname[$f] = "SA Score";
+      $fieldname[$f] = _("SA Score");
       $align[$f] = "right";
      } else {
       $display[$f] = false;
@@ -1564,25 +1538,25 @@ echo $pager->links;
      break;
     case 'mcpsascore':
      if(get_conf_truefalse('MCPChecks')) {
-      $fieldname[$f] = "MCP Score";
+      $fieldname[$f] = _("MCP Score");
       $align[$f] = "right";
      } else {
       $display[$f] = false;
      }
      break;
     case 'status':
-     $fieldname[$f] = "Status";
+     $fieldname[$f] = _("Status");
      $orderable[$f] = false;
      break;
     case 'message':
-     $fieldname[$f] = "Message";
+     $fieldname[$f] = _("Message");
      break;
     case 'attempts':
-     $fieldname[$f] = "Tries";
+     $fieldname[$f] = _("Tries");
      $align[$f] = "right";
      break;
     case 'lastattempt':
-     $fieldname[$f] = "Last";
+     $fieldname[$f] = _("Last");
      $align[$f] = "right";
      break;
    }
@@ -1660,6 +1634,12 @@ echo $pager->links;
       // Create a link to detail.php as [<link>]
       $row[$f] = "[<a href=\"detail.php?id=$row[$f]\">&nbsp;&nbsp;</a>]";
       break;
+     //add headers for charset checking 090907 -- begin
+     case 'headers':
+      $charset = detect_charset($row[$f]);
+      $fix_subject = fix_utf8_subject($row[$f]);
+      break;
+     //end
      case 'from_address':
       $row[$f] = htmlentities($row[$f]);
       if(FROMTO_MAXLEN>0) {
@@ -1681,14 +1661,42 @@ echo $pager->links;
       $row[$f] = str_replace(",","<br>",$row[$f]);
       break;
      case 'subject':
+      /*
       $row[$f] = decode_header($row[$f]);
-      if (function_exists ('mb_check_encoding')) {
+      if (function_exists (mb_check_encoding)) {
        if (! mb_check_encoding ($row[$f], 'UTF-8')) {
         $row[$f] = mb_convert_encoding($row[$f], 'UTF-8');
        }
       } else {
        $row[$f] = utf8_encode($row[$f]);
       }
+      */
+      //090909 add by James Chien -- begin
+      //It seems MailWath.pm(or MailScanner?) decoded UTF-8 subject as latin1 and wrote 
+      //it into mysql, we can't do anything with it. But we can use undecoded header to
+      //find out the correct subject instead !!
+      if ($charset[0] === NULL) {
+       //mailq.php can handle subject with correct encoding,therefore we convert it directly.
+       $subject_charset = detect_charset($row[$f]);
+       if ($subject_charset[0] != NULL) {
+        $row[$f] = mb_convert_encoding(decode_header($row[$f]),"UTF-8",$subject_charset[0]);
+       } else {
+        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
+       }
+      } elseif (strtolower($charset[0]) != "utf-8") {
+       if ($charset[1] == 0) {
+        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",$charset[0]);
+       } else {
+        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
+       }
+      } else {
+       if ($charset[1] == 0) {
+        $row[$f] = decode_header($fix_subject);
+       } else {
+        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
+       }
+      }
+       //end
       $row[$f] = htmlspecialchars($row[$f]);
       if(SUBJECT_MAXLEN>0) {
        $row[$f] = trim_output($row[$f], SUBJECT_MAXLEN);
@@ -1763,7 +1771,7 @@ echo $pager->links;
      case 'clienthost':
       $hostname = gethostbyaddr($row[$f]);
       if($hostname == $row[$f]) {
-       $row[$f] = "(Hostname lookup failed)";
+       $row[$f] = _("(Hostname lookup failed)");
       } else {
        $row[$f] = $hostname;
       }
@@ -1809,10 +1817,10 @@ echo $pager->links;
      echo '<tr class="mcp">'."\n";
      break;
     default:
-	  if($fieldname['mcpsascore']!=''){
-		echo '<tr class="mcp">'."\n";
+	  if($fieldname['sascore']==''){
+		'<tr class="mcp">'."\n";
 	  }else{
-        echo '<tr >'."\n";
+     echo '<tr >'."\n";
 	 }
      break;
    }
@@ -1863,10 +1871,10 @@ echo $pager->links;
    &nbsp; <a href="javascript:SetRadios(\'H\')">H</a>
    &nbsp; <a href="javascript:SetRadios(\'F\')">F</a>
    &nbsp; <a href=\"javascript:SetRadios(\'R\')">R</a>
-   &nbsp; or <a href="javascript:SetRadios(\'C\')">Clear</a> all
-   <p><input type="SUBMIT" name="SUBMIT" value="Learn">
+   &nbsp; or <a href="javascript:SetRadios(\'C\')">'._("Clear").'</a> '._("all").'
+   <p><input type="SUBMIT" name="SUBMIT" value='._("Learn").'>
    </form>
-	<p><b>S</b> = Spam &nbsp; <b>H</b> = Ham &nbsp; <b>F</b> = Forget &nbsp; <b>R</b> = Release'."\n";
+	<p><b>S</b> = '._("Spam").' &nbsp; <b>H</b> = '._("Ham").' &nbsp; <b>F</b> = '._("Forget").' &nbsp; <b>R</b> = '._("Release")."\n";
    }
 echo '<br>'."\n";
 if($pager) {
@@ -1893,7 +1901,7 @@ if($pager) {
 	'delta'			=> 2,
 	'totalItems'	=> $rows,
 	);
-	$pager = @Pager::factory($pager_options);
+	$pager = Pager::factory($pager_options);
 
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
@@ -1902,7 +1910,7 @@ echo '</ul>'."\n";
 
 echo '<table cellspacing="1" class="mail" >
     <tr>
-   <th colspan="5">Displaying page '.$pager->getCurrentPageID().' of '.$pager->numPages().' - Records '.$from.' to '.$to.' of '.$pager->numItems().'</th>
+   <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
   <tr>
   <tr>
@@ -1920,7 +1928,7 @@ echo $pager->links;
 }
 
 // Function to display data as a table
-function dbtable($sql,$title=false,$pager=false) {
+function dbtable($sql,$title=false,$pager=false,$translate=false) {
  
  // Query the data
  $sth = dbquery($sql);
@@ -1956,7 +1964,7 @@ if($pager) {
 	'delta'			=> 2,
 	'totalItems'	=> $rows,
 	);
-	$pager = @Pager::factory($pager_options);
+	$pager = Pager::factory($pager_options);
 
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
@@ -1965,7 +1973,7 @@ echo '</ul>'."\n";
 
 echo '<table cellspacing="1" class="mail" >
     <tr>
-   <th colspan="5">Displaying page '.$pager->getCurrentPageID().' of '.$pager->numPages().' - Records '.$from.' to '.$to.' of '.$pager->numItems().'</th>
+   <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
   <tr>
   <tr>
@@ -2007,7 +2015,11 @@ echo $pager->links;
   // Column headings
   echo ' <tr>'."\n";
   for($f=0;$f<$fields;$f++) {
-   echo '  <th>'.mysql_field_name($sth,$f).'</th>'."\n";
+   if($translate){
+    echo '  <th>'._(mysql_field_name($sth,$f)).'</th>'."\n";
+   }else{
+    echo '  <th>'.mysql_field_name($sth,$f).'</th>'."\n";
+   }
   }
   echo ' </tr>'."\n";
   // Rows
@@ -2020,7 +2032,7 @@ echo $pager->links;
   }
   echo '</table>'."\n";
  } else {
-  echo "No rows retrieved!\n";
+  echo _("No rows retrieved!\n");
  }
  echo '<br>'."\n";
  if($pager) {
@@ -2047,7 +2059,7 @@ echo $pager->links;
 	'delta'			=> 2,
 	'totalItems'	=> $rows,
 	);
-	$pager = @Pager::factory($pager_options);
+	$pager = Pager::factory($pager_options);
 
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
@@ -2056,7 +2068,7 @@ echo '</ul>'."\n";
 
 echo '<table cellspacing="1" class="mail" >
     <tr>
-   <th colspan="5">Displaying page '.$pager->getCurrentPageID().' of '.$pager->numPages().' - Records '.$from.' to '.$to.' of '.$pager->numItems().'</th>
+   <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
   <tr>
   <tr>
@@ -2089,7 +2101,7 @@ function db_vertical_table($sql) {
   }
   echo "</table>\n";
  } else {
-  echo "No rows retrieved\n";
+  echo _("No rows retrieved.")."\n";
  }
 }
 
@@ -2104,12 +2116,12 @@ function get_microtime() {
 }
 
 function page_creation_timer() {
- if(!isset($GLOBALS['pc_start_time'])) {
-  $GLOBALS['pc_start_time'] = get_microtime();
+ if(!isset($GLOBALS[pc_start_time])) {
+  $GLOBALS[pc_start_time] = get_microtime();
  } else {
   $pc_end_time = get_microtime();
-  $pc_total_time = $pc_end_time - $GLOBALS['pc_start_time'];
-  printf("Page generated in %f seconds\n", $pc_total_time);
+  $pc_total_time = $pc_end_time - $GLOBALS[pc_start_time];
+  printf(_("Page generated in %f seconds\n"), $pc_total_time);
  }
 }
 
@@ -2272,10 +2284,10 @@ function ldap_get_conf_var($entry) {
  $entry = translate_etoi($entry);
 
  $lh = @ldap_connect(LDAP_HOST, LDAP_PORT)
-  or die("Error: could not connect to LDAP directory on: ".LDAP_HOST."\n");
+  or die(_("Error: could not connect to LDAP directory on").": ".LDAP_HOST."\n");
 
  @ldap_bind($lh)
-  or die("Error: unable to bind to LDAP directory\n");
+  or die(_("Error: unable to bind to LDAP directory")."\n");
 
  # As per MailScanner Config.pm
  $filter = "(objectClass=mailscannerconfmain)";
@@ -2297,7 +2309,7 @@ function ldap_get_conf_var($entry) {
   }
  } else {
   // No results
-  die("Error: cannot find configuration value '$entry' in LDAP directory.\n");
+  die(_("Error: cannot find configuration value '$entry' in LDAP directory.")."\n");
  }
 }
 
@@ -2306,10 +2318,10 @@ function ldap_get_conf_truefalse($entry) {
  $entry = translate_etoi($entry);
 
  $lh = @ldap_connect(LDAP_HOST, LDAP_PORT)
-  or die("Error: could not connect to LDAP directory on: ".LDAP_HOST."\n");
+  or die(_("Error: could not connect to LDAP directory on").": ".LDAP_HOST."\n");
 
  @ldap_bind($lh)
-  or die("Error: unable to bind to LDAP directory\n");
+  or die(_("Error: unable to bind to LDAP directory")."\n");
 
  # As per MailScanner Config.pm
  $filter = "(objectClass=mailscannerconfmain)";
@@ -2349,7 +2361,7 @@ function translate_etoi($name) {
  $name = strtolower($name);
  $file = MS_LIB_DIR.'MailScanner/ConfigDefs.pl';
  $fh = fopen($file,'r')
-  or die("Cannot open MailScanner ConfigDefs file: $file\n");
+  or die(_("Cannot open MailScanner ConfigDefs file: $file")."\n");
  while(!feof($fh)) {
   $line = rtrim(fgets($fh, filesize($file)));
   if(preg_match('/^([^#].+)\s=\s([^#].+)/i',$line,$regs)) {
@@ -2518,7 +2530,7 @@ SELECT
  $sth = dbquery($sql);
  $rows = mysql_num_rows($sth);
  if($rows<=0) {
-  die("Message ID $msgid not found.\n");
+  die(_("Message ID $msgid not found.")."\n");
  }
  $row = mysql_fetch_object($sth);
  if(!$rpc_only && is_local($row->hostname)) {
@@ -2579,7 +2591,7 @@ SELECT
   }
   // Check the main quarantine
   if(is_dir($quarantine) && is_readable($quarantine)) {
-   $d = opendir($quarantine) or die("Cannot open quarantine dir: $quarantine\n");
+   $d = opendir($quarantine) or die(_("Cannot open quarantine dir: $quarantine")."\n");
    while(false !== ($f = readdir($d))) {
     if($f !== '..' && $f !== '.') {
      $quarantined[$count]['id']		= $count;
@@ -2637,6 +2649,7 @@ function quarantine_release($list, $num, $to, $rpc_only=false) {
    $mime->setTXTBody(QUARANTINE_MSG_BODY);
    // Loop through each selected file and attach them to the mail
    foreach($num as $key=>$val) {
+    //echo "Key: ".$key." Value: ".$val."\n";
     // If the message is of rfc822 type then set it as Quoted printable
     if(preg_match('/message\/rfc822/',$list[$val]['type'])) {
      $mime->addAttachment($list[$val]['path'], 'message/rfc822', 'Original Message', true, '');
@@ -2646,7 +2659,8 @@ function quarantine_release($list, $num, $to, $rpc_only=false) {
     }
    }
    $mail_param = array('host' => QUARANTINE_MAIL_HOST);
-   $body = $mime->get();
+   //UTF-8 Body
+   $body = $mime->get(array('text_charset' => 'utf-8', 'html_charset' => 'utf-8','head_charset' => 'utf-8'));
    $hdrs = $mime->headers($hdrs);
    $mail =& Mail::factory('smtp',$mail_param);
    $m_result = $mail->send($to, $hdrs, $body);
@@ -2656,7 +2670,7 @@ function quarantine_release($list, $num, $to, $rpc_only=false) {
     global $error;
     $error = true;
    } else {
-    $status = "Release: message released to ".str_replace(",",", ",$to);
+    $status = _("Release: message released to ").str_replace(",",", ",$to);
     audit_log('Quarantined message ('.$list[$val]['msgid'].') released to '.$to);
    }
    return($status);
@@ -2669,10 +2683,10 @@ function quarantine_release($list, $num, $to, $rpc_only=false) {
      debug($cmd.$list[$val]['path']);
      exec($cmd.$list[$val]['path']." 2>&1", $output_array, $retval);
      if ($retval == 0) {
-      $status = "Release: message released to ".str_replace(",",", ",$to);
+      $status = _("Release: message released to ").str_replace(",",", ",$to);
       audit_log('Quarantined message ('.$list[$val]['msgid'].') released to '.$to);
      } else {
-      $status = "Release: error code ".$retval." returned from Sendmail:\n".join("\n",$output_array);
+      $status = _("Release: error code ").$retval." "._("returned from Sendmail").":\n".join("\n",$output_array);
       global $error;
       $error = true;
      }
@@ -2711,7 +2725,6 @@ function quarantine_release($list, $num, $to, $rpc_only=false) {
 }
 
 function quarantine_learn($list, $num, $type, $rpc_only=false) {
-dbconn();
  if(!is_array($list) || !isset($list[0]['msgid'])) {
   return "Invalid argument";
  } else {
@@ -2726,35 +2739,35 @@ dbconn();
      $learn_type = "ham";
      if($list[$val]['isspam'] == 'Y') {
       // Learning SPAM as HAM - this is a false-positive
-      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=1, isfn=0 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=1, isfn=0 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      } else {
       // Learning HAM as HAM - better reset the flags just in case
-      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      }
      break;
     case "spam":
      $learn_type = "spam";
      if($list[$val]['isspam'] == 'N') {
       // Learning HAM as SPAM - this is a false-negative
-      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=1 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=1 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      } else {
       // Learning SPAM as SPAM - better reset the flags just in case
-      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+      $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      }
      break;
     case "forget":
      $learn_type = "forget";
-     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=0 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      break;
     case "report":
      $use_spamassassin = true;
      $learn_type = "-r";
-     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=1 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=0, isfn=1 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      break;
     case "revoke":
      $use_spamassassin = true;
      $learn_type = "-k";
-     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=1, isfn=0 WHERE id='".mysql_real_escape_string($list[$val]['msgid'])."'";
+     $sql = "UPDATE maillog SET timestamp=timestamp, isfp=1, isfn=0 WHERE id='".mysql_escape_string($list[$val]['msgid'])."'";
      break;
    }
    if(true === $use_spamassassin) {
@@ -2777,7 +2790,7 @@ dbconn();
      }
      audit_log('SpamAssassin was trained and reported on message '.$list[$val]['msgid'].' as '.$learn_type);
     } else {
-     $status[] = "SpamAssassin: error code ".$retval." returned from SpamAssassin:\n".join("\n",$output_array);
+     $status[] = _("SpamAssassin: error code ").$retval." "._("returned from SpamAssassin").":\n".join("\n",$output_array);
      global $error;
      $error = true;
     }
@@ -2790,10 +2803,10 @@ dbconn();
       debug("Learner - running SQL: $sql");
       $junk = dbquery($sql);
      }
-     $status[] = "SA Learn: ".join(", ",$output_array);
+     $status[] = _("SA Learn: ").join(", ",$output_array);
      audit_log('SpamAssassin was trained on message '.$list[$val]['msgid'].' as '.$learn_type);
     } else {
-     $status[] = "SA Learn: error code ".$retval." returned from sa-learn:\n".join("\n",$output_array);
+     $status[] = _("SA Learn: error code ").$retval." "._("returned from sa-learn").":\n".join("\n",$output_array);
      global $error;
      $error = true;
     }
@@ -2832,7 +2845,7 @@ dbconn();
 
 function quarantine_delete($list, $num, $rpc_only=false) {
  if(!is_array($list) || !isset($list[0]['msgid'])) {
-  return "Invalid argument";
+  return _("Invalid argument");
  } else {
   $new = quarantine_list_items($list[0]['msgid']);
   $list =& $new;
@@ -2841,11 +2854,11 @@ function quarantine_delete($list, $num, $rpc_only=false) {
  if(!$rpc_only && is_local($list[0]['host'])) {
   foreach($num as $key=>$val) {
    if(@unlink($list[$val]['path'])) {
-    $status[] = "Delete: deleted file ".$list[$val]['path'];
+    $status[] = _("Delete: deleted file ").$list[$val]['path'];
     dbquery("UPDATE maillog SET quarantined=NULL WHERE id='".$list[$val]['msgid']."'");
     audit_log('Delete file from quarantine: '.$list[$val]['path']);
    } else {
-    $status[] = "Delete: error deleting file ".$list[$val]['path'];
+    $status[] = _("Delete: error deleting file ").$list[$val]['path'];
     global $error;
     $error = true;
    }
@@ -2881,12 +2894,11 @@ function quarantine_delete($list, $num, $rpc_only=false) {
 }
 
 function audit_log($action) {
-dbconn();
  if(AUDIT) {
   if(!MSEE) {
-   $user = mysql_real_escape_string($_SESSION['myusername']);
-   $action = mysql_real_escape_string($action);
-   $ip = mysql_real_escape_string($_SERVER['REMOTE_ADDR']);
+   $user = mysql_escape_string($_SESSION['myusername']);
+   $action = mysql_escape_string($action);
+   $ip = mysql_escape_string($_SERVER['REMOTE_ADDR']);
    dbquery("INSERT INTO audit_log (user,ip_address,action) VALUES ('$user','$ip','$action')");
   } else {
    // TODO: MSEE audit_logging (what session variable hold user name??)
@@ -2906,7 +2918,7 @@ function mailwatch_array_sum($array) {
 
 function read_ruleset_default($file) {
  $fh = fopen($file,'r')
-  or die("Cannot open MailScanner ruleset file ($file)");
+  or die(_("Cannot open MailScanner ruleset file ($file)"));
  while(!feof($fh)) {
   $line = rtrim(fgets($fh, filesize($file)));
   if(preg_match('/(\S+)\s+(\S+)\s+(\S+)/',$line,$regs)) {
@@ -2975,7 +2987,7 @@ function net_match($network, $ip) {
 }
 
 function mw_version(){
-	return("1.2.0 DEV");
+	return("1.2.0b4");
 }
 
 function is_rpc_client_allowed() {
@@ -3058,6 +3070,174 @@ function delete_dir($path) {
         if ( $path!= "".MAILWATCH_HOME."/".CACHE_DIR."") echo "bad path";
 }
 
+###################################################
+# Add by James
+##################################################
+//Allow mailwatch use PAM to authenticate.You must install pwauth.
+function checkPassword($uname, $password) {
+ $handle = popen(PWAUTH_BIN, "w");
+ fwrite($handle, "$uname\n$password\n");
+ return pclose($handle);
+}
+
+//Need to install php-imap package for below two frunctions
+function detect_charset($input) {
+  //Find out the charset from the subject
+  //preg_match('/Subject:\s+.*=\?([^?]+)\?(q|b)\?[^?]*\?=/i', $input, $matches);
+  //preg_match('/Subject:\s+(.*[^\n]*(\n+.*)*)\n.+:\s+.*/i', $input, $subject);
+  //$obj = imap_rfc822_parse_headers($input);
+  //$subject = $obj->subject;
+  $subject = fix_utf8_subject($input);
+  preg_match('/.*=\?([^?]+)\?(q|b)\?[^?]*\?=/i', $subject, $matches);
+  $charset  = $matches[1];
+  //$encoding = $matches[2];
+  $type = 0;
+  //It's better using gbk instead of gb2312.Some emails said it's gb2312 encoding,
+  //,but actually it's gbk.GBK includes all characters in GB2312.
+  if (strtolower($charset) == "gb2312") {
+   $charset = "gbk";
+  }
+  //mb_convert_encoding does not support MS950, only CP950.
+  if (strtolower($charset) == "ms950") {
+   $charset = "cp950";
+  }
+  //mb_convert_encoding does not recognise ks_c_5601-1987, it's the same as euc-kr.
+  if (strtolower($charset) == "ks_c_5601-1987") {
+   $charset = "euc-kr";
+  }
+  //If the subject was null,then use From: or To: to find out the charset. 
+  if ($charset == "") {
+   preg_match('/=\?([^?]+)\?(q|b)\?[^?]*\?=/i', $input, $matches);
+   $charset  = $matches[1];
+   $type = 1;
+   if (strtolower($charset) == "gb2312") {
+    $charset = "gbk";
+   }
+   if (strtolower($charset) == "ms950") {
+    $charset = "cp950";
+   }
+   if (strtolower($charset) == "ks_c_5601-1987") {
+    $charset = "euc-kr";
+   }       
+   //$encoding = $matches[2];
+  }
+ //$input = str_replace($charset);
+ return array($charset,$type);
+}
+
+function fix_utf8_subject($input) {
+ // For each encoded-word...
+  //preg_match('/Subject:\s+(.*\?=)/i', $input, $matches);
+  //preg_match('/Subject:\s+(.*=\?[^?]+\?(q|b)\?[^?]+\?=[^\n]*(\n+\s*=\?[^?]+\?(q|b)\?[^?]+\?=)*)/i', $input, $matches);
+  //$encoded  = $matches[1];
+  //return $encoded;
+ if (extension_loaded(imap)){
+  $obj = imap_rfc822_parse_headers($input);
+  return $obj->subject;
+ } else {
+  $headers = preg_split('/\n/', $input);
+  foreach($headers as $value){
+   $array = preg_split('/:\s+/', $value);
+   if (isset($array) && count($array)>1){
+    if ($array[0] == $tmp) {
+     $header[$array[0]] .= "\n".$array[1];
+    } else {
+     $header[$array[0]] = $array[1];
+    }
+    $tmp = $array[0];
+   } else {
+    $header[$tmp] .= "\n".$value ;
+   }
+   unset($array);
+  }
+  return $header['Subject'];
+ }
+}
+
+function check_locale() {
+ //Give a default charset
+ //if (SYSTEM_LOCALE == "zh_TW") {$default_charset = "big5";}
+ if (SYSTEM_LOCALE == "zh_TW") {$default_charset = "cp950";}
+ if (SYSTEM_LOCALE == "zh_CN") {$default_charset = "gbk";}
+ return $default_charset;
+}
+
+function sa_dbconn() {
+ $sa_sql_dsn = get_sa_sql_dsn(bayes_sql_dsn);
+ $user = get_sa_conf_var(bayes_sql_username);
+ $pass = get_sa_conf_var(bayes_sql_password);
+ $link = mysql_pconnect($sa_sql_dsn[4],$user,$pass)
+  or die ("Could not connect to database: ".mysql_error());
+ mysql_select_db($sa_sql_dsn[3]) or die("Could not select db: ".mysql_error());
+ return $link;
+}
+
+function sa_dbquery($sql) {
+ sa_dbconn();
+ if(DEBUG && headers_sent() && preg_match('/\bselect\b/i',$sql)) {
+  echo "<!--\n\n";
+  $dbg_sql = "EXPLAIN ".$sql;
+  echo "SQL:\n\n$sql\n\n";
+  $result = mysql_query($dbg_sql) or die("Error executing query: ".mysql_error());
+  $fields = mysql_num_fields($result);
+  $rows = mysql_num_rows($result);
+  while($row=mysql_fetch_row($result)) {
+   for($f=0; $f<$fields; $f++) {
+    echo mysql_field_name($result,$f).": ".$row[$f]."\n";
+   }
+  }
+  //dbtable("SHOW STATUS");
+  echo "\n-->\n\n";
+ }
+ $result = mysql_query($sql) or die("<B>Error executing query: </B><BR/><BR/>".mysql_error()."<BR/><BR/><B>SQL:<B><BR/><PRE>$sql</PRE>");
+ return $result;
+}
+
+function get_sa_conf_var($name) {
+ if(DISTRIBUTED_SETUP) { return false; }
+ // Translate input if using LDAP on MSEE
+ if(MSEE) {
+  $name = translate_etoi($name);
+  return ldap_get_conf_var($name);
+ } else {
+  $saconfig = MS_CONFIG_DIR."spam.assassin.prefs.conf";
+  $fh = fopen($saconfig,'r') 
+   or die("Cannot open MailScanner configuration file");
+  while(!feof($fh)) {
+   $line = rtrim(fgets($fh, filesize($saconfig)));
+   if(preg_match('/^([^#].+)\s+([^#].+)/',$line,$regs)) {
+    $regs[1] = preg_replace('/ */', '', $regs[1]);
+    # Strip trailing comments
+    $regs[2] = preg_replace("/#.*$/","",$regs[2]);
+    # store %var% variables
+    if(preg_match("/%.+%/",$regs[1])) {
+     $var[$regs[1]] = $regs[2];
+    }
+    # expand %var% variables
+    if(preg_match("/(%.+%)/",$regs[2],$match)) {
+     $regs[2] = preg_replace("/%.+%/",$var[$match[1]],$regs[2]);
+    }
+    if((strtolower($regs[1])) == (strtolower($name))) {
+     fclose($fh) or die($php_errormsg);
+     if(is_file($regs[2])) {
+      return read_ruleset_default($regs[2]);
+     } else {
+      return $regs[2];
+     }
+    }
+   }
+  }
+  fclose($fh); //or die($php_errormsg);
+   //die("Cannot find configuration value: $name in $saconfig\n");
+ }
+}
+
+function get_sa_sql_dsn($name) {
+ $input = get_sa_conf_var($name);
+ preg_match('/([^:]+):([^:]+):([^:]+):([^:]+)/i', $input, $matches);
+ return $matches;
+}
+
 
 /////////////////////////////////////////////////////
 /// Last Updated: 2012/01/22   //////////////////////
@@ -3067,3 +3247,4 @@ function funcs_phpversion()
    return(phpversion());
 }
 
+?>
