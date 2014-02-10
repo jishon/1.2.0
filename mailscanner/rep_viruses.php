@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("Virus Report",0,false,true);
+$filter = html_start(_("Virus Report"),0,false,true);
 
 // Get a list of virus scanners from MailScanner.conf
 $scanner=array();
@@ -124,7 +124,7 @@ ORDER BY
 
 $result = dbquery($sql);
 if(!mysql_num_rows($result) > 0) {
- die("Error: no rows retrieved from database\n");
+ die(_("Error: no rows retrieved from database")."\n");
 }
 
 $virus_array = array();
@@ -161,10 +161,10 @@ echo "<TR>";
 echo "<TD ALIGN=\"CENTER\">";
 echo "<TABLE WIDTH=\"500\">";
 echo "<TR BGCOLOR=\"#F7CE4A\">";
-echo "<TH>Virus</TH>";
-echo "<TH>Scanner</TH>";
-echo "<TH>First Seen</TH>";
-echo "<TH>Count</TH>";
+echo "<TH>"._("Virus")."</TH>";
+echo "<TH>"._("Scanner")."</TH>";
+echo "<TH>"._("First Seen")."</TH>";
+echo "<TH>"._("Count")."</TH>";
 echo "</TR>";
 
 // Write the data in table

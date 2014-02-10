@@ -25,10 +25,10 @@ require_once("./functions.php");
 session_start();
 require('login.function.php');
 
-html_start("SpamAssassin Lint",0,false,true);
+html_start(_("SpamAssassin Lint"),0,false,true);
 
 if(!$fp = popen(SA_DIR.'spamassassin -x -D -p '.SA_PREFS.' --lint 2>&1','r')) {
- die("Cannot open pipe");
+ die(_("Cannot open pipe"));
 } else {
  audit_log('Run SpamAssassin lint');
 }
@@ -47,7 +47,7 @@ while($line = fgets($fp,2096)) {
   $timer = get_microtime();
   $linet = $timer-$start;
   if(!$last) { $last = $linet; }
-  echo "<!-- Timer: $timer, Line Start: $linet -->\n";
+  echo sprintf(_("<!-- Timer: %s, Line Start: %s -->\n"), $timer, $linet);
   echo "    <TR>\n";
   echo "     <TD>$line</TD>\n";
   $thisone = $linet-$last;
@@ -68,7 +68,7 @@ while($line = fgets($fp,2096)) {
 }
 pclose($fp);
 echo "   <TR>\n";
-echo "    <TD><B>Finish - Total Time</B></TD>\n";
+echo "    <TD><B>"._("Finish - Total Time")."</B></TD>\n";
 echo "    <TD ALIGN=\"RIGHT\"><B>".round(get_microtime()-$start,5)."</B></TD>\n";
 echo "   </TR>\n";
 echo "</TABLE>\n";

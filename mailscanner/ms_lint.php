@@ -25,18 +25,18 @@ require_once("./functions.php");
 session_start();
 require('login.function.php');
 
-html_start("MailScanner Lint",0,false,false);
+html_start(_("MailScanner Lint"),0,false,false);
 
 
 if(!$fp = popen('sudo /usr/sbin/MailScanner --lint 2>&1','r')) {
- die("Cannot open pipe");
+ die(_("Cannot open pipe"));
 } else {
  audit_log('Run MailScanner lint');
 }
 
 echo '<table class="mail" cellspacing="1" width="100%">'."\n";
 echo ' <tr>'."\n";
-echo '  <th colspan="2">MailScanner Lint</th>'."\n";
+echo '  <th colspan="2">'._("MailScanner Lint").'</th>'."\n";
 echo ' </tr>'."\n";
 
 // Start timer
@@ -50,7 +50,7 @@ while($line = fgets($fp,2096)) {
   $linet = $timer-$start;
   if(!$last) { $last = $linet; }
 
-  echo '<!-- Timer: '.$timer.', Line Start: '.$linet.' -->'."\n";
+  echo sprintf(_("<!-- Timer: %s, Line Start: %s -->\n"), $timer, $linet);
 
   echo '    <tr>'."\n";
 
@@ -73,7 +73,7 @@ while($line = fgets($fp,2096)) {
 }
 pclose($fp);
 echo '   <tr>'."\n";
-echo '    <td><b>Finish - Total Time</b></td>'."\n";
+echo '    <td><b>'._("Finish - Total Time").'</b></td>'."\n";
 echo '    <td align="right"><b>'.round(get_microtime()-$start,5).'</b></td>'."\n";
 echo '   </tr>'."\n";
 echo '</table>'."\n";

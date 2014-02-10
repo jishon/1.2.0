@@ -31,7 +31,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("Message Listing",0,false,true);
+$filter = html_start(_("Message Listing"),0,false,true);
 
 // Checks to see if you are looking for quarantined files only
 if(QUARANTINE_USE_FLAG) {
@@ -45,6 +45,7 @@ $sql = "
  SELECT
   id AS id2,
   DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
+  headers,
   from_address,
   to_address,
   subject,
@@ -75,7 +76,7 @@ $sql = "
 ";
 
  // function to display the data from functions.php
-db_colorised_table($sql,'Message Operations',true,true,"SPAM");
+db_colorised_table($sql,_('Message Operations'),true,true,"SPAM");
 
 // Add footer
 html_end();

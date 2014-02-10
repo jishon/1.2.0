@@ -31,12 +31,13 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter=html_start("Message Listing",0,false,false);
+$filter=html_start(_("Message Listing"),0,false,false);
 
 $sql = "
  SELECT
   id AS id2,
   DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
+  headers,
   from_address,
   to_address,
   subject,
@@ -88,7 +89,7 @@ $sql .= "
  ";
 
  // function to display the data from functions.php
-db_colorised_table($sql,'Message Listing',true,true);
+db_colorised_table($sql,_('Message Listing'),true,true);
 
 // Add footer
 html_end();

@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("SpamAssassin Rule Hits",0,false,true);
+$filter = html_start(_("SpamAssassin Rule Hits"),0,false,true);
 
 $sql = "
  SELECT
@@ -44,7 +44,7 @@ $sql = "
 
 $result = dbquery($sql);
 if(!mysql_num_rows($result) > 0) {
- die("Error: no rows retrieved from database\n");
+ die(_("Error: no rows retrieved from database")."\n");
 }
 
 // Initialise the array
@@ -95,12 +95,12 @@ echo "<TR><TD ALIGN=\"CENTER\">";
 echo "<TABLE CLASS=\"boxtable\" ALIGN=\"CENTER\" BORDER=\"0\">\n";
 echo "
 <TR BGCOLOR=\"#F7CE4A\">
- <TH>Rule</TH>
- <TH>Description</TH>
- <TH>Total</TH>
- <TH>Ham</TH>
+ <TH>"._("Rule")."</TH>
+ <TH>"._("Description")."</TH>
+ <TH>"._("Total")."</TH>
+ <TH>"._("Ham")."</TH>
  <TH>%</TH>
- <TH>Spam</TH>
+ <TH>"._("Spam")."</TH>
  <TH>%</TH>
 </TR>\n";
 while ((list($key,$val) = each($sa_array)) && $count < 10) {

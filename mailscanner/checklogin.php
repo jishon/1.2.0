@@ -38,6 +38,10 @@ if ((USE_LDAP == 1) && (($result = ldap_authenticate($myusername, $mypassword)) 
     $_SESSION['user_ldap'] = '1';
     $myusername = safe_value($result);
     $sql = "SELECT * FROM users WHERE username='$myusername'";
+} elseif ((constant("PWAUTH_BIN") != NULL) && (checkPassword($myusername,$mypassword) == 0)) {
+    $_SESSION['use_pam'] = '1';
+    $myusername = safe_value($myusername);
+    $sql = "SELECT * FROM users WHERE username='$myusername'";
 } else {
     $myusername = safe_value($myusername);
     if ($mypassword != "") {
@@ -50,8 +54,8 @@ if ((USE_LDAP == 1) && (($result = ldap_authenticate($myusername, $mypassword)) 
 $result = dbquery($sql);
 
 if (!$result) {
-    $message = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $sql;
+    $message  = _('Invalid query: ') . mysql_error() . "\n";
+    $message .= _('Whole query: ') . $sql;
     die($message);
 }
 if (mysql_num_rows($result) > 0) {
@@ -62,8 +66,8 @@ $sql1 = "SELECT filter FROM user_filters WHERE username='$myusername' AND active
 $result1 = dbquery($sql1);
 
 if (!$result1) {
-    $message = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $sql1;
+    $message  = _('Invalid query: ') . mysql_error() . "\n";
+    $message .= _('Whole query: ') . $sql1;
     die($message);
 }
 
@@ -81,7 +85,7 @@ switch ($usertype) {
         break;
     case "D":
         if (strpos($myusername, '@')) {
-            $ar = explode("@", $myusername);
+            $ar=preg_split("/@/",$myusername);
             $domainname = $ar[1];
             if ((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
                 $global_filter = $global_filter . " OR to_domain='$domainname'";
@@ -126,7 +130,7 @@ if ($count == 1) {
     echo '<html>';
     echo '<head>';
     echo '<link rel="shortcut icon" href="images/favicon.png" >' . "\n";
-    echo '<title>MailWatch Login Page</title>';
+    echo '<title>'._("MailWatch Login Page").'</title>';
     echo '</head>';
     echo '<body>';
     echo '<table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">';
@@ -144,21 +148,21 @@ if ($count == 1) {
     echo '<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">';
 
     echo '<tr>';
-    echo '    <td colspan="3"><strong>MailWatch Login</strong></td>';
+    echo '    <td colspan="3"><strong>'._("MailWatch Login").'</strong></td>';
     echo '</tr>';
 
     echo '<tr>';
-    echo '    <td colspan="3"> Bad username or Password</td>';
+    echo '    <td colspan="3"> '._("Bad username or Password").'</td>';
     echo '</tr>';
 
     echo '<tr>';
-    echo '    <td width="78">Username</td>';
+    echo '    <td width="78">'._("Username").'</td>';
     echo '    <td width="6">:</td>';
     echo '    <td width="294"><input name="myusername" type="text" id="myusername"></td>';
     echo '</tr>';
 
     echo '<tr>';
-    echo '    <td>Password</td>';
+    echo '    <td>'._("Password").'</td>';
     echo '    <td>:</td>';
     echo '    <td><input name="mypassword" type="password" id="mypassword"></td>';
     echo '</tr>';
@@ -166,7 +170,7 @@ if ($count == 1) {
     echo '<tr>';
     echo '    <td>&nbsp;</td>';
     echo '    <td>&nbsp;</td>';
-    echo '    <td><input type="submit" name="Submit" value="Login"> <input type="reset" value="Reset">  <INPUT TYPE="button" VALUE="Back" onClick="history.go(-1);return true;"></td>';
+    echo '    <td><input type="submit" name="Submit" value='._("Login").'> <input type="reset" value='._("Reset").'>  <INPUT TYPE="button" VALUE='._("Back").' onClick="history.go(-1);return true;"></td>';
     echo '</tr>
 </table>
 </td>

@@ -24,7 +24,7 @@ require_once("./functions.php");
 session_start();
 require('login.function.php');
 
-html_start("Documentation");
+html_start(_("Documentation"));
 
 if (isset($_GET['doc'])) {
     $file = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['doc']);
@@ -33,8 +33,8 @@ if (isset($_GET['doc'])) {
  echo '<table width="100%" class="boxtable">'."\n";
  echo ' <tr>'."\n";
  echo '  <td>'."\n";
- echo '  <h1>Documentation</h1>'."\n";
- echo '  This page does require authentication, so you can put links to your site documentation here and allow your users to access it if you wish.'."\n";
+ echo '  <h1>'._("Documentation").'</h1>'."\n";
+ echo '  '._("This page does require authentication, so you can put links to your site documentation here and allow your users to access it if you wish.")'."\n";
  echo '  </td>'."\n";
  echo ' </tr>'."\n";
  echo '</table>'."\n";

@@ -33,7 +33,7 @@ if ($_SESSION['user_type'] != 'A') {
     header("Location: index.php");
 } else {
     // add the header information such as the logo, search, menu, ....
-    $filter = html_start("Audit Log", 0, false, true);
+    $filter=html_start(_("Audit Log"),0,false,true);
 
     // SQL query for the audit log
     $sql = "
@@ -56,7 +56,7 @@ if ($_SESSION['user_type'] != 'A') {
  <tr><td>' . "\n";
 
     // Function to to query and display the data
-    dbtable($sql, "Audit Log", true);
+    dbtable($sql,_("Audit Log"),true);
 
     // close off the table
     echo '</td></tr>

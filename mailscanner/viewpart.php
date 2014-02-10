@@ -29,12 +29,12 @@ require 'login.function.php';
 ini_set("memory_limit", MEMORY_LIMIT);
 
 if (!isset($_GET['id'])) {
-    die("No input Message ID");
+ die(_("No input Message ID"));
 } else {
     // See if message is local
     dbconn(); // required db link for mysql_real_escape_string
     if (!($host = @mysql_result(dbquery("SELECT hostname FROM maillog WHERE id='" . mysql_real_escape_string($_GET['id']) . "' AND " . $_SESSION["global_filter"] . ""),0))) {
-        die("Message '" . $_GET['id'] . "' not found\n");
+        die(sprintf(_("Message %s not found\n"), $_GET['id']));
     }
     if (!is_local($host) || RPC_ONLY) {
         // Host is remote - use XML-RPC
@@ -83,7 +83,7 @@ if (!isset($_GET['id'])) {
             $_GET['filename'] = preg_replace('[\.\/|\.\.\/]', '', $_GET['filename']);
             $filename = get_conf_var('QuarantineDir') . "/" . $_GET['filename'];
             if (!@file_exists($filename)) {
-                die("Error: file not found\n");
+                die(_("Error: file not found")."\n");
             }
             $file = file_get_contents($filename);
         }
@@ -92,7 +92,8 @@ if (!isset($_GET['id'])) {
 
 $params['include_bodies'] = true;
 $params['decode_bodies'] = true;
-$params['decode_headers'] = true;
+//$params['decode_headers'] = true;
+$params['decode_headers'] = false;
 $params['input'] = $file;
 
 $structure = Mail_mimeDecode::decode($params);
@@ -101,48 +102,85 @@ $mime_struct = Mail_mimeDecode::getMimeNumbers($structure);
 // Make sure that part being requested actually exists
 if (isset($_GET['part'])) {
     if (!isset($mime_struct[$_GET['part']])) {
-        die("Part " . $_GET['part'] . " not found\n");
+        die(sprintf(_("Part %s not found\n"), $_GET['part']));
     }
 }
 
 function decode_structure($structure)
 {
     $type = $structure->ctype_primary . "/" . $structure->ctype_secondary;
+    //Using mimeDecode to identify charset in MIME part.. If all is null,just set to "".
+    $charset = $structure->ctype_parameters['charset'];
     switch ($type) {
         case "text/plain":
+                /*
             if (isset ($structure->ctype_parameters['charset']) && strtolower($structure->ctype_parameters['charset']) == 'utf-8') {
                 $structure->body = utf8_decode($structure->body);
             }
+            */
             echo '<html>
  <head>
  <link rel="shortcut icon" href="images/favicon.png">
- <title>Quarantined E-Mail Viewer</title>
+ <title>'._("Quarantined E-Mail Viewer").'</title>
  </head>
  <body>
- <pre>
- ' . htmlentities(wordwrap($structure->body)) . '
- </pre>
+ <pre>';
+ //' . htmlentities(wordwrap($structure->body)) . '
+   //Convet the body using charset we found.If none,convert as default locale.
+   if ($charset == "") {
+    echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)),"UTF-8",check_locale());
+   } elseif (strtolower($charset) != 'utf-8'){
+    echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)),"UTF-8",$charset);
+   } else {
+    echo htmlspecialchars(wordwrap($structure->body));
+   }
+ echo '</pre>
  </body>
- </html>' . "\n";
-            break;
-        case "text/html":
-            if (isset ($structure->ctype_parameters['charset']) && strtolower($structure->ctype_parameters['charset']) != 'utf-8') {
-                $structure->body = utf8_encode($structure->body);
-            }
-            if (STRIP_HTML) {
-                echo strip_tags($structure->body, ALLOWED_TAGS);
-            } else {
-                echo $structure->body;
-            }
-            break;
-        case "multipart/alternative":
-            break;
-        default:
-            header("Content-type: " . $structure->headers['content-type']);
-            header("Content-Disposition: " . $structure->headers['content-disposition']);
-            echo $structure->body;
-            break;
+ </html>'."\n";
+   break;
+  case "text/html":
+   /*
+   if (isset ($structure->ctype_parameters['charset']) && strtolower($structure->ctype_parameters['charset']) != 'utf-8') {
+    $structure->body = utf8_encode ($structure->body);
+   }
+   */
+   if (STRIP_HTML) {
+    //Convet the body using charset we found.If none,convert as default locale.
+    if ($charset == "") {
+     echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",check_locale());
+    } elseif (strtolower($charset) != "utf-8") {
+     echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",$charset);
+    } else {
+      echo strip_tags($structure->body, ALLOWED_TAGS);
     }
+    //echo strip_tags($structure->body, ALLOWED_TAGS);
+   } else {
+    if ($charset == "") {
+     echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
+    } elseif (strtolower($charset) != "utf-8") {
+     echo mb_convert_encoding($structure->body,"UTF-8",$charset);
+    } else {
+     echo $structure->body;
+    }   
+    //echo $structure->body;
+   }
+   break;
+  case "multipart/alternative":
+   break;
+  default:
+   header("Content-type: ".$structure->headers['content-type']);
+   header("Content-Disposition: ".$structure->headers['content-disposition']);
+   //Convet the body using charset we found.If none,convert as default locale.
+   if ($charset == "") {
+   echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
+   } elseif (strtolower($charset) != "utf-8") {
+    echo mb_convert_encoding($structure->body,"UTF-8",$charset);
+   } else {
+    echo $structure->body;
+   }
+   //echo $structure->body;
+   break;
+ }
 }
 
 decode_structure($mime_struct[$_GET['part']]);

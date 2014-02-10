@@ -36,7 +36,7 @@ function doit($input)
 {
  global $fp;
  if(!$fp = popen($input,'r'))
-  die("Cannot open pipe");
+  die(_("Cannot open pipe"));
 
  $lines = 1;
  while($line = fgets($fp,2096))

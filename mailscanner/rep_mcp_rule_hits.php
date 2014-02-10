@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("MCP Rule Hits", 0, false, true);
+$filter = html_start(_("MCP Rule Hits"), 0, false, true);
 
 // File name
 $filename = "" . CACHE_DIR . "/rep_mcp_rule_hits.png." . time() . "";
@@ -47,7 +47,7 @@ $sql = "
 
 $result = dbquery($sql);
 if (!mysql_num_rows($result) > 0) {
-    die("Error: no rows retrieved from database\n");
+    die(_("Error: no rows retrieved from database")."\n");
 }
 
 // Initialise the array
@@ -94,10 +94,10 @@ echo '<table border="0" cellpadding="10" cellspacing="0" width="100%">
  <tr><td align="center">
  <table class="boxtable" align="center" border="0">
  <tr bgcolor="#F7CE4A">
- <th>Rule</th>
- <th>Description</th>
- <th>Total</th>
- <th>Clean</th>
+ <th>'._("Rule").'</th>
+ <th>'._("Description").'</th>
+ <th>'._("Total").'</th>
+ <th>'._("Clean").'</th>
  <th>%</th>
  <th>MCP</th>
  <th>%</th>

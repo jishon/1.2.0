@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("Top Senders by Volume",0,false,true);
+$filter = html_start(_("Top Senders by Volume"),0,false,true);
 
 // File name
 $filename = "".CACHE_DIR."/top_senders_by_volume.png.".time()."";
@@ -63,7 +63,7 @@ include_once("./jpgraph/src/jpgraph_pie3d.php");
 
 $result = dbquery($sql);
 if(!mysql_num_rows($result) > 0) {
- die("Error: no rows retrieved from database\n");
+ die(_("Error: no rows retrieved from database")."\n");
 }
 
 while($row=mysql_fetch_object($result)) {
@@ -78,7 +78,10 @@ format_report_volume($data_size, $size_info);
 $graph = new PieGraph(800,385,0,false);
 $graph->SetShadow();
 $graph->img->SetAntiAliasing();
-$graph->title->Set("Top 10 Senders by Volume");
+$graph->title->Set(_("Top 10 Senders by Volume"));
+if (FF_CHINESE != NULL) {
+ $graph->title->SetFont(FF_CHINESE, FS_NORMAL);
+}
 
 $p1 = new PiePlot3d($data);
 $p1->SetTheme('sand');
@@ -103,7 +106,7 @@ echo "<TR>";
 if(is_readable($filename)){
 echo " <TD ALIGN=\"CENTER\"><IMG SRC=\"".$filename."\" ALT=\"Graph\"></TD>";
 }else{
-echo "<TD ALIGN=\"CENTER\"> File isn't readable. Please make sure that ".CACHE_DIR." is readable and writable by Mailwatch.";
+echo "<TD ALIGN=\"CENTER\"> "._("File isn't readable. Please make sure that ").CACHE_DIR._(" is readable and writable by Mailwatch.");
 }
 
 echo "</TR>";
@@ -111,9 +114,9 @@ echo "<TR>";
 echo " <TD ALIGN=\"CENTER\">";
 echo "  <TABLE WIDTH=500>";
 echo "   <TR BGCOLOR=\"#F7CE4A\">";
-echo "    <TH>E-Mail Address</TH>";
-echo "    <TH>Count</TH>";
-echo "    <TH>Size</TH>";
+echo "    <TH>"._("E-Mail Address")."</TH>";
+echo "    <TH>"._("Count")."</TH>";
+echo "    <TH>"._("Size")."</TH>";
 echo "   </TR>";
 
 

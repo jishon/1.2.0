@@ -36,7 +36,7 @@ header("Location: index.php");
 
 else{
 
-html_start("McAfee Status",0,false,false);
+html_start(_("McAfee Status"),0,false,false);
 
 echo '<table class="boxtable" width="100%">'."\n";
 echo '<tr>'."\n";

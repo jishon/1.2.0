@@ -100,21 +100,21 @@ class Filter {
 
  function Display() {
   echo '<table width="600" border="0" class="boxtable">'."\n";
-  echo ' <tr><th colspan="2">Active Filters</th></tr>'."\n";
+  echo ' <tr><th colspan="2">'._("Active Filters").'</th></tr>'."\n";
   if(count($this->item)>0) {
    foreach($this->item as $key=>$val) {
     echo '<tr><td>'.
          $this->TranslateColumn($val[0]).' '.$this->TranslateOperator($val[1]).
-         ' \''.stripslashes($val[2]).'\'</td><td align="right"><a href="'.$_SERVER["PHP_SELF"].'?action=remove&column='.$key.'">Remove</a></td></tr>'."\n";
+         ' \''.stripslashes($val[2]).'\'</td><td align="right"><a href="'.$_SERVER["PHP_SELF"].'?action=remove&column='.$key.'">'._("Remove").'</a></td></tr>'."\n";
    }
   } else {
-   echo '<tr><td colspan="2">None</td></tr>'."\n";
+   echo '<tr><td colspan="2">'._("None").'</td></tr>'."\n";
   }
   
   // Add filter
-  echo ' <tr><th colspan="2">Add Filter</th></tr>'."\n";
+  echo ' <tr><th colspan="2">'._("Add Filter").'</th></tr>'."\n";
   echo ' <tr><td colspan="2">'.$this->DisplayForm().'</td></tr>'."\n";
-  echo ' <tr><th colspan="2">Statistics (Filtered)</th></tr>'."\n";
+  echo ' <tr><th colspan="2">'._("Statistics (Filtered)").'</th></tr>'."\n";
   $query = "
 SELECT
  DATE_FORMAT(MIN(date),'".DATE_FORMAT."') AS oldest,
@@ -127,11 +127,11 @@ WHERE
 ".$this->CreateSQL();
   $sth = dbquery($query);
   while($row = mysql_fetch_object($sth)) {
-   echo ' <tr><td>Oldest record:</td><td align="right">'.$row->oldest.'</td></tr>'."\n";
-   echo ' <tr><td>Newest record:</td><td align="right">'.$row->newest.'</td></tr>'."\n";
-   echo ' <tr><td>Message count:</td><td align="right">'.number_format($row->messages).'</td></tr>'."\n";
+   echo ' <tr><td>'._("Oldest record").':</td><td align="right">'.$row->oldest.'</td></tr>'."\n";
+   echo ' <tr><td>'._("Newest record").':</td><td align="right">'.$row->newest.'</td></tr>'."\n";
+   echo ' <tr><td>'._("Message count").':</td><td align="right">'.number_format($row->messages).'</td></tr>'."\n";
   }
-  echo '<tr><th colspan="2">Reports</th></tr>'."\n";
+  echo '<tr><th colspan="2">'._("Reports").'</th></tr>'."\n";
   echo '<tr><td colspan="2"><ul>'."\n";
   foreach($this->reports as $description=>$url) {
    echo '<li><a href="'.$url.'">'.$description.'</a>'."\n";
@@ -229,7 +229,7 @@ WHERE
      $return .= " SELECTED";
     }
    }
-   $return .= '>'.$val.'</option>'."\n";
+   $return .= '>'._("$val").'</option>'."\n";
   }
   $return .= '</select>'."\n";
   $return .= '</td></tr>'."\n";
@@ -245,7 +245,7 @@ WHERE
      $return .= " SELECTED";
     }
    }
-   $return .= '>'.$val.'</option>'."\n";
+   $return .= '>'._("$val").'</option>'."\n";
   }
   $return .= '</select><br>'."\n";
   $return .= '</td></tr>'."\n";
@@ -255,15 +255,16 @@ WHERE
   $return .= '<input type="text" size="50" name="value"';
   if ($this->display_last) {
    //  Use the last value as the default
-   $return .= " value=\"" . htmlentities(stripslashes($this->last_value)) . "\"";
+   //$return .= " value=\"" . htmlentities(stripslashes($this->last_value)) . "\"";
+   $return .= " value=\"" . htmlspecialchars(stripslashes($this->last_value)) . "\"";
   }
   $return .= ">\n";
-  $return .= '</td><td align="right"><input type="submit" name="action" value="Add"></td></tr>'."\n";
-  $return .= '<tr><td align="left">To set date you must use YYYY-mm-dd format</td>'."\n".' <td></td></tr>'."\n";
-  $return .= '<tr><th colspan="2">Load/Save Filter</th></tr>'."\n";
-  $return .= '<tr><td><input type="text" size="50" name="save_as"></td><td align="right"><input type="SUBMIT" name="action" value="Save"></td></tr>'."\n";
+  $return .= '</td><td align="right"><input type="submit" name="action" value='._("Add").'></td></tr>'."\n";
+  $return .= '<tr><td align="left">'._("To set date you must use YYYY-mm-dd format").'</td>'."\n".' <td></td></tr>'."\n";
+  $return .= '<tr><th colspan="2">'._("Load/Save Filter").'</th></tr>'."\n";
+  $return .= '<tr><td><input type="text" size="50" name="save_as"></td><td align="right"><input type="SUBMIT" name="action" value='._("Save").'></td></tr>'."\n";
   $return .= '<tr><td>'."\n";
-  $return .= $this->ListSaved().'</td><td style="white-space: nowrap; text-align:right;"><input type="SUBMIT" name="action" value="Load">&nbsp;<input type="SUBMIT" name="action" value="Save">&nbsp;<input type="SUBMIT" name="action" value="Delete"></td></tr>'."\n";
+  $return .= $this->ListSaved().'</td><td style="white-space: nowrap; text-align:right;"><input type="SUBMIT" name="action" value='._("Load").'>&nbsp;<input type="SUBMIT" name="action" value='._("Save").'>&nbsp;<input type="SUBMIT" name="action" value='._("Delete").'></td></tr>'."\n";
   $return .= '</table>'."\n";
   $return .= '</form>'."\n";
 
@@ -311,7 +312,7 @@ WHERE
   $sql = "SELECT DISTINCT name FROM saved_filters WHERE username='".$_SESSION['myusername']."'";
   $sth = dbquery($sql);
   $return = '<select name="filter">'."\n";
-  $return .= ' <option value="_none_">None</option>'."\n";
+  $return .= ' <option value="_none_">'._("None").'</option>'."\n";
   while($row=mysql_fetch_array($sth)) {
    $return .= ' <option value="'.$row[0].'">'.$row[0].'</option>'."\n";
   }

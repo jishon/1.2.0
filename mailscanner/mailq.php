@@ -25,7 +25,7 @@ require_once('./functions.php');
 session_start();
 require('login.function.php');
 
-html_start("Mail Queue Viewer",0,false,false);
+html_start(_("Mail Queue Viewer"),0,false,false);
 
 switch($_GET['queue']) {
  case "inq":
@@ -37,7 +37,7 @@ switch($_GET['queue']) {
   $display='Outbound Mail Queue';
   break;
  default:
-  die("No queue specified\n");
+  die(_("No queue specified")."\n");
   break;
 }
 

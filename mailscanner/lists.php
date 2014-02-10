@@ -25,7 +25,7 @@ require_once("./functions.php");
 session_start();
 require('./login.function.php');
 
-html_start("Whitelist/Blacklist",0,false,false);
+html_start(_("Whitelist/Blacklist"),0,false,false);
 
 $url_type = $_GET['type'];
 $url_type = htmlentities($url_type);
@@ -146,10 +146,10 @@ switch(true) {
 if($url_submit == 'Add') {
  // Check input is valid
  if(empty($url_list)) {
-  $errors[] = "You must select a list to create the entry.";
+  $errors[] = _("You must select a list to create the entry.");
  }
  if(empty($from)) {
-   $errors[] = "You must enter a from address (user@domain, domain or IP).";
+   $errors[] = _("You must enter a from address (user@domain, domain or IP).");
  }
 
  $todomain1 = strtolower($url_domain);
@@ -211,20 +211,20 @@ function build_table($sql,$list) {
  if($rows>0) {
   echo '<table class="blackwhitelist">'."\n";
   echo ' <tr>'."\n";
-  echo '  <th>From</th>'."\n";
-  echo '  <th>To</th>'."\n";
-  echo '  <th>Action</th>'."\n";
+  echo '  <th>'._("From").'</th>'."\n";
+  echo '  <th>'._("To").'</th>'."\n";
+  echo '  <th>'._("Action").'</th>'."\n";
   echo ' </tr>'."\n";
   while($row=mysql_fetch_row($sth)) {
    echo ' <tr>'."\n";
    echo '  <td>'.$row[1].'</td>'."\n";
    echo '  <td>'.$row[2].'</td>'."\n";
-   echo '  <td><a href="'.$_SERVER['PHP_SELF'].'?submit=Delete&amp;id='.$row[0].'&amp;to='.$row[2].'&amp;list='.$list.'">Delete</a><td>'."\n";
+   echo '  <td><a href="'.$_SERVER['PHP_SELF'].'?submit=Delete&amp;id='.$row[0].'&amp;to='.$row[2].'&amp;list='.$list.'">'._("Delete").'</a><td>'."\n";
    echo ' </tr>'."\n";
   }
   echo '</table>'."\n";
  } else {
-  echo "No entries found.\n";
+  echo _("No entries found.")."\n";
  }
 }
 
@@ -233,14 +233,14 @@ echo '
 <form action="'.$_SERVER['PHP_SELF'].'">
 <table cellspacing="1" class="mail">
  <tr>
-  <th colspan=2>Add to Whitelist/Blacklist</th>
+  <th colspan=2>'._("Add to Whitelist/Blacklist").'</th>
  </tr>
  <tr>
-  <td class="heading">From:</td>
+  <td class="heading">'._("From:").'</td>
   <td><input type="text" name="from" size=50 value="'.$from.'"></td>
  </tr>
  <tr>
-  <td class="heading">To:</td>';
+  <td class="heading">'._("To:").'</td>';
   
   switch($_SESSION['user_type']) {
   case 'A':
@@ -280,7 +280,7 @@ echo '
   echo'
  </tr>
  <tr>
-  <td class="heading">List:</td>
+  <td class="heading">'._("List:").'</td>
   <td>';
   
 switch($url_list) {
@@ -291,18 +291,18 @@ switch($url_list) {
   $b = 'CHECKED';
   break;
 }
-echo  '   <input type="radio" value="w" name="list" '.$w.'>Whitelist &nbsp;&nbsp;'."\n";
-echo  '   <input type="radio" value="b" name="list" '.$b.'>Blacklist'."\n";
+echo  '   <input type="radio" value="w" name="list" '.$w.'>'._("Whitelist").' &nbsp;&nbsp'."\n";
+echo  '   <input type="radio" value="b" name="list" '.$b.'>'._("Blacklist")."\n";
 
 echo '  </td>
  </tr>
  <tr>
-  <td class="heading">Action:</td>
-  <td><input type="reset" value="Reset">&nbsp;&nbsp;<input type="submit" value="Add" name="submit"></td>
+  <td class="heading">'._("Action:").'</td>
+  <td><input type="reset" value='._("Reset").'>&nbsp;&nbsp;<input type="submit" value='._("Add").' name="submit"></td>
  </tr>';
 if(isset($errors)){
  echo '<tr>
-  <td class="heading">Errors:</td>
+  <td class="heading">'._("Errors:").'</td>
   <td>'.implode("<br>",$errors).'
   </td>
  </tr> ';
@@ -313,8 +313,8 @@ echo '</table>
 
 <table cellspacing="1" width="100%" class="mail">
 <tr>
- <th class="whitelist">Whitelist</th>
- <th class="blacklist">Blacklist</th>
+ <th class="whitelist">'._("Whitelist").'</th>
+ <th class="blacklist">'._("Blacklist").'</th>
 </tr>
 <tr>
  <td class="blackwhitelist">

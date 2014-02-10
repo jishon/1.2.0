@@ -28,14 +28,14 @@ require_once('./filter.inc');
 session_start();
 require('login.function.php');
 
-$refresh = html_start("Operation Results");
+$refresh = html_start(_("Operation Results"));
 
-echo '<table border="0" width="100%" class="maildetail">' . "\n";
-echo ' <tr>' . "\n";
-echo '  <th colspan="3">Spam Learn Results</th>' . "\n";
-echo ' </tr>' . "\n";
-echo '  <tr>' . "\n";
-echo '  <td colspan="3" class="detail">' . "\n";
+echo '<table border="0" width="100%" class="maildetail">'."\n";
+echo ' <tr>'."\n";
+echo '  <th>'._("Spam Learn Results").'</th>'."\n";
+echo ' </tr>'."\n";
+echo '  <tr>'."\n";
+echo '  <td class="detail">'."\n";
 
 // Iterate through the POST variables
 
@@ -94,7 +94,7 @@ if (is_array($_POST)) {
         }
     }
 } else {
-    echo '<tr><td colspan="3">Message ' . $id . ' not found in quarantine</td></tr>' . "\n";
+    echo '<tr><td colspan="3">'.sprintf(_("Message %s not found in quarantine"), $id).'</td></tr>' . "\n";
 }
 echo '</table>' . "\n";
 

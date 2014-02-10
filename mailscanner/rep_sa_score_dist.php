@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("SpamAssassin Score Distribution",0,false,true);
+$filter = html_start(_("SpamAssassin Score Distribution"),0,false,true);
 
 // File name
 $filename = "".CACHE_DIR."/sa_score_dist.png.".time()."";
@@ -63,7 +63,7 @@ include_once("./jpgraph/src/jpgraph_line.php");
 ##### AJOS1 NOTE #####
 $result = dbquery($sql);
 if(mysql_num_rows($result) <= 1) {
- die("Error: Needs 2 or more rows of data to be retrieved from database\n");
+ die(_("Error: Needs 2 or more rows of data to be retrieved from database")."\n");
 }
 
 while($row=mysql_fetch_object($result)) {
@@ -85,11 +85,17 @@ $graph->SetShadow();
 $graph->SetScale("textlin");
 $graph->yaxis->SetTitleMargin(40);
 $graph->img->SetMargin(60,60,30,70);
-$graph->title->Set("SpamAssassin Score Distribution");
-$graph->xaxis->title->Set("Score (rounded)");
+$graph->title->Set(_("SpamAssassin Score Distribution"));
+$graph->xaxis->title->Set(_("Score (rounded)"));
+
 $graph->xaxis->SetTextLabelInterval($labelinterval);
 $graph->xaxis->SetTickLabels($data_labels);
-$graph->yaxis->title->Set("No. of messages");
+$graph->yaxis->title->Set(_("No. of messages"));
+if (FF_CHINESE != NULL) {
+ $graph->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->xaxis->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->yaxis->title->SetFont(FF_CHINESE, FS_NORMAL);
+}
 $graph->legend->SetLayout(LEGEND_HOR);
 $graph->legend->Pos(0.52,0.87,'center');
 $bar1 = new LinePlot($data_count);
@@ -107,7 +113,7 @@ echo " <TR>\n";
 if(is_readable($filename)){
 echo " <TD ALIGN=\"CENTER\"><IMG SRC=\"".$filename."\" ALT=\"Graph\"></TD>";
 }else{
-echo "<TD ALIGN=\"CENTER\"> File isn't readable. Please make sure that ".CACHE_DIR." is readable and writable by Mailwatch.";
+echo "<TD ALIGN=\"CENTER\"> "._("File isn't readable. Please make sure that ").CACHE_DIR._(" is readable and writable by Mailwatch.");
 }
 
 echo " </TR>\n";
@@ -115,8 +121,8 @@ echo " <TR>\n";
 echo "  <TD ALIGN=\"CENTER\">\n";
 echo "<TABLE BORDER=\"0\" WIDTH=\"500\">\n";
 echo " <TR BGCOLOR=\"#F7CE4A\">\n";
-echo "  <TH>Score</TH>\n";
-echo "  <TH>Count</TH>\n";
+echo "  <TH>"._("Score")."</TH>\n";
+echo "  <TH>"._("Count")."</TH>\n";
 echo " </TR>\n";
 
 for($i=0; $i<count($data_count); $i++) {

@@ -47,15 +47,15 @@ if (file_exists('conf.php')) {
                 <form name="form1" method="post" action="checklogin.php">
                     <table width="100%" border="0" cellpadding="3" cellspacing="1">
                         <tr>
-                            <td colspan="3"><strong> MailWatch Login</strong></td>
+                            <td colspan="3"><strong> <?php echo _("MailWatch Login");?></strong></td>
                         </tr>
                         <tr>
-                            <td style="width:78px;">Username</td>
+                            <td style="width:78px;"><?php echo _("Username");?></td>
                             <td style="width:6px;">:</td>
                             <td style="width:294px;"><input name="myusername" type="text" id="myusername"></td>
                         </tr>
                         <tr>
-                            <td>Password</td>
+                            <td><?php echo _("Password");?></td>
                             <td>:</td>
                             <td><input name="mypassword" type="password" id="mypassword"></td>
                         </tr>
@@ -63,9 +63,9 @@ if (file_exists('conf.php')) {
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
-                                <input type="submit" name="Submit" value="Login">
-                                <input type="reset" value="Reset">
-                                <input type="button" value="Back" onClick="history.go(-1);return true;">
+                                <input type="submit" name="Submit" value="<?php echo _("Login");?>>
+                                <input type="reset" value=<?php echo _("Reset");?>>
+                                <input type="button" value=<?php echo _("Back");?> onClick="history.go(-1);return true;">
                             </td>
                         </tr>
                     </table>
@@ -78,7 +78,7 @@ if (file_exists('conf.php')) {
 <?php
 } else {
 ?>
-    <title>MailWatch Login Page</title>
+    <title><?php echo _("MailWatch Login Page");?></title>
 </head>
 <body>
     <table width="300" border="1" style="text-align:center;" cellpadding="0" cellspacing="0">
@@ -90,17 +90,16 @@ if (file_exists('conf.php')) {
                 <form name="form1" method="post" action="checklogin.php">
                     <table width="100%" border="0" cellpadding="3" cellspacing="1">
                         <tr>
-                            <td colspan="3"><strong> MailWatch Login</strong></td>
+                            <td colspan="3"><strong> <?php echo _("MailWatch Login");?></strong></td>
                         </tr>
                         <tr>
-                            <td colspan="3"> Sorry the Server is missing conf.php. Please create the file by copying conf.php.example and
-                                making the required changes.
+                            <td colspan="3"> <?php echo _("Sorry the Server is missing config.conf. Please create the file by copying config.conf.example and making the required changes.");?>
                             </td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td><input type="button" value="Back" onClick="history.go(-1);return true;"></td>
+                            <td><input type="button" value=<?php echo _("Back");?> onClick="history.go(-1);return true;"></td>
                         </tr>
                     </table>
                 </form>

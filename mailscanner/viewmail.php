@@ -27,7 +27,7 @@ ini_set("memory_limit",MEMORY_LIMIT);
 session_start();
 require('login.function.php');
 
-html_start("Message Viewer",0,false,false);
+html_start(_("Message Viewer"),0,false,false);
 ?>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
@@ -88,13 +88,13 @@ if(!isset($_GET['id'])) {
 
   // File is local
   if(!isset($_GET['filename'])) {
-   die("No input filename");
+   die(_("No input filename"));
   } else {
    // SECURITY - strip off any potential nasties
    $_GET['filename'] = preg_replace('[\.\/|\.\.\/]','',$_GET['filename']);
    $filename = get_conf_var('QuarantineDir')."/".$_GET['filename'];
    if(!@file_exists($filename)) {
-    die("Error: file not found\n");
+    die(_("Error: file not found")."\n");
    }
    $file = file_get_contents($filename);
   }
@@ -103,7 +103,8 @@ if(!isset($_GET['id'])) {
 
 $params['include_bodies'] = false;
 $params['decode_bodies'] = true;
-$params['decode_headers'] = true;
+//$params['decode_headers'] = true;
+$params['decode_headers'] = false;
 $params['input'] = $file;
 
 $structure = Mail_mimeDecode::decode($params);
@@ -138,17 +139,29 @@ switch(true) {
   } else {
    $structure->headers['date'] = utf8_encode ($structure->headers['date']);
   }
-  lazy("Date:",$structure->headers['date']);
+  lazy(_("Date:"),$structure->headers['date']);
  case isset($structure->headers['from']):
+  /*  mb_check_encoding would not work well in some case with Big5/GBK.
   if (function_exists ('mb_check_encoding')) {
    if ( ! mb_check_encoding ($structure->headers['from'], 'UTF-8')) {
     $structure->headers['from'] = mb_convert_encoding($structure->headers['from'], 'UTF-8');
    }
   } else {
-   $structure->headers['from'] = utf8_encode ($structure->headers['from']);
+   $structure->headers['from'] = utf8_encode (decode_header($structure->headers['from']));
   }
   lazy("From:",str_replace('"','',$structure->headers['from']));
+   */
+  $charset = detect_charset($structure->headers['from']);
+  //lazy("From:",str_replace('"','',$structure->headers['from']));
+  if ($charset[0] == "") {
+   lazy(_("From:"),mb_convert_encoding(decode_header($structure->headers['from']),"UTF-8",check_locale()));
+  } elseif (strtolower($charset[0]) != "utf-8") {
+   lazy(_("From:"),mb_convert_encoding(decode_header($structure->headers['from']),"UTF-8",$charset[0]));
+  } else {
+   lazy(_("From:"),decode_header($structure->headers['from']));
+  }
  case isset($structure->headers['to']):
+   /*
   if (function_exists ('mb_check_encoding')) {
    if ( ! mb_check_encoding ($structure->headers['to'], 'UTF-8')) {
     $structure->headers['to'] = mb_convert_encoding($structure->headers['to'], 'UTF-8');
@@ -157,7 +170,18 @@ switch(true) {
    $structure->headers['to'] = utf8_encode ($structure->headers['to']);
   }
   lazy("To:",str_replace('"','',$structure->headers['to']));
+   */
+  $charset = detect_charset($structure->headers['to']);
+  //lazy("To:",str_replace('"','',$structure->headers['to']));
+  if ($charset[0] == "") {
+   lazy(_("To:"),mb_convert_encoding(decode_header($structure->headers['to']),"UTF-8",check_locale()));
+  } elseif (strtolower($charset[0]) != "utf-8") {
+   lazy(_("To:"),mb_convert_encoding(decode_header($structure->headers['to']),"UTF-8",$charset[0]));
+  } else {
+   lazy(_("To:"),decode_header($structure->headers['to']));
+  }
  case isset($structure->headers['subject']):
+   /*
   if (function_exists ('mb_check_encoding')) {
    if ( ! mb_check_encoding ($structure->headers['subject'], 'UTF-8')) {
     $structure->headers['subject'] = mb_convert_encoding ($structure->headers['subject'], 'UTF-8');
@@ -166,14 +190,34 @@ switch(true) {
    $structure->headers['subject'] = utf8_encode ($structure->headers['subject']);
   }
   lazy("Subject:",$structure->headers['subject']);
+   */
+  $charset = detect_charset($structure->headers['subject']);
+  //lazy("Subject:",$structure->headers['subject']);
+  if ($charset[0] == "") {
+   lazy(_("Subject:"),mb_convert_encoding(decode_header($structure->headers['subject']),"UTF-8",check_locale()));
+  } elseif (strtolower($charset[0]) != "utf-8") {
+   lazy(_("Subject:"),mb_convert_encoding(decode_header($structure->headers['subject']),"UTF-8",$charset[0]));
+  } else {
+   lazy(_("Subject:"),decode_header($structure->headers['subject']));
+  }
 }
 
 if (($row->virusinfected == 0 && $row->nameinfected == 0 && $row->otherinfected == 0) || $_SESSION['user_type'] == 'A') {
-lazy("Actions:","<a href=\"javascript:void(0)\" onClick=\"do_action('".$row->id."','release')\">Release this message</a> | <a href=\"javascript:void(0)\" onClick=\"do_action('".$row->id."','delete')\">Delete this message</a>");
+lazy(_("Actions:"),"<a href=\"javascript:void(0)\" onClick=\"do_action('".$row->id."','release')\">"._("Release this message")."</a> | <a href=\"javascript:void(0)\" onClick=\"do_action('".$row->id."','delete')\">"._("Delete this message")."</a>");
 }
 
 foreach($mime_struct as $key=>$part) {
  $type = $part->ctype_primary.'/'.$part->ctype_secondary;
+ //Check attachment charset
+ $filename_charset = detect_charset($part->d_parameters['filename']);
+ if (strtolower($filename_charset[0]) == "") {
+  $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8",check_locale());
+ } elseif (strtolower($filename_charset[0]) != "utf-8") {
+  $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8",$filename_charset[0]);
+ } else {
+  //$fname = $filename_charset[0];
+  $fname = decode_header($part->d_parameters['filename']);
+ }
  echo " <tr>\n";
  echo "  <td colspan=2 class=\"heading\">MIME Type: $type</td>\n";
 
@@ -195,9 +239,10 @@ foreach($mime_struct as $key=>$part) {
   default:
    echo " <tr>\n";
 
-   echo "  <td colspan=2 class=\"detail\">".$part->d_parameters['filename'];
+   //echo "  <td colspan=2 class=\"detail\">".$part->d_parameters['filename'];
+   echo "  <td colspan=2 class=\"detail\">".$fname;
    if (($row->virusinfected == 0 && $row->nameinfected == 0 && $row->otherinfected == 0) || $_SESSION['user_type'] == 'A') {
-   echo " <a href=\"viewpart.php?id=".$_GET['id']."&filename=".$_GET['filename']."&part=".$part->mime_id."\">Download</a>";
+   echo " <a href=\"viewpart.php?id=".$_GET['id']."&filename=".$_GET['filename']."&part=".$part->mime_id."\">"._("Download")."</a>";
    }
    echo "  </td>";
    

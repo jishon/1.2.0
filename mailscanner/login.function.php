@@ -28,9 +28,9 @@ elseif (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SESSION ['myusername']) &&
 {
 	header('WWW-Authenticate: Basic realm="MailWatch for MailScanner"');
 	header('HTTP/1.0 401 Unauthorized');
-	html_start("Not authenticated",0,false,false);
-	echo "<TABLE CLASS=\"boxtable\" WIDTH=100%><TR><TD><H1><FONT COLOR=\"RED\">Authentication Required!</FONT>
-		</H1>Your username and/or password are incorrect.</TD></TR>\n";
+	html_start(_("Not authenticated"),0,false,false);
+	echo "<TABLE CLASS=\"boxtable\" WIDTH=100%><TR><TD><H1><FONT COLOR=\"RED\">"._("Authentication Required")."!</FONT>
+		</H1>"._("Your username and/or password are incorrect")."</TD></TR>\n";
 	html_end();
 	exit;
 }

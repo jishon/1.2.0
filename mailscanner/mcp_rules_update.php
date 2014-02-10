@@ -28,20 +28,20 @@ require('login.function.php');
 if ($_SESSION['user_type'] != 'A') {
     header('Location: index.php');
 } else {
-    html_start("MCP Rule Description Update", 0, false, false);
+    html_start(_("MCP Rule Description Update"),0,false,false);
 
     echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" >' . "\n";
     echo '<input type="hidden" name="run" value="true">' . "\n";
     echo '<table class="boxtable" width="100%">' . "\n";
     echo ' <tr>' . "\n";
     echo '  <td>' . "\n";
-    echo '   This utility is used to update the SQL database with up-to-date descriptions of the MCP rules which are displayed on the Message Detail screen.<br>
+    echo '   '_("This utility is used to update the SQL database with up-to-date descriptions of the MCP rules which are displayed on the Message Detail screen.").'<br>
    <br>
-   This utility should generally be run after an update to your MCP rules, however it is safe to run at any time as it only replaces the existing values and inserts only new values in the table (therefore preserving descriptions from potentially deprecated or removed rules).<br>
+   '._("This utility should generally be run after an update to your MCP rules, however it is safe to run at any time as it only replaces the existing values and inserts only new values in the table (therefore preserving descriptions from potentially deprecated or removed rules).").'<br>
   </td>
  </tr>
  <tr>' . "\n";
-    echo '  <td align="center"><br><input type="submit" value="Run Now"><br><br></td>' . "\n";
+    echo '  <td align="center"><br><input type="submit" value='._("Run Now").'><br><br></td>' . "\n";
     echo ' </tr>' . "\n";
 
     if ($_POST['run']) {

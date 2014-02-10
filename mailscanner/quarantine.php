@@ -27,7 +27,7 @@ require('login.function.php');
 
 
 
-html_start("Quarantine Viewer",0,false,false);
+html_start(_("Quarantine Viewer"),0,false,false);
 
 if(!isset($_GET['dir']) && !isset($_GET["msgdir"])) {
  // Get the top-level list
@@ -35,14 +35,14 @@ if(!isset($_GET['dir']) && !isset($_GET["msgdir"])) {
   // Don't use the database any more - it's too slow on big datasets
   $dates = return_quarantine_dates();
   echo '<table class="mail" cellspacing="2" align="center">'."\n";
-  echo '<tr><th>Folder</th></tr>'."\n";
+  echo '<tr><th>'._("Folder").'</th></tr>'."\n";
   foreach($dates as $date) {
    $sql = "SELECT id FROM maillog WHERE ".$_SESSION['global_filter']." AND date='$date' AND quarantined=1";
    $result = dbquery($sql);
    $rowcnt = mysql_num_rows($result);
    $rowstr = " - ----------";
    if ($rowcnt > 0) {
-      $rowstr = sprintf(" - %02d items", $rowcnt);
+      $rowstr = sprintf(_(" - %02d items"), $rowcnt);
    }
    echo '<tr><td align="center"><a href="'.$_SERVER['PHP_SELF'].'?dir='.$date.'">'.translateQuarantineDate($date, DATE_FORMAT).$rowstr.'</a></td></tr>'."\n";
   }
@@ -53,7 +53,7 @@ if(!isset($_GET['dir']) && !isset($_GET["msgdir"])) {
    // Sort in reverse chronological order
    arsort($items);
    echo '<table class="mail" cellspacing="1" align="center">'."\n";
-   echo '<tr><th>Folder</th></tr>'."\n";
+   echo '<tr><th>'._("Folder").'</th></tr>'."\n";
    $count=0;
    foreach($items as $f) {
    
@@ -66,7 +66,7 @@ if(!isset($_GET['dir']) && !isset($_GET["msgdir"])) {
    }
    echo '</table>'."\n";
   } else {
-   die("No quarantine directories found\n");
+   die(_("No quarantine directories found")."\n");
   }
  }
 } else {
@@ -77,6 +77,7 @@ dbconn();
 SELECT
  id AS id2,
  DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
+ headers,
  from_address,
  to_address,
  subject,
@@ -107,7 +108,7 @@ AND
  quarantined = 1
 ORDER BY
  date DESC, time DESC";
-  db_colorised_table($sql,'Folder: '.translateQuarantineDate($_GET['dir'], DATE_FORMAT),true,true);
+  db_colorised_table($sql,_("Folder").': '.translateQuarantineDate($_GET['dir'], DATE_FORMAT),true,true);
  } else {
   // SECURITY: trim off any potential nasties
   $_GET['dir'] = preg_replace('[\.|\.\.|\/]','',$_GET['dir']);
@@ -120,6 +121,7 @@ ORDER BY
   SELECT
    id AS id2,
    DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
+   headers,
    from_address,
    to_address,
    subject,
@@ -151,9 +153,9 @@ ORDER BY
   ORDER BY
    date DESC, time DESC
   ";
-   db_colorised_table($sql,'Folder: '.translateQuarantineDate($_GET['dir']),true,true);
+   db_colorised_table($sql,_("Folder").': '.translateQuarantineDate($_GET['dir']),true,true);
   } else {
-   echo "No quarantined messages found\n";
+   echo _("No quarantined messages found")."\n";
  }
 }
 }

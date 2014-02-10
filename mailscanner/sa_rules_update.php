@@ -29,20 +29,20 @@ if($_SESSION['user_type'] != 'A'){
 header( 'Location: index.php');
 }
 else{
-html_start("SpamAssassin Rule Description Update",0,false,false);
+html_start(_("SpamAssassin Rule Description Update"),0,false,false);
 
 echo "<FORM METHOD=\"POST\" ACTION=\"".$_SERVER['PHP_SELF']."\">";
 echo "<INPUT TYPE=\"HIDDEN\" NAME=\"run\" VALUE=\"true\">";
 echo "<TABLE CLASS=\"boxtable\" WIDTH=\"100%\">";
 echo "<TR>";
 echo "  <TD>";
-echo "   This utility is used to update the SQL database with up-to-date descriptions of the SpamAssassin rules which are displayed on the Message Detail screen.<BR>";
+echo "   "._("This utility is used to update the SQL database with up-to-date descriptions of the SpamAssassin rules which are displayed on the Message Detail screen.")."<BR>";
 echo "   <BR>";
-echo "   This utility should generally be run after a SpamAssassin update, however it is safe to run at any time as it only replaces the existing values and inserts only new values in the table (therefore preserving descriptions from potentially deprecated or removed rules).<BR>";
+echo "   "._("This utility should generally be run after a SpamAssassin update, however it is safe to run at any time as it only replaces the existing values and inserts only new values in the table (therefore preserving descriptions from potentially deprecated or removed rules).")."<BR>";
 echo "  </TD>";
 echo "</TR>";
 echo " <TR>";
-echo "  <TD ALIGN=\"CENTER\"><BR><INPUT TYPE=\"SUBMIT\" VALUE=\"Run Now\"><BR><BR></TD>";
+echo "  <TD ALIGN=\"CENTER\"><BR><INPUT TYPE=\"SUBMIT\" VALUE=\""._("Run Now")."\"><BR><BR></TD>";
 echo "</TR>";
 
 if($_POST['run']) {

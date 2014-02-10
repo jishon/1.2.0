@@ -37,14 +37,14 @@ if(!is_object($_SESSION["filter"])) {
 }
 
 // add the header information such as the logo, search, menu, ....
-html_start("Reports","0",false,false);
+html_start(_("Reports"),"0",false,false);
 
 // Set directory varible
 $dirname = "".MAILWATCH_HOME."/".CACHE_DIR."";
 
 // Add filters and save them
 switch(strtolower($_GET["action"])) {
- case "add":
+ case _("add"):
   $filter->Add($_GET["column"], $_GET["operator"], $_GET["value"]);
   break;
  case "remove":
@@ -54,7 +54,7 @@ switch(strtolower($_GET["action"])) {
   session_destroy();
   echo "Session destroyed\n";
   exit;
- case "save":
+ case _("save"):
   if(isset($_GET['save_as'])) {
    $name = $_GET['save_as'];
   }
@@ -63,10 +63,10 @@ switch(strtolower($_GET["action"])) {
   }
   if(!empty($name)) { $filter->Save($name); }
   break;
- case "load":
+ case _("load"):
   $filter->Load($_GET['filter']);
   break;
- case "delete":
+ case _("delete"):
   $filter->Delete($_GET['filter']);
   break;
 }
@@ -74,37 +74,37 @@ switch(strtolower($_GET["action"])) {
 // add the session filters to the variables
 $_SESSION["filter"] = $filter;
 
-$filter->AddReport("rep_message_listing.php","Message Listing");
-$filter->AddReport("rep_message_ops.php","Message Operations");
+$filter->AddReport("rep_message_listing.php", _("Message Listing"));
+$filter->AddReport("rep_message_ops.php", _("Message Operations"));
 
-$filter->AddReport("rep_total_mail_by_date.php","Total Messages by Date");
-$filter->AddReport("rep_top_mail_relays.php","Top Mail Relays");
+$filter->AddReport("rep_total_mail_by_date.php", _("Total Messages by Date"));
+$filter->AddReport("rep_top_mail_relays.php", _("Top Mail Relays"));
 
-$filter->AddReport("rep_top_viruses.php","Top Viruses");
-$filter->AddReport("rep_viruses.php","Virus Report");
+$filter->AddReport("rep_top_viruses.php", _("Top Viruses"));
+$filter->AddReport("rep_viruses.php", _("Virus Report"));
 
-$filter->AddReport("rep_top_senders_by_quantity.php","Top Senders by Quantity");
-$filter->AddReport("rep_top_senders_by_volume.php","Top Senders by Volume");
-$filter->AddReport("rep_top_recipients_by_quantity.php","Top Recipients by Quantity");
-$filter->AddReport("rep_top_recipients_by_volume.php","Top Recipients by Volume");
+$filter->AddReport("rep_top_senders_by_quantity.php", _("Top Senders by Quantity"));
+$filter->AddReport("rep_top_senders_by_volume.php", _("Top Senders by Volume"));
+$filter->AddReport("rep_top_recipients_by_quantity.php", _("Top Recipients by Quantity"));
+$filter->AddReport("rep_top_recipients_by_volume.php", _("Top Recipients by Volume"));
 
-//$filter->AddReport("rep_mrtg_style.php","MRTG Style Report");
+//$filter->AddReport("rep_mrtg_style.php", _("MRTG Style Report"));
 
-$filter->AddReport("rep_top_sender_domains_by_quantity.php","Top Sender Domains by Quantity");
-$filter->AddReport("rep_top_sender_domains_by_volume.php","Top Sender Domains by Volume");
-$filter->AddReport("rep_top_recipient_domains_by_quantity.php","Top Recipient Domains by Quantity");
-$filter->AddReport("rep_top_recipient_domains_by_volume.php","Top Recipient Domains by Volume");
+$filter->AddReport("rep_top_sender_domains_by_quantity.php", _("Top Sender Domains by Quantity"));
+$filter->AddReport("rep_top_sender_domains_by_volume.php", _("Top Sender Domains by Volume"));
+$filter->AddReport("rep_top_recipient_domains_by_quantity.php", _("Top Recipient Domains by Quantity"));
+$filter->AddReport("rep_top_recipient_domains_by_volume.php", _("Top Recipient Domains by Volume"));
 
 if(get_conf_truefalse('UseSpamAssassin')){
-$filter->AddReport("rep_sa_score_dist.php","SpamAssassin Score Distribution");
-$filter->AddReport("rep_sa_rule_hits.php","SpamAssassin Rule Hits");
+$filter->AddReport("rep_sa_score_dist.php", _("SpamAssassin Score Distribution"));
+$filter->AddReport("rep_sa_rule_hits.php", _("SpamAssassin Rule Hits"));
 }
 if(get_conf_truefalse('MCPChecks')){
-$filter->AddReport("rep_mcp_score_dist.php","MCP Score Distribution");
-$filter->AddReport("rep_mcp_rule_hits.php","MCP Rule Hits");
+$filter->AddReport("rep_mcp_score_dist.php", _("MCP Score Distribution"));
+$filter->AddReport("rep_mcp_rule_hits.php", _("MCP Rule Hits"));
 }
 
-$filter->AddReport("rep_audit_log.php","Audit Log");
+$filter->AddReport("rep_audit_log.php", _("Audit Log"));
 $filter->Display();
 
 delete_dir($dirname);

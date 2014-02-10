@@ -25,9 +25,9 @@ require "./functions.php";
 session_start();
 require('login.function.php');
 
-html_start("Mail Queue Viewer");
+html_start(_("Mail Queue Viewer"));
 
-echo '<u><b>Combined mail queue (Inbound and Outbound)</b></u>'."\n";
+echo '<u><b>'._("Combined mail queue (Inbound and Outbound)").'</b></u>'."\n";
 echo '<pre>';
 postfixmailq();
 echo '</pre>';

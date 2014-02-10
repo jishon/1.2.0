@@ -27,7 +27,7 @@ require_once('./functions.php');
 session_start();
 require('./login.function.php');
 
-html_start("GeoIP Database Update",0,false,false);
+html_start(_("GeoIP Database Update"),0,false,false);
 
 if(!isset($_POST['run'])) {
 
@@ -36,19 +36,19 @@ echo '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">
 	 <table class="boxtable" width="100%">
 	 <tr>
 	 <td>
-	 This utility is used to update the SQL database with up-to-date GeoIP data from <a href="http://dev.maxmind.com/geoip/legacy/geolite/" target="_maxmind">MaxMind</a> which is used to work out the country of origin for any given IP address and is displayed on the Message Detail page.<br>
+	 '._("This utility is used to update the SQL database with up-to-date GeoIP data from <a href=\"http://dev.maxmind.com/app/geoip_country\" target=\"_maxmind\">MaxMind</a> which is used to work out the country of origin for any given IP address and is displayed on the Message Detail page.").'<br>
 	 <br>
 	 </td>
 	 </tr>
 	 <tr>
-	 <td align="center"><br><input type="SUBMIT" value="Run Now"><br><br></td>
+	 <td align="center"><br><input type="SUBMIT" value='._("Run Now").'><br><br></td>
 	 </tr>
 	 </table>
 	 </form>'."\n";
 
 } else {
 ob_start();
- echo "Downloading file, please wait....<BR>\n";
+ echo _("Downloading file, please wait....")."<BR>\n";
 
  $file1 = './temp/GeoIPCountryCSV.zip';
  $file2 = './temp/GeoIPCountryWhois.csv';
@@ -188,7 +188,7 @@ ob_flush();
         dbquery("LOAD DATA LOCAL INFILE '".$file4."' INTO TABLE geoip_country FIELDS TERMINATED BY ',' ENCLOSED BY '\"'");
 
         // Done return the number of rows
-        echo "Download complete ... ".mysql_result(dbquery("SELECT COUNT(*) FROM geoip_country"),0)." rows imported.<br>\n";
+        echo _("Download complete ... ").mysql_result(dbquery("SELECT COUNT(*) FROM geoip_country"),0)._(" rows imported.")."<br>\n";
         
 		audit_log('Ran GeoIP update');
 
@@ -196,26 +196,26 @@ ob_flush();
 		
         // If it was unable to unzip the the file display this erro
         
-		die("Unzip failed:<br>Error: ".join("<br>",$output)."<br>".join("<br>",$output1)."\n");
+		die(_("Unzip failed").":<br>"._("Error").": ".join("<br>",$output)."<br>".join("<br>",$output1)."\n");
         }
     }else{
         
 		// unable to download the file correctly
-        die("Unable to download GeoIP data file.\n");
+        die(_("Unable to download GeoIP data file.")."\n");
     
 	}
     
 	}else{
     
 	// unable to read or write to the directory
-    
-	die("Unable to read or write to the".$OUTDIR.".\n");
+
+	die(_("Unable to read or write to the").$OUTDIR.".\n");
     
 	}
     
 	}else{
     
-	die("Files still exist for some reason\n");
+	die(_("Files still exist for some reason")."\n");
     
 	}
 

@@ -27,55 +27,55 @@ require_once("./functions.php");
 session_start();
 require('login.function.php');
 
-html_start('Tools', "0", false, false);
+html_start(_('Tools'),"0",false,false);
 
 echo '<table width="100%" class="boxtable">
  <tr>
   <td>
-   <p>Tools</p>
+   <p>'._("Tools").'</p>
    <ul>';
 if (!MSEE) {
-    echo '<li><a href="user_manager.php">User Management</a>';
+    echo '<li><a href="user_manager.php">'._("User Management").'</a>';
 }
 if (preg_match('/sophos/i', get_conf_var('VirusScanners')) && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="sophos_status.php">Sophos Status</a>';
+    echo '<li><a href="sophos_status.php">'._("Sophos Status").'</a>';
 }
 if (preg_match('/f-secure/i', get_conf_var('VirusScanners')) && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="f-secure_status.php">F-Secure Status</a>';
+    echo '<li><a href="f-secure_status.php">'._("F-Secure Status").'</a>';
 }
 if (preg_match('/clam/i', get_conf_var('VirusScanners')) && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="clamav_status.php">ClamAV Status</a>';
+    echo '<li><a href="clamav_status.php">'._("ClamAV Status").'</a>';
 }
 if (preg_match('/mcafee/i', get_conf_var('VirusScanners')) && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="mcafee_status.php">McAfee Status</a>';
+    echo '<li><a href="mcafee_status.php">'._("McAfee Status").'</a>';
 }
 if (preg_match('/f-prot/i', get_conf_var('VirusScanners')) && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="f-prot_status.php">F-Prot Status</a>';
+    echo '<li><a href="f-prot_status.php">'._("F-Prot Status").'</a>';
 }
 if ($_SESSION['user_type'] == 'A') {
-    echo '<li><a href="mysql_status.php">MySQL Database Status</a>';
-    echo '<li><a href="msconfig.php">View MailScanner Configuration</a>';
+    echo '<li><a href="mysql_status.php">'._("MySQL Database Status").'</a>';
+    echo '<li><a href="msconfig.php">'._("View MailScanner Configuration").'</a>';
 }
 if (!DISTRIBUTED_SETUP
     && !in_array(strtolower(get_conf_var('UseSpamAssassin')), array('0', 'no', false))
     && $_SESSION['user_type'] == 'A'
 ) {
     echo '
-     <li><a href="bayes_info.php">SpamAssassin Bayes Database Info</a>
-     <li><a href="sa_lint.php">SpamAssassin Lint (Test)</a>
-     <li><a href="ms_lint.php">MailScanner Lint (Test)</a>
-     <li><a href="sa_rules_update.php">Update SpamAssasin Rule Descriptions</a>';
+     <li><a href="bayes_info.php">'._("SpamAssassin Bayes Database Info").'</a>
+     <li><a href="sa_lint.php">'._("SpamAssassin Lint (Test)").'</a>
+     <li><a href="ms_lint.php">'._("MailScanner Lint (Test)").'</a>
+     <li><a href="sa_rules_update.php">'._("Update SpamAssasin Rule Descriptions").'</a>';
 }
 if (!DISTRIBUTED_SETUP && get_conf_truefalse('MCPChecks') && $_SESSION['user_type'] == 'A') {
-    echo '<li><a href="mcp_rules_update.php">Update MCP Rule Descriptions</a>';
+    echo '<li><a href="mcp_rules_update.php">'._("Update MCP Rule Descriptions").'</a>';
 }
 if ($_SESSION['user_type'] == 'A') {
-    echo '<li><a href="geoip_update.php">Update GeoIP Database</a>';
+    echo '<li><a href="geoip_update.php">'._("Update GeoIP Database").'</a>';
 }
 echo '</ul>';
 if ($_SESSION['user_type'] == 'A') {
     echo '
-   <p>Links</p>
+   <p>'._("Links").'</p>
    <ul>
     <li><a href="http://mailwatch.sourceforge.net">MailWatch for MailScanner</a>
     <li><a href="http://www.mailscanner.info">MailScanner</a>';

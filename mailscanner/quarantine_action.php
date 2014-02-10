@@ -53,13 +53,13 @@ function simple_html_result($status)
             <td valign="middle" align="center">
                 <table border=0>
                     <tr>
-                        <th>Result</th>
+                        <th><?php echo _("Result");?></th>
                     </tr>
                     <tr>
                         <td><?php echo $status; ?></td>
                     </tr>
                     <tr>
-                        <td align="center"><b><a href="javascript:window.close()">Close Window</a></td>
+                        <td align="center"><b><a href="javascript:window.close()"><?php echo _("Close Window");?></a></td>
                     </tr>
                 </table>
             </td>
@@ -70,17 +70,17 @@ function simple_html_result($status)
 
 switch (false) {
     case (isset($_GET['id'])):
-        die("Error: No Message ID");
+        die(_("Error: No Message ID"));
         break;
     case (isset($_GET['action'])):
-        die("Error: No action");
+        die(_("Error: No action"));
         break;
 }
 
 
 $list = quarantine_list_items($_GET['id']);
 if (count($list) == 0) {
-    die("Error: Message not found in quarantine");
+    die(_("Error: Message not found in quarantine"));
 }
 
 
@@ -117,13 +117,13 @@ switch ($_GET['action']) {
                         <td align="center" valign="middle">
                             <table>
                                 <tr>
-                                    <th>Delete: Are you sure?</th>
+                                    <th><?php echo _("Delete: Are you sure?");?></th>
                                 </tr>
                                 <tr>
                                     <td align="center">
-                                        <a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $_GET['id']; ?>&action=delete&html=true&confirm=true">Yes</a>
+                                        <a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $_GET['id']; ?>&action=delete&html=true&confirm=true"><?php echo _("Yes");?></a>
                                         &nbsp;&nbsp
-                                        <a href="javascript:void(0)" onClick="javascript:window.close()">No</a>
+                                        <a href="javascript:void(0)" onClick="javascript:window.close()"><?php echo _("No");?></a>
                                     </td>
                                 </tr>
                             </table>
@@ -153,7 +153,7 @@ switch ($_GET['action']) {
         break;
 
     default:
-        die("Unknown action: " . $_GET['action']);
+        die(_("Unknown action: ").$_GET['action']);
         break;
 }
 

@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter = html_start("MRTG Style Mail Report",0,false,true);
+$filter = html_start(_("MRTG Style Mail Report"),0,false,true);
 
 // File name
 $filename = "".CACHE_DIR."/rep_mrtg_style.png.".time()."";
@@ -72,7 +72,7 @@ include_once("./jpgraph/src/jpgraph_line.php");
 ##### AJOS1 NOTE #####
 $result = dbquery($sql_last24hrs);
 if(mysql_num_rows($result) <= 1) {
- die("Error: Needs 2 or more rows of data to be retrieved from database\n");
+ die(_("Error: Needs 2 or more rows of data to be retrieved from database")."\n");
 }
 
 
@@ -111,12 +111,12 @@ $graph->SetScale("textlin");
 //$graph->y2axis->title->Set("Volume (".$size_info['longdesc'].")");
 $graph->yaxis->SetTitleMargin(40);
 $graph->img->SetMargin(60,60,30,70);
-$graph->title->Set("Last 24 Hrs");
-$graph->xaxis->title->Set("Date");
+$graph->title->Set(_("Last 24 Hrs"));
+$graph->xaxis->title->Set(_("Date"));
 $graph->xaxis->SetTextLabelInterval(60);
 $graph->xaxis->SetTickLabels($data_labels_hour);
 $graph->xaxis->SetLabelAngle(50);
-$graph->yaxis->title->Set("No. of messages");
+$graph->yaxis->title->Set(_("No. of messages"));
 //$graph->legend->SetLayout(LEGEND_HOR);
 $graph->legend->Pos(0.52,0.92,'center');
 $bar1 = new LinePlot($data_total_mail);
@@ -156,7 +156,7 @@ echo " <TR>\n";
 if(is_readable($filename)){
 echo " <TD ALIGN=\"CENTER\"><IMG SRC=\"".$filename."\" ALT=\"Graph\"></TD>";
 }else{
-echo "<TD ALIGN=\"CENTER\"> File isn't readable. Please make sure that ".CACHE_DIR." is readable and writable by Mailwatch.";
+echo "<TD ALIGN=\"CENTER\"> "._("File isn't readable. Please make sure that ").CACHE_DIR._(" is readable and writable by Mailwatch.");
 }
 
 echo " </TR>\n";
@@ -164,11 +164,11 @@ echo " <TR>\n";
 echo "  <TD ALIGN=\"CENTER\">\n";
 echo "<TABLE BORDER=\"0\" WIDTH=\"500\">\n";
 echo " <TR BGCOLOR=\"#F7CE4A\">\n";
-echo "  <TH>Date</TH>\n";
-echo "  <TH>Mail</TH>\n";
-echo "  <TH>Spam</TH>\n";
-echo "  <TH>Virus</TH>\n";
-echo "  <TH>Volume</TH>\n";
+echo "  <TH>"._("Date")."</TH>\n";
+echo "  <TH>"._("Mail")."</TH>\n";
+echo "  <TH>"._("Spam")."</TH>\n";
+echo "  <TH>"._("Virus")."</TH>\n";
+echo "  <TH>"._("Volume")."</TH>\n";
 echo " </TR>\n";
 for($i=0; $i<count($data_total_mail); $i++) {
  echo "<TR BGCOLOR=\"#EBEBEB\">\n";

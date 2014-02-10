@@ -29,7 +29,7 @@ session_start();
 require('./login.function.php');
 
 // Start the header code and Title
-html_start("SpamAssassin Bayes Database Info", 0, false, false);
+html_start(_("SpamAssassin Bayes Database Info"), 0, false, false);
 
 // Enter the Action in the Audit log
 audit_log('Viewed SpamAssasin Bayes Database Info');
@@ -37,59 +37,107 @@ audit_log('Viewed SpamAssasin Bayes Database Info');
 // Create the table
 echo '<table align="center" class="boxtable" border="0" cellspacing="1" cellpadding="1" width="600">';
 // Add a Header to the table
-echo '<tr><th colspan="2">Bayes Database Information</th></tr>';
+echo '<tr><th colspan="2">'._("Bayes Database Information").'</th></tr>';
 
 // Open the spamassassin file
+if (get_sa_conf_var(bayes_store_module) == "Mail::SpamAssassin::BayesStore::SQL") {
+ $sql = "
+ SELECT SUM(spam_count) AS 'nspam',
+        SUM(ham_count) AS 'nham',
+        SUM(token_count) AS 'ntokens',
+        MIN(oldest_token_age) AS 'oldest atime',
+        MAX(newest_token_age) AS 'newest atime',
+        MAX(last_expire) AS 'last expiry atime',
+        SUM(last_expire_reduce) AS 'last expire reduction count'
+   FROM bayes_vars
+ ";
+ $sth = sa_dbquery($sql);
+ $fields = mysql_num_fields($sth);
+ $rows = mysql_num_rows($sth);
+ if ($rows > 0) {
+  setlocale(LC_TIME, $_ENV['LANG']);
+  $row = mysql_fetch_row($sth);
+  for ($f=0; $f<$fields; $f++) {   
+   switch($filename[$f]=mysql_field_name($sth,$f)) {
+    case 'nspam':
+     echo '<tr><td class="heading">'._("Number of Spam Messages").':</td><td align="right">'.number_format($row[$f]).'</td></tr>';
+     break;
+    case 'nham':
+     echo '<tr><td class="heading">'._("Number of Ham Messages").':</td><td align="right">'.number_format($row[$f]).'</td></tr>';
+     break;
+    case 'ntokens':
+     echo '<tr><td class="heading">'._("Number of Tokens").':</td><td align="right">'.number_format($row[$f]).'</td></tr>';
+     break;
+    case 'oldest atime':
+     echo '<tr><td class="heading">'._("Oldest Token").':</td><td align="right">'.strftime('%c',$row[$f]).'</td></tr>';
+     break;
+    case 'newest atime':
+     echo '<tr><td class="heading">'._("Newest Token").':</td><td align="right">'.strftime('%c',$row[$f]).'</td></tr>';
+     break;
+    case 'last expiry atime':
+     echo '<tr><td class="heading">'._("Last Expiry").':</td><td align="right">'.strftime('%c',$row[$f]).'</td></tr>';
+     break;
+    case 'last expire reduction count':
+     echo '<tr><td class="heading">'._("Last Expiry Reduction Count").':</td><td align="right">'.number_format($row[$f]).' tokens</td></tr>';
+     break;
+   }
+  }
+  $database_type = get_sa_sql_dsn(bayes_sql_dsn);
+  echo "<TR><TD CLASS=\"heading\">"._("Database Type").":</TD><TD ALIGN=\"RIGHT\">".$database_type[2]."</TD></TR>\n";
+ }
+} else {
 $fh = popen(SA_DIR . 'sa-learn -p ' . SA_PREFS . ' --dump magic', 'r');
 
 
-while (!feof($fh)) {
+ while (!feof($fh)) {
 
-    $line = rtrim(fgets($fh, 4096));
+  $line = rtrim(fgets($fh,4096));
 
-    debug("line: " . $line . "\n");
+  debug("line: ".$line."\n");
 
-    if (preg_match('/(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+non-token data: (.+)/', $line, $regs)) {
+  if(preg_match('/(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+non-token data: (.+)/', $line, $regs)) {
 
-        switch ($regs[5]) {
+  switch($regs[5]) {
+		
+	    case 'nspam':
+		    echo '<tr><td class="heading">'._("Number of Spam Messages").':</td><td align="right">'.number_format($regs[3]).'</td></tr>';
+         break;
+		
+		case 'nham':
+		    echo '<tr><td class="heading">'._("Number of Ham Messages").':</td><td align="right">'.number_format($regs[3]).'</td></tr>';
+		break;
 
-            case 'nspam':
-                echo '<tr><td class="heading">Number of Spam Messages:</td><td align="right">' . number_format($regs[3]) . '</td></tr>';
-                break;
+		case 'ntokens':
+		    echo '<tr><td class="heading">'._("Number of Tokens").':</td><td align="right">'.number_format($regs[3]).'</td></tr>';
+		break;
 
-            case 'nham':
-                echo '<tr><td class="heading">Number of Ham Messages:</td><td align="right">' . number_format($regs[3]) . '</td></tr>';
-                break;
-
-            case 'ntokens':
-                echo '<tr><td class="heading">Number of Tokens:</td><td align="right">' . number_format($regs[3]) . '</td></tr>';
-                break;
-
-            case 'oldest atime':
-                echo '<tr><td class="heading">Oldest Token:</td><td align="right">' . date('r', $regs[3]) . '</td></tr>';
-                break;
-
-            case 'newest atime':
-                echo '<tr><td class="heading">Newest Token:</td><td align="right">' . date('r', $regs[3]) . '</td></tr>';
-                break;
-
-            case 'last journal sync atime':
-                echo '<tr><td class="heading">Last Journal Sync:</td><td align="right">' . date('r', $regs[3]) . '</td></tr>';
-                break;
-
-            case 'last expiry atime':
-                echo '<tr><td class="heading">Last Expiry:</td><td align="right">' . date('r', $regs[3]) . '</td></tr>';
-                break;
-
-            case 'last expire reduction count':
-                echo '<tr><td class="heading">Last Expiry Reduction Count:</td><td align="right">' . number_format($regs[3]) . ' tokens</td></tr>';
-                break;
+		case 'oldest atime':
+			echo '<tr><td class="heading">'._("Oldest Token").':</td><td align="right">'.date('r',$regs[3]).'</td></tr>';
+		break;
+		
+		case 'newest atime':
+			echo '<tr><td class="heading">'._("Newest Token").':</td><td align="right">'.date('r',$regs[3]).'</td></tr>';
+		break;
+		
+		case 'last journal sync atime':
+			echo '<tr><td class="heading">'._("Last Journal Sync").':</td><td align="right">'.date('r',$regs[3]).'</td></tr>';
+		break;
+		
+		case 'last expiry atime':
+			echo '<tr><td class="heading">'._("Last Expiry").':</td><td align="right">'.date('r',$regs[3]).'</td></tr>';
+		break;
+		
+		case 'last expire reduction count':
+			echo '<tr><td class="heading">'._("Last Expiry Reduction Count").':</td><td align="right">'.number_format($regs[3]).' tokens</td></tr>';
+		break;
         }
     }
-}
+ }
 
-// Close the file
-pclose($fh);
+ // Close the file
+ echo '<tr><td class="heading">'._("Database Type").':</td><td align="right">'._("Spamassassin Build-In").'</td></tr>';
+ pclose($fh);
+}
 
 // End the table html tag
 echo '</table>';

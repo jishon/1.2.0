@@ -20,15 +20,17 @@
 #
 
 BEGIN {
+ #TEXTDOMAIN = "messages";
+ bindtextdomain("./i18n");
  FS = "/";
  print "<table class=\"sophos\" cellpadding=\"1\" cellspacing=\"1\">";
  print " <tr>";
- print "  <th colspan=\"4\">ClamAV Status</th>";
+ printf "  <th colspan=\"4\">%s</th>", _"ClamAV Status";
  print " </tr>";
 }
 { FS = "/";
-  print " <tr><td class=\"heading\">Version:</td><td>"$1"</td></tr>";
-  print " <tr><td class=\"heading\">Virus Identities:</td><td>"$2"</td></tr>";
-  print " <tr><td class=\"heading\">Database Timestamp:</td><td>"$3"</td></tr>";
+  printf " <tr><td class=\"heading\">%s:</td><td>"$1"</td></tr>", _"Version";
+  printf " <tr><td class=\"heading\">%s:</td><td>"$2"</td></tr>", _"Virus Identities";
+  printf " <tr><td class=\"heading\">%s:</td><td>"$3"</td></tr>", _"Database Timestamp";
 }
 END { print "</table>" }

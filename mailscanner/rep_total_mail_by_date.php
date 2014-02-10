@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter=html_start("Total Mail by Date",0,false,true);
+$filter=html_start(_("Total Mail by Date"),0,false,true);
 
 // Set Date format
 $date_format = "'".DATE_FORMAT."'";
@@ -88,7 +88,7 @@ include_once("./jpgraph/src/jpgraph_line.php");
 // Must be one or more row
 $result = dbquery($sql);
 if(!mysql_num_rows($result) > 0) {
- die("Error: no rows retrieved from database\n");
+ die(_("Error: no rows retrieved from database")."\n");
 }
 
 // Connecting to the DB and running the query
@@ -143,26 +143,27 @@ $graph = new Graph(750,350,0,false);
 $graph->SetShadow();
 $graph->SetScale("textlin");
 $graph->SetY2Scale("lin");
-$graph->y2axis->title->Set("Volume (".$size_info['longdesc'].")");
+$graph->y2axis->title->Set(_("Volume")." (".$size_info['longdesc'].")");
 $graph->yaxis->SetTitleMargin(30);
 $graph->y2axis->SetTitleMargin(50);
 $graph->img->SetMargin(60,60,30,70);
-$graph->title->Set("Total Mail Processed by Date");
-$graph->xaxis->title->Set("Date");
+$graph->title->Set(_("Total Mail Processed by Date"));
+$graph->xaxis->title->Set(_("Date"));
 $graph->xaxis->SetTickLabels($graph_labels);
 $graph->xaxis->SetLabelAngle(45);
-$graph->yaxis->title->Set("No. of messages");
+$graph->yaxis->title->Set(_("No. of messages"));
 $graph->legend->SetLayout(LEGEND_HOR);
 $graph->legend->Pos(0.52,0.92,'center');
 $bar1 = new BarPlot($data_total_mail);
 $bar1->SetFillColor('blue');
-$bar1->SetLegend('Mail');
+$bar1->SetLegend(_('Mail'));
+
 $bar2 = new BarPlot($data_total_virii);
 $bar2->SetFillColor('red');
-$bar2->SetLegend('Viruses');
+$bar2->SetLegend(_('Viruses'));
 $bar3 = new BarPlot($data_total_spam);
 $bar3->SetFillColor('pink');
-$bar3->SetLegend('Spam');
+$bar3->SetLegend(_('Spam'));
 $bar4 = new BarPlot($data_total_mcp);
 $bar4->SetFillColor('lightblue');
 $bar4->SetLegend('MCP');
@@ -170,11 +171,18 @@ $bar4->SetLegend('MCP');
 $line1 = new LinePlot($data_total_size);
 $line1->SetColor('green');
 $line1->SetFillColor('green');
-$line1->SetLegend('Volume ('.$size_info['shortdesc'].')');
+$line1->SetLegend(_('Volume').' ('.$size_info['shortdesc'].')');
 $line1->SetCenter();
 
 $abar1 = new AccBarPlot(array($bar2,$bar3,$bar4));
 $gbplot = new GroupBarPlot(array($bar1,$abar1));
+if (FF_CHINESE != NULL) {
+ $graph->title->SetFont(FF_CHINESE,FS_NORMAL);
+ $graph->xaxis->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->yaxis->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->y2axis->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->legend->SetFont(FF_CHINESE, FS_NORMAL);
+}
 
 $graph->AddY2($line1);
 $graph->Add($gbplot);
@@ -190,7 +198,7 @@ echo " <TR>\n";
 if(is_readable($filename)){
 echo " <TD ALIGN=\"CENTER\"><IMG SRC=\"".$filename."\" ALT=\"Graph\"></TD>";
 }else{
-echo "<TD ALIGN=\"CENTER\"> File isn't readable. Please make sure that ".CACHE_DIR." is readable and writable by Mailwatch.";
+echo "<TD ALIGN=\"CENTER\"> "._("File isn't readable. Please make sure that ").CACHE_DIR._(" is readable and writable by Mailwatch.");
 }
 
 echo " </TR>\n";
@@ -198,18 +206,18 @@ echo " <TR>\n";
 echo "  <TD ALIGN=\"CENTER\">\n";
 echo "<TABLE BORDER=0>\n";
 echo " <TR BGCOLOR=\"#F7CE4A\">\n";
-echo "  <TH>Date</TH>\n";
-echo "  <TH>Mail</TH>\n";
-echo "  <TH>Virus</TH>\n";
+echo "  <TH>"._("Date")."</TH>\n";
+echo "  <TH>"._("Mail")."</TH>\n";
+echo "  <TH>"._("Virus")."</TH>\n";
 echo "  <TH>%</TH>\n";
-echo "  <TH>Spam</TH>\n";
+echo "  <TH>"._("Spam")."</TH>\n";
 echo "  <TH>%</TH>\n";
 echo "  <TH>MCP</TH>\n";
 echo "  <TH>%</TH>\n";
-echo "  <TH>Volume</TH>\n";
+echo "  <TH>"._("Volume")."</TH>\n";
 echo "  <TH>&nbsp;&nbsp;&nbsp;&nbsp</TH>\n";
-echo "  <TH>Unknown<BR>Users</TH>\n";
-echo "  <TH>Can't<BR>Resolve</TH>\n";
+echo "  <TH>"._("Unknown<BR>Users")."</TH>\n";
+echo "  <TH>"._("Can't<BR>Resolve")."</TH>\n";
 echo "  <TH>RBL</TH>\n";
 echo " </TR>\n";
 
@@ -232,7 +240,7 @@ for($i=0; $i<count($data_total_mail); $i++) {
 }
 
  echo " <TR BGCOLOR=\"#F7CE4A\">\n";
- echo " <TH ALIGN=\"RIGHT\">Totals</TH>\n";
+ echo " <TH ALIGN=\"RIGHT\">"._("Totals")."</TH>\n";
  echo " <TH ALIGN=\"RIGHT\">".number_format(mailwatch_array_sum($data_total_mail))."</TH>\n";
  echo " <TH ALIGN=\"RIGHT\">".number_format(mailwatch_array_sum($data_total_virii))."</TH>\n";
  echo " <TH ALIGN=\"RIGHT\">".number_format(mailwatch_array_sum($data_total_virii)/mailwatch_array_sum($data_total_mail)*100,1)."</TH>\n";

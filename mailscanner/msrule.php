@@ -28,7 +28,7 @@ require('login.function.php');
 if ($_SESSION['user_type'] != 'A') {
     header("Location: index.php");
 } else {
-    html_start("Rules");
+    html_start(_("Rules"));
 
     // limit accessible files to the ones in MailScanner etc directory
     $MailscannerEtcDir = realpath(get_conf_var('%etc-dir%'));
@@ -36,10 +36,10 @@ if ($_SESSION['user_type'] != 'A') {
 
     if ($FilePath === false || strpos($FilePath, $MailscannerEtcDir) !== 0) {
         //Directory Traversal
-        echo "Directory traversal attempt blocked.\n";
+        echo _("Directory traversal attempt blocked.")."\n";
     } else {
         echo '<table cellspacing="1" class="maildetail" width="100%">' . "\n";
-        echo '<tr><td class="heading">File: ' . $FilePath . '</td></tr>' . "\n";
+        echo '<tr><td class="heading">'._("File").': ' . $FilePath . '</td></tr>' . "\n";
         echo '<tr><td><pre>' . "\n";
         if ($fh = @@fopen($FilePath, 'r')) {
             while (!feof($fh)) {
@@ -54,7 +54,7 @@ if ($_SESSION['user_type'] != 'A') {
             }
             fclose($fh);
         } else {
-            echo "Unable to open file.\n";
+            echo _("Unable to open file.")."\n";
         }
         echo '</pre></td></tr>' . "\n";
         echo '</table>' . "\n";

@@ -41,7 +41,7 @@ echo '<table width="100%" class="boxtable">'."\n";
 echo '<tr>'."\n";
 echo '<td>'."\n";
 
-echo '<p class="center" style="font-size:20px"><b>Software Versions</b></p>'."\n";
+echo '<p class="center" style="font-size:20px"><b>'._("Software Versions").'</b></p>'."\n";
 echo 'MailWatch Version = '.$mailwatch_version.'<br>'."\n";
 echo '<br>'."\n";
 echo 'MailScanner Version = '.$mailscanner_version.'<br>'."\n";

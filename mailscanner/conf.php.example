@@ -72,7 +72,7 @@ define('PROXY_PASS', '');
 define('MAILWATCH_HOME', '/var/www/html/mailscanner');
 define('MS_CONFIG_DIR', '/etc/MailScanner/');
 define('MS_LIB_DIR', '/usr/lib/MailScanner/');
-define('IMAGES_DIR', './images/'); // trailing slash needed
+define('IMAGES_DIR', './images/');
 define('CACHE_DIR', './images/cache/'); // JpGraph cache
 define('TTF_DIR','./jpgraph/src/fonts/'); // JpGraph fonts
 define('SA_DIR','/usr/bin/');
@@ -80,6 +80,10 @@ define('SA_RULES_DIR', '/usr/share/spamassassin/');
 define('SA_PREFS', MS_CONFIG_DIR.'spam.assassin.prefs.conf');
 define('FPDF_FONTPATH','./fpdf/font/');
 define('TEMP_DIR', '/tmp/');
+//added by James. If you wanted to use pwauth
+//define('PWAUTH_BIN','/usr/local/sbin/pwauth');
+//You can use en_US,zh_TW or zh_CN as default language
+define('SYSTEM_LOCALE','zh_TW');
 
 // Log file location
 define('MS_LOG', '/var/log/mail.log');

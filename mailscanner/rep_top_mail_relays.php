@@ -29,7 +29,7 @@ session_start();
 require('login.function.php');
 
 // add the header information such as the logo, search, menu, ....
-$filter=html_start("Top Mail Relays",0,false,true);
+$filter=html_start(_("Top Mail Relays"),0,false,true);
 
 // File name
 $filename = "".CACHE_DIR."/top_mail_relays.png.".time()."";
@@ -62,7 +62,7 @@ include_once("./jpgraph/src/jpgraph_pie3d.php");
 
 $result = dbquery($sql);
 if(!mysql_num_rows($result) > 0) {
- die("Error: no rows retrieved from database\n");
+ die(_("Error: no rows retrieved from database")."\n");
 }
 
 $relay_array = array();
@@ -71,7 +71,7 @@ while($row = mysql_fetch_object($result)) {
  $data[] = $row->count;
  $hostname = gethostbyaddr($row->clientip);
  if($hostname == $row->clientip) {
-  $data_names[] = "(Hostname lookup failed)";
+  $data_names[] = "("._("Hostname lookup failed").")";
  } else {
   $data_names[] = $hostname;
  }
@@ -79,7 +79,7 @@ while($row = mysql_fetch_object($result)) {
  if($geoip = return_geoip_country($row->clientip)) {
   $data_geoip[] = $geoip;
  } else {
-  $data_geoip[] = "(GeoIP lookup failed)";
+  $data_geoip[] = "("._("GeoIP lookup failed").")";
  }
  $data_virus[] = $row->total_viruses;
  $data_spam[] = $row->total_spam;
@@ -89,7 +89,11 @@ while($row = mysql_fetch_object($result)) {
 $graph = new PieGraph(800,385,0,false);
 $graph->SetShadow();
 $graph->img->SetAntiAliasing();
-$graph->title->Set("Top 10 Mail Relays");
+$graph->title->Set(_("Top 10 Mail Relays"));
+if (FF_CHINESE != NULL) {
+ $graph->title->SetFont(FF_CHINESE, FS_NORMAL);
+ $graph->legend->SetFont(FF_CHINESE, FS_NORMAL);
+}
 //$graph->legend->SetLayout(LEGEND_HOR);
 $graph->legend->Pos(0.52,0.87,'center');
 
@@ -117,7 +121,7 @@ echo "<TR>";
 if(is_readable($filename)){
 echo " <TD ALIGN=\"CENTER\"><IMG SRC=\"".$filename."\" ALT=\"Graph\"></TD>";
 }else{
-echo "<TD ALIGN=\"CENTER\"> File isn't readable. Please make sure that ".CACHE_DIR." is readable and writable by Mailwatch.";
+echo "<TD ALIGN=\"CENTER\"> "._("File isn't readable. Please make sure that ").CACHE_DIR._(" is readable and writable by Mailwatch.");
 }
 
 echo "</TR>";
@@ -125,13 +129,13 @@ echo "<TR>";
 echo "<TD ALIGN=\"CENTER\">";
 echo "<TABLE WIDTH=\"500\">";
 echo "<TR BGCOLOR=\"#F7CE4A\">";
-echo "    <TH>Hostname</TH>";
-echo "    <TH>IP Address</TH>";
-echo "    <TH>Country</TH>";
-echo "    <TH>Messages</TH>";
-echo "    <TH>Viruses</TH>";
-echo "    <TH>Spam</TH>";
-echo "    <TH>Volume</TH>";
+echo "    <TH>"._("Hostname")."</TH>";
+echo "    <TH>"._("IP Address")."</TH>";
+echo "    <TH>"._("Country")."</TH>";
+echo "    <TH>"._("Messages")."</TH>";
+echo "    <TH>"._("Viruses")."</TH>";
+echo "    <TH>"._("Spam")."</TH>";
+echo "    <TH>"._("Volume")."</TH>";
 echo "   </TR>";
 
 for($i=0; $i<count($data_names); $i++) {

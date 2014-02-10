@@ -25,12 +25,12 @@ require_once('./functions.php');
 session_start();
 include 'login.function.php';
 
-html_start("MySQL Status",0,false,true);
+html_start(_("MySQL Status"),0,false,true);
 
 if($_SESSION['user_type']!= 'A')
 {
 
-echo "Not Authorized";
+echo _("Not Authorized");
 
 }
 else{

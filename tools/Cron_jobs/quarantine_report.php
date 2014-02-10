@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/bin/php -qn
 <?php
 
 /*
@@ -31,8 +31,10 @@ ini_set('html_errors','off');
 ini_set('display_errors','on');
 ini_set('implicit_flush','false');
 ini_set("memory_limit",'256M');
-ini_set("error_reporting",E_ALL);
+//ini_set("error_reporting",E_ALL);
 ini_set("max_execution_time",0);
+//Overwrite the related i18n path
+bindtextdomain("messages", '/var/www/html/mailscanner/i18n');
 
 /*
 ** HTML Template
@@ -41,7 +43,7 @@ ini_set("max_execution_time",0);
 $html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
- <title>Message Quarantine Report</title>
+ <title>'._("Message Quarantine Report").'</title>
  <style type="text/css">
  <!--
   body, td, tr {
@@ -58,8 +60,8 @@ $html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
  <tr>
   <td><img src="mailwatch-logo.gif"/></td>
   <td align="center" valign="middle">
-   <h2>Quarantine Report for %s</h2>
-   In the last %s day(s) you have received %s e-mails that have been quarantined and are listed below.  All messages in the quarantine are automatically deleted %s days after the date that they were received.
+   <h2>'._("Quarantine Report for %s").'</h2>'.
+   _("In the last %s day(s) you have received %s e-mails that have been quarantined and are listed below.  All messages in the quarantine are automatically deleted %s days after the date that they were received.").'
   </td>
  </tr>
  <tr>
@@ -71,11 +73,11 @@ $html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 $html_table = '<table width="100%%" border="0">
  <tr>
-  <td bgcolor="#F7CE4A"><b>Received</b></td>
-  <td bgcolor="#F7CE4A"><b>From</b></td>
-  <td bgcolor="#F7CE4A"><b>Subject</b></td>
-  <td bgcolor="#F7CE4A"><b>Reason</b></td>
-  <td bgcolor="#F7CE4A"><b>Action</b></td>
+  <td bgcolor="#F7CE4A"><b>'._("Received").'</b></td>
+  <td bgcolor="#F7CE4A"><b>'._("From").'</b></td>
+  <td bgcolor="#F7CE4A"><b>'._("Subject").'</b></td>
+  <td bgcolor="#F7CE4A"><b>'._("Reason").'</b></td>
+  <td bgcolor="#F7CE4A"><b>'._("Action").'</b></td>
  </tr>
 %s
 </table>';
@@ -93,20 +95,20 @@ $html_content = ' <tr>
 ** Text Template
 */
 
-$text = 'Quarantine Report for %s
+$text = _("Quarantine Report for %s
 
 In the last %s day(s) you have received %s e-mails that have been quarantined and are listed below.  All messages in the quarantine are automatically deleted %s days after the date that they were received.
 
-%s';
+%s");
 
-$text_content = 'Received: %s
+$text_content = _("Received: %s
 From: %s
 Subject: %s
 Reason: %s
 Action:
 %s
 
-';
+");
 
 /*
 ** SQL Templates
@@ -134,27 +136,39 @@ AND
  active='Y'
 "; 
 
+$type_sql = "
+SELECT
+ type
+FROM
+ users
+WHERE
+ username=%s
+AND
+ quarantine_report=1
+"; 
+
 $sql = "
 SELECT DISTINCT
 a.id AS id,
-DATE_FORMAT(timestamp,'".str_replace('%','%%',DATE_FORMAT)." <br/>".str_replace('%','%%',TIME_FORMAT)."') AS datetime,
+DATE_FORMAT(timestamp,'".str_replace('%','%%',DATE_FORMAT)." ".str_replace('%','%%',TIME_FORMAT)."') AS datetime,
+a.headers AS header,
 a.from_address AS from_address,
 a.subject AS subject,
 CASE
- WHEN a.virusinfected>0 THEN 'Virus'
- WHEN a.nameinfected>0 THEN 'Bad Content'
- WHEN a.otherinfected>0 THEN 'Infected'
- WHEN a.ishighspam>0 THEN 'Spam'
- WHEN a.issaspam>0 THEN 'Spam'
- WHEN a.isrblspam>0 THEN 'Spam'
- WHEN a.spamblacklisted>0 THEN 'Blacklisted'
- WHEN a.isspam THEN 'Spam'
- WHEN a.ismcp>0 THEN 'Policy'
- WHEN a.ishighmcp>0 THEN 'Policy'
- WHEN a.issamcp>0 THEN 'Policy'
- WHEN a.mcpblacklisted>0 THEN 'Policy'
- WHEN a.isspam>0 THEN 'Spam'
- ELSE 'UNKNOWN'
+ WHEN a.virusinfected>0 THEN '"._("Virus")."'
+ WHEN a.nameinfected>0 THEN '"._("Bad Content")."'
+ WHEN a.otherinfected>0 THEN '"._("Infected")."'
+ WHEN a.ishighspam>0 THEN '"._("Spam")."'
+ WHEN a.issaspam>0 THEN '"._("Spam")."'
+ WHEN a.isrblspam>0 THEN '"._("Spam")."'
+ WHEN a.spamblacklisted>0 THEN '"._("Blacklisted")."'
+ WHEN a.isspam THEN '"._("Spam")."'
+ WHEN a.ismcp>0 THEN '"._("Policy")."'
+ WHEN a.ishighmcp>0 THEN '"._("Policy")."'
+ WHEN a.issamcp>0 THEN '"._("Policy")."'
+ WHEN a.mcpblacklisted>0 THEN '"._("Policy")."'
+ WHEN a.isspam>0 THEN '"._("Spam")."'
+ ELSE '"._("UNKNOWN")."'
 END AS reason
 FROM
  maillog a
@@ -163,8 +177,38 @@ WHERE
 AND
  ((to_address=%s) OR (to_domain=%s))
 AND 
- a.date >= DATE_SUB(CURRENT_DATE(), INTERVAL ".QUARANTINE_REPORT_DAYS." DAY)
+ a.date >= DATE_SUB(CURRENT_DATE(), INTERVAL '".QUARANTINE_REPORT_DAYS."' DAY)
 ORDER BY a.date DESC, a.time DESC";
+$sql1 = "
+SELECT DISTINCT
+a.id AS id,
+DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
+a.headers AS header,
+a.from_address AS from_address,
+a.subject AS subject,
+CASE
+ WHEN a.virusinfected>0 THEN '"._("Virus")."'
+ WHEN a.nameinfected>0 THEN '"._("Bad Content")."'
+ WHEN a.otherinfected>0 THEN '"._("Infected")."'
+ WHEN a.ishighspam>0 THEN '"._("Spam")."'
+ WHEN a.issaspam>0 THEN '"._("Spam")."'
+ WHEN a.isrblspam>0 THEN '"._("Spam")."'
+ WHEN a.spamblacklisted>0 THEN '"._("Blacklisted")."'
+ WHEN a.isspam THEN '"._("Spam")."'
+ WHEN a.ismcp>0 THEN '"._("Policy")."'
+ WHEN a.ishighmcp>0 THEN '"._("Policy")."'
+ WHEN a.issamcp>0 THEN '"._("Policy")."'
+ WHEN a.mcpblacklisted>0 THEN '"._("Policy")."'
+ WHEN a.isspam>0 THEN '"._("Spam")."'
+ ELSE '"._("UNKNOWN")."'
+END AS reason
+FROM
+ maillog a
+WHERE 
+ a.quarantined = 1
+AND
+ a.date >= DATE_SUB(CURRENT_DATE(), INTERVAL '".QUARANTINE_REPORT_DAYS."' DAY)
+ ORDER BY a.date DESC, a.time DESC";
 
 $result = dbquery($users_sql);
 $rows = mysql_num_rows($result);
@@ -195,9 +239,10 @@ if($rows>0) {
    dbg(" ==== Recipient e-mail address is $email");
    // Get any additional reports required
    $filters = array_merge(array($user->username),return_user_filters($user->username));
+   $type = $user->type;
    foreach($filters as $filter) {
     dbg(" ==== Building list for $filter");
-    $quarantined = return_quarantine_list_array($filter);
+    $quarantined = return_quarantine_list_array($filter,$type);
     dbg(" ==== Found ".count($quarantined)." quarantined e-mails");
     //print_r($quarantined);
     if(count($quarantined)>0) {
@@ -229,17 +274,26 @@ function return_user_filters($user) {
  }
 }
 
-function return_quarantine_list_array($filter) {
+function return_quarantine_list_array($filter,$type) {
  global $sql;
- $result = dbquery(sprintf($sql,quote_smart($filter),quote_smart($filter)));
+ global $sql1;
+ if ($type == 'A'){
+  //echo $sql1;
+  $result = dbquery($sql1);
+ } else {
+  //echo sprintf($sql,quote_smart($filter),quote_smart($filter));
+  $result = dbquery(sprintf($sql,quote_smart($filter),quote_smart($filter)));
+ }
  $rows = mysql_num_rows($result);
  if($rows>0) {
   while($row=mysql_fetch_object($result)) {
    $array[] = array(
     'id'       => trim($row->id),
     'datetime' => trim($row->datetime),
+    'header'   => trim($row->header),
     'from'     => trim_output($row->from_address,FROMTO_MAXLEN),
-    'subject'  => trim_output($row->subject,SUBJECT_MAXLEN),
+    //'subject'  => trim_output($row->subject,SUBJECT_MAXLEN),
+    'subject'  => trim($row->subject),
     'reason'   => trim($row->reason));
   } 
   return $array;
@@ -257,6 +311,58 @@ function send_quarantine_email($email, $filter, $quarantined) {
  $t1 = "";
  // Build the quarantine list for this recipient
  foreach($quarantined as $qitem) {
+  //Convert subject to UTF-8
+  if ($qitem['subject'] != NULL) {
+   $charset = detect_charset($qitem['header']);
+   $fix_subject = fix_utf8_subject($qitem['header']);
+   $subject_charset = detect_charset($qitem['subject']);
+   if ($charset[0] === NULL) {
+    $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
+   } elseif (strtolower($charset[0]) != "utf-8") {
+    if ($charset[1] == 0) {
+     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",$charset[0]);
+    } else {
+     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
+    }
+   } else {
+    if ($charset[1] == 0) {
+     $qitem['subject'] = decode_header($fix_subject);
+    } else {
+     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
+    }
+   }
+   $qitem['subject'] = htmlspecialchars($qitem['subject']);
+   trim_output($qitem['subject'],SUBJECT_MAXLEN);
+  }
+  //Localize the reason description.
+  /*
+  switch($qitem['reason']){
+   case 'Virus':
+    $qitem['reason'] = '病毒';
+    break;
+   case 'Bad Content':
+    $qitem['reason'] = '不良內容';
+    break;
+   case 'Infected':
+    $qitem['reason'] = '已感染';
+    break;
+   case 'Spam':
+    $qitem['reason'] = '垃圾郵件';
+    break;
+   case 'Blacklisted':
+    $qitem['reason'] = '黑名單';
+    break;
+   case 'Policy':
+    $qitem['reason'] = '政策';
+    break;
+   case 'UNKNOWN':
+    $qitem['reason'] = '不明';
+    break;
+   default:
+    break;
+  }
+  */
+
   // HTML Version
   $h1 .=  sprintf($html_content, $qitem['datetime'], $qitem['from'], $qitem['subject'], $qitem['reason'], '<a href="'.QUARANTINE_REPORT_HOSTURL.'/viewmail.php?id='.$qitem['id'].'">View</a>');
    // Text Version
@@ -281,7 +387,7 @@ function send_quarantine_email($email, $filter, $quarantined) {
  $mime->addHTMLImage(MAILWATCH_HOME.'/images/mailwatch-logo.gif','image/gif','mailwatch-logo.gif',true);
  $mime->setTXTBody($text_report);
  $mime->setHTMLBody($html_report);
- $body = $mime->get();
+ $body = $mime->get(array('text_charset' => 'utf-8', 'html_charset' => 'utf-8','head_charset' => 'utf-8'));
  $hdrs = $mime->headers($hdrs);
  $mail_param = array('host' => QUARANTINE_MAIL_HOST);
  $mail =& Mail::factory('smtp',$mail_param);
