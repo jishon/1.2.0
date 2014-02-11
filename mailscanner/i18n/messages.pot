@@ -1,0 +1,1800 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-03 15:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bayes_info.php:28 other.php:65
+msgid "SpamAssassin Bayes Database Info"
+msgstr ""
+
+#: bayes_info.php:33
+msgid "Bayes Database Information"
+msgstr ""
+
+#: bayes_info.php:54 bayes_info.php:87
+msgid "Number of Spam Messages"
+msgstr ""
+
+#: bayes_info.php:57 bayes_info.php:90
+msgid "Number of Ham Messages"
+msgstr ""
+
+#: bayes_info.php:60 bayes_info.php:93
+msgid "Number of Tokens"
+msgstr ""
+
+#: bayes_info.php:63 bayes_info.php:96
+msgid "Oldest Token"
+msgstr ""
+
+#: bayes_info.php:66 bayes_info.php:99
+msgid "Newest Token"
+msgstr ""
+
+#: bayes_info.php:69 bayes_info.php:105
+msgid "Last Expiry"
+msgstr ""
+
+#: bayes_info.php:72 bayes_info.php:108
+msgid "Last Expiry Reduction Count"
+msgstr ""
+
+#: bayes_info.php:77 bayes_info.php:113
+msgid "Database Type"
+msgstr ""
+
+#: bayes_info.php:102
+msgid "Last Journal Sync"
+msgstr ""
+
+#: bayes_info.php:113
+msgid "Spamassassin Build-In"
+msgstr ""
+
+#: checklogin.php:52 checklogin.php:64
+msgid "Invalid query: "
+msgstr ""
+
+#: checklogin.php:53 checklogin.php:65
+msgid "Whole query: "
+msgstr ""
+
+#: checklogin.php:155 login.php:34 login.php:82
+msgid "MailWatch Login Page"
+msgstr ""
+
+#: checklogin.php:167 login.php:47 login.php:95
+msgid "MailWatch Login"
+msgstr ""
+
+#: checklogin.php:170
+msgid "Bad username or Password"
+msgstr ""
+
+#: checklogin.php:173 login.php:50 user_manager.php:80 user_manager.php:152
+#: user_manager.php:314
+msgid "Username"
+msgstr ""
+
+#: checklogin.php:178 login.php:55 user_manager.php:82 user_manager.php:83
+#: user_manager.php:154 user_manager.php:316 user_manager.php:317
+msgid "Password"
+msgstr ""
+
+#: checklogin.php:185 login.php:62
+msgid "Login"
+msgstr ""
+
+#: checklogin.php:185 lists.php:236 login.php:62 user_manager.php:95
+#: user_manager.php:167
+msgid "Reset"
+msgstr ""
+
+#: checklogin.php:185 login.php:62 login.php:101
+msgid "Back"
+msgstr ""
+
+#: clamav_status.php:35 other.php:50 clamav.awk:29
+msgid "ClamAV Status"
+msgstr ""
+
+#: detail.php:39
+msgid "Received on:"
+msgstr ""
+
+#: detail.php:40
+msgid "Received by:"
+msgstr ""
+
+#: detail.php:41 detail.php:95
+msgid "Received from:"
+msgstr ""
+
+#: detail.php:42 detail.php:102
+msgid "Received Via:"
+msgstr ""
+
+#: detail.php:44 detail.php:201
+msgid "Message Headers:"
+msgstr ""
+
+#: detail.php:45 detail.php:154 lists.php:210 viewmail.php:139
+#: viewmail.php:141 viewmail.php:143
+msgid "From:"
+msgstr ""
+
+#: detail.php:46 detail.php:163 detail.php:175 lists.php:214 viewmail.php:149
+#: viewmail.php:151 viewmail.php:153
+msgid "To:"
+msgstr ""
+
+#: detail.php:47 detail.php:163 detail.php:179 viewmail.php:159
+#: viewmail.php:161 viewmail.php:163
+msgid "Subject:"
+msgstr ""
+
+#: detail.php:48 detail.php:198
+msgid "Size:"
+msgstr ""
+
+#: detail.php:49
+msgid "Archive:"
+msgstr ""
+
+#: detail.php:50
+msgid "Anti-Virus/Dangerous Content Protection"
+msgstr ""
+
+#: detail.php:50 detail.php:55 detail.php:65 detail.php:239
+msgid "HEADER"
+msgstr ""
+
+#: detail.php:51
+msgid "Virus:"
+msgstr ""
+
+#: detail.php:52
+msgid "Blocked File:"
+msgstr ""
+
+#: detail.php:53
+msgid "Other Infection:"
+msgstr ""
+
+#: detail.php:54 detail.php:148
+msgid "Report:"
+msgstr ""
+
+#: detail.php:56 detail.php:223
+msgid "Spam:"
+msgstr ""
+
+#: detail.php:57 detail.php:231
+msgid "High Scoring Spam:"
+msgstr ""
+
+#: detail.php:58
+msgid "SpamAssassin Spam:"
+msgstr ""
+
+#: detail.php:59
+msgid "Listed in RBL:"
+msgstr ""
+
+#: detail.php:60
+msgid "Spam Whitelisted:"
+msgstr ""
+
+#: detail.php:61
+msgid "Spam Blacklisted:"
+msgstr ""
+
+#: detail.php:62 detail.php:216
+msgid "SpamAssassin Autolearn:"
+msgstr ""
+
+#: detail.php:63
+msgid "SpamAssassin Score:"
+msgstr ""
+
+#: detail.php:64 detail.php:195
+msgid "Spam Report:"
+msgstr ""
+
+#: detail.php:65
+msgid "Message Content Protection (MCP)"
+msgstr ""
+
+#: detail.php:66
+msgid "MCP:"
+msgstr ""
+
+#: detail.php:67
+msgid "High Scoring MCP:"
+msgstr ""
+
+#: detail.php:68
+msgid "SpamAssassin MCP:"
+msgstr ""
+
+#: detail.php:69
+msgid "MCP Whitelisted:"
+msgstr ""
+
+#: detail.php:70
+msgid "MCP Blacklisted:"
+msgstr ""
+
+#: detail.php:71
+msgid "MCP Score:"
+msgstr ""
+
+#: detail.php:72 detail.php:235
+msgid "MCP Report:"
+msgstr ""
+
+#: detail.php:85
+#, php-format
+msgid "Message ID '%s' not found!"
+msgstr ""
+
+#: detail.php:97 detail.php:158
+msgid "Add to Whitelist"
+msgstr ""
+
+#: detail.php:97 detail.php:158
+msgid "Add to Blacklist"
+msgstr ""
+
+#: detail.php:106 rep_top_mail_relays.php:132
+msgid "IP Address"
+msgstr ""
+
+#: detail.php:107 rep_top_mail_relays.php:131
+msgid "Hostname"
+msgstr ""
+
+#: detail.php:108 rep_top_mail_relays.php:133
+msgid "Country"
+msgstr ""
+
+#: detail.php:110 functions.php:242 functions.php:570 functions.php:1749
+#: rep_mrtg_style.php:169 rep_sa_rule_hits.php:103 rep_top_mail_relays.php:136
+#: rep_total_mail_by_date.php:165 rep_total_mail_by_date.php:213
+#: quarantine_report.php:158 quarantine_report.php:159
+#: quarantine_report.php:160 quarantine_report.php:162
+#: quarantine_report.php:167 quarantine_report.php:191
+#: quarantine_report.php:192 quarantine_report.php:193
+#: quarantine_report.php:195 quarantine_report.php:200
+msgid "Spam"
+msgstr ""
+
+#: detail.php:111 rep_mrtg_style.php:170 rep_top_viruses.php:123
+#: rep_total_mail_by_date.php:211 rep_viruses.php:164
+#: quarantine_report.php:155 quarantine_report.php:188
+msgid "Virus"
+msgstr ""
+
+#: detail.php:112
+msgid "All"
+msgstr ""
+
+#: detail.php:122
+msgid "Reverse Lookup Failed"
+msgstr ""
+
+#: detail.php:128
+msgid "GeoIP Lookup Failed"
+msgstr ""
+
+#: detail.php:260 detail.php:277
+msgid "Relayed by"
+msgstr ""
+
+#: detail.php:261 detail.php:278
+msgid "Relayed to"
+msgstr ""
+
+#: detail.php:262 detail.php:279
+msgid "Delay"
+msgstr ""
+
+#: detail.php:263 detail.php:280 functions.php:257 functions.php:1433
+msgid "Status"
+msgstr ""
+
+#: detail.php:276 functions.php:1316 functions.php:1320
+msgid "Date/Time"
+msgstr ""
+
+#: detail.php:294
+msgid "Relay Information"
+msgstr ""
+
+#: detail.php:350
+msgid "Quarantine Command Results"
+msgstr ""
+
+#: detail.php:354
+msgid "Result Messages"
+msgstr ""
+
+#: detail.php:364
+msgid "Error Messages"
+msgstr ""
+
+#: detail.php:373 functions.php:165
+msgid "Error"
+msgstr ""
+
+#: detail.php:381 functions.php:580
+msgid "Quarantine"
+msgstr ""
+
+#: detail.php:384 functions.php:1749
+msgid "Release"
+msgstr ""
+
+#: detail.php:385 filter.inc:272 lists.php:193 user_manager.php:251
+#: user_manager.php:290
+msgid "Delete"
+msgstr ""
+
+#: detail.php:386
+msgid "SA Learn"
+msgstr ""
+
+#: detail.php:387 msrule.php:36
+msgid "File"
+msgstr ""
+
+#: detail.php:388
+msgid "Type"
+msgstr ""
+
+#: detail.php:389
+msgid "Path"
+msgstr ""
+
+#: detail.php:390
+msgid "Dangerous"
+msgstr ""
+
+#: detail.php:405
+msgid "As Ham"
+msgstr ""
+
+#: detail.php:405
+msgid "As Spam"
+msgstr ""
+
+#: detail.php:405 functions.php:1749
+msgid "Forget"
+msgstr ""
+
+#: detail.php:405
+msgid "As Spam+Report"
+msgstr ""
+
+#: detail.php:405
+msgid "As Ham+Revoke"
+msgstr ""
+
+#: detail.php:443
+msgid "Alternate Recipient(s)"
+msgstr ""
+
+#: docs.php:27 docs.php:35
+msgid "Documentation"
+msgstr ""
+
+#: docs.php:36
+msgid ""
+"This page does require authentication, so you can put links to your site "
+"documentation here and allow your users to access it if you wish."
+msgstr ""
+
+#: do_message_ops.php:31
+msgid "Operation Results"
+msgstr ""
+
+#: do_message_ops.php:35
+msgid "Spam Learn Results"
+msgstr ""
+
+#: do_message_ops.php:81
+#, php-format
+msgid "Message %s not found in quarantine"
+msgstr ""
+
+#: filter.inc:106
+msgid "Active Filters"
+msgstr ""
+
+#: filter.inc:114
+msgid "Remove"
+msgstr ""
+
+#: filter.inc:117 filter.inc:317
+msgid "None"
+msgstr ""
+
+#: filter.inc:121
+msgid "Add Filter"
+msgstr ""
+
+#: filter.inc:123
+msgid "Statistics (Filtered)"
+msgstr ""
+
+#: filter.inc:136
+msgid "Oldest record"
+msgstr ""
+
+#: filter.inc:137
+msgid "Newest record"
+msgstr ""
+
+#: filter.inc:138
+msgid "Message count"
+msgstr ""
+
+#: filter.inc:140 functions.php:581
+msgid "Reports"
+msgstr ""
+
+#: filter.inc:267 lists.php:79 lists.php:236
+msgid "Add"
+msgstr ""
+
+#: filter.inc:268
+msgid "To set date you must use YYYY-mm-dd format"
+msgstr ""
+
+#: filter.inc:269
+msgid "Load/Save Filter"
+msgstr ""
+
+#: filter.inc:270 filter.inc:272
+msgid "Save"
+msgstr ""
+
+#: filter.inc:272
+msgid "Load"
+msgstr ""
+
+#: functions.php:28
+msgid ""
+"Cannot read conf.php - please create it by copying conf.php.example and "
+"modifying the parameters to suit.\n"
+msgstr ""
+
+#: functions.php:165
+msgid ""
+"You are running MailWatch in distributed mode therefore MailWatch cannot "
+"read your MailScanner configuration files to acertain your primary virus "
+"scanner - please edit functions.php and manually set the VIRUS_REGEX "
+"constant for your primary scanner."
+msgstr ""
+
+#: functions.php:195
+msgid "MailWatch Filter Report"
+msgstr ""
+
+#: functions.php:230
+msgid "Jump to message"
+msgstr ""
+
+#: functions.php:232
+msgid "Welcome"
+msgstr ""
+
+#: functions.php:240
+msgid "Color Codes"
+msgstr ""
+
+#: functions.php:241 quarantine_report.php:156
+#: quarantine_report.php:189
+msgid "Bad Content"
+msgstr ""
+
+#: functions.php:241 quarantine_report.php:157
+#: quarantine_report.php:190
+msgid "Infected"
+msgstr ""
+
+#: functions.php:243
+msgid "High Spam"
+msgstr ""
+
+#: functions.php:245
+msgid "High MCP"
+msgstr ""
+
+#: functions.php:246
+msgid "Whitelisted"
+msgstr ""
+
+#: functions.php:247 quarantine_report.php:161
+#: quarantine_report.php:194
+msgid "Blacklisted"
+msgstr ""
+
+#: functions.php:248 functions.php:565 rep_mcp_rule_hits.php:98
+msgid "Clean"
+msgstr ""
+
+#: functions.php:266
+msgid "children"
+msgstr ""
+
+#: functions.php:269 functions.php:282
+msgid "proc(s)"
+msgstr ""
+
+#: functions.php:293
+msgid "Load Average"
+msgstr ""
+
+#: functions.php:305 functions.php:314
+msgid "Inbound"
+msgstr ""
+
+#: functions.php:306 functions.php:315
+msgid "Outbound"
+msgstr ""
+
+#: functions.php:308
+#, php-format
+msgid "Please verify read permissions on %s and %s"
+msgstr ""
+
+#: functions.php:313
+msgid "Mail Queues"
+msgstr ""
+
+#: functions.php:320
+msgid "Free Drive Space"
+msgstr ""
+
+#: functions.php:563
+msgid "Today's Totals"
+msgstr ""
+
+#: functions.php:564
+msgid "Processed"
+msgstr ""
+
+#: functions.php:566 rep_top_mail_relays.php:135
+#: rep_total_mail_by_date.php:162
+msgid "Viruses"
+msgstr ""
+
+#: functions.php:567
+msgid "Top Virus"
+msgstr ""
+
+#: functions.php:568
+msgid "Blocked files"
+msgstr ""
+
+#: functions.php:569
+msgid "Others"
+msgstr ""
+
+#: functions.php:571
+msgid "High Scoring Spam"
+msgstr ""
+
+#: functions.php:573
+msgid "High Scoring MCP"
+msgstr ""
+
+#: functions.php:578 status.php:28
+msgid "Recent Messages"
+msgstr ""
+
+#: functions.php:579
+msgid "Lists"
+msgstr ""
+
+#: functions.php:582
+msgid "Tools/Links"
+msgstr ""
+
+#: functions.php:583
+msgid "Logout"
+msgstr ""
+
+#: functions.php:669
+msgid "Could not connect to database"
+msgstr ""
+
+#: functions.php:670
+msgid "Could not select db"
+msgstr ""
+
+#: functions.php:697
+msgid "Error executing query"
+msgstr ""
+
+#: functions.php:814 rep_mcp_score_dist.php:121 rep_sa_score_dist.php:124
+msgid "Score"
+msgstr ""
+
+#: functions.php:814
+msgid "Matching Rule"
+msgstr ""
+
+#: functions.php:814 mcp_rules_update.php:49 rep_mcp_rule_hits.php:96
+#: rep_sa_rule_hits.php:99
+msgid "Description"
+msgstr ""
+
+#: functions.php:962
+msgid "Cannot open ruleset file"
+msgstr ""
+
+#: functions.php:984 functions.php:1026
+msgid "Cannot open MailScanner configuration file"
+msgstr ""
+
+#: functions.php:1013
+#, php-format
+msgid "Cannot find configuration value: %s in %s\n"
+msgstr ""
+
+#: functions.php:1197 functions.php:1757 functions.php:1865 functions.php:1980
+#, php-format
+msgid "Displaying page %s of %s - Records %s to %s of %s"
+msgstr ""
+
+#: functions.php:1308 functions.php:1404
+msgid "Host"
+msgstr ""
+
+#: functions.php:1334 rep_top_recipient_domains_by_quantity.php:115
+#: rep_top_recipient_domains_by_volume.php:115
+#: rep_top_recipients_by_volume.php:119
+#: rep_top_sender_domains_by_quantity.php:116
+#: rep_top_sender_domains_by_volume.php:116
+#: rep_top_senders_by_quantity.php:126 rep_top_senders_by_volume.php:119
+msgid "Size"
+msgstr ""
+
+#: functions.php:1338 lists.php:185 quarantine_report.php:74
+msgid "From"
+msgstr ""
+
+#: functions.php:1341 lists.php:186
+msgid "To"
+msgstr ""
+
+#: functions.php:1344 quarantine_report.php:75
+msgid "Subject"
+msgstr ""
+
+#: functions.php:1408 rep_mrtg_style.php:115 rep_mrtg_style.php:167
+#: rep_total_mail_by_date.php:149 rep_total_mail_by_date.php:209
+msgid "Date"
+msgstr ""
+
+#: functions.php:1411
+msgid "Time"
+msgstr ""
+
+#: functions.php:1418
+msgid "SA Score"
+msgstr ""
+
+#: functions.php:1426
+msgid "MCP Score"
+msgstr ""
+
+#: functions.php:1437
+msgid "Message"
+msgstr ""
+
+#: functions.php:1440
+msgid "Tries"
+msgstr ""
+
+#: functions.php:1444
+msgid "Last"
+msgstr ""
+
+#: functions.php:1650
+msgid "(Hostname lookup failed)"
+msgstr ""
+
+#: functions.php:1746
+msgid "or"
+msgstr ""
+
+#: functions.php:1746
+msgid "Clear"
+msgstr ""
+
+#: functions.php:1746
+msgid "all"
+msgstr ""
+
+#: functions.php:1749 rep_sa_rule_hits.php:101
+msgid "Ham"
+msgstr ""
+
+#: functions.php:1823 functions.php:2065
+msgid "No rows retrieved."
+msgstr ""
+
+#: functions.php:1973
+msgid "No rows retrieved!\n"
+msgstr ""
+
+#: functions.php:2085
+#, php-format
+msgid "Page generated in %f seconds\n"
+msgstr ""
+
+#: functions.php:2209 functions.php:2243
+msgid "Error: could not connect to LDAP directory on"
+msgstr ""
+
+#: functions.php:2212 functions.php:2246
+msgid "Error: unable to bind to LDAP directory"
+msgstr ""
+
+#: functions.php:2550 functions.php:2763
+msgid "Invalid argument"
+msgstr ""
+
+#: functions.php:2588 functions.php:2601
+msgid "Release: message released to "
+msgstr ""
+
+#: functions.php:2604
+msgid "Release: error code "
+msgstr ""
+
+#: functions.php:2604
+msgid "returned from Sendmail"
+msgstr ""
+
+#: functions.php:2708
+msgid "SpamAssassin: error code "
+msgstr ""
+
+#: functions.php:2708
+msgid "returned from SpamAssassin"
+msgstr ""
+
+#: functions.php:2721
+msgid "SA Learn: "
+msgstr ""
+
+#: functions.php:2724
+msgid "SA Learn: error code "
+msgstr ""
+
+#: functions.php:2724
+msgid "returned from sa-learn"
+msgstr ""
+
+#: functions.php:2772
+msgid "Delete: deleted file "
+msgstr ""
+
+#: functions.php:2776
+msgid "Delete: error deleting file "
+msgstr ""
+
+#: geoip_update.php:30
+msgid "GeoIP Database Update"
+msgstr ""
+
+#: geoip_update.php:39
+msgid ""
+"This utility is used to update the SQL database with up-to-date GeoIP data "
+"from <a href=\"http://www.maxmind.com/app/geoip_country\" target=\"_maxmind"
+"\">MaxMind</a> which is used to work out the country of origin for any given "
+"IP address and is displayed on the Message Detail page.<BR>"
+msgstr ""
+
+#: geoip_update.php:44 mcp_rules_update.php:45 sa_rules_update.php:45
+msgid "Run Now"
+msgstr ""
+
+#: geoip_update.php:50
+msgid "Downloading file, please wait....<BR>\n"
+msgstr ""
+
+#: geoip_update.php:150
+msgid "Download complete ... "
+msgstr ""
+
+#: geoip_update.php:150
+msgid " rows imported.<BR>\n"
+msgstr ""
+
+#: geoip_update.php:158
+msgid "Unzip failed:<BR>Error: "
+msgstr ""
+
+#: geoip_update.php:163
+msgid "Unable to download GeoIP data file.\n"
+msgstr ""
+
+#: geoip_update.php:171
+msgid "Unable to read or write to the"
+msgstr ""
+
+#: geoip_update.php:177
+msgid "Files still exist for some reason\n"
+msgstr ""
+
+#: lists.php:28
+msgid "Whitelist/Blacklist"
+msgstr ""
+
+#: lists.php:34
+msgid "Username is not in the correct format to use this utility."
+msgstr ""
+
+#: lists.php:82
+msgid "You must select a list to create the entry."
+msgstr ""
+
+#: lists.php:85
+msgid "You must enter a from address (user@domain, domain or IP)."
+msgstr ""
+
+#: lists.php:95
+msgid "To address does not match current username."
+msgstr ""
+
+#: lists.php:111
+msgid "To domain does not match the current username."
+msgstr ""
+
+#: lists.php:187 user_manager.php:95 user_manager.php:167 user_manager.php:324
+#: quarantine_report.php:77
+msgid "Action"
+msgstr ""
+
+#: lists.php:198
+msgid "No entries found.\n"
+msgstr ""
+
+#: lists.php:207
+msgid "Add to Whitelist/Blacklist"
+msgstr ""
+
+#: lists.php:218
+msgid "List:"
+msgstr ""
+
+#: lists.php:229 lists.php:251
+msgid "Whitelist"
+msgstr ""
+
+#: lists.php:230 lists.php:252
+msgid "Blacklist"
+msgstr ""
+
+#: lists.php:235
+msgid "Action:"
+msgstr ""
+
+#: lists.php:240
+msgid "Errors:"
+msgstr ""
+
+#: login.function.php:31
+msgid "Not authenticated"
+msgstr ""
+
+#: login.function.php:32
+msgid "Authentication Required"
+msgstr ""
+
+#: login.function.php:33
+msgid "Your username and/or password are incorrect"
+msgstr ""
+
+#: login.php:97
+msgid ""
+"Sorry the Server is missing config.conf. Please create the file by copying "
+"config.conf.example and making the required changes."
+msgstr ""
+
+#: mailq.php:28 postfixmailq.php:28
+msgid "Mail Queue Viewer"
+msgstr ""
+
+#: mailq.php:40
+msgid "No queue specified\n"
+msgstr ""
+
+#: mailscanner_relay.php:39 ms_lint.php:32 sa_lint.php:31
+msgid "Cannot open pipe"
+msgstr ""
+
+#: mcp_rules_update.php:32
+msgid "MCP Rule Description Update"
+msgstr ""
+
+#: mcp_rules_update.php:39
+msgid ""
+"   This utility is used to update the SQL database with up-to-date "
+"descriptions of the MCP rules which are displayed on the Message Detail "
+"screen.<BR>\n"
+"   <BR>\n"
+"   This utility should generally be run after an update to your MCP rules, "
+"however it is safe to run at any time as it only replaces the existing "
+"values and inserts only new values in the table (therefore preserving "
+"descriptions from potentially deprecated or removed rules).<BR>\n"
+"  </TD>\n"
+" </TR>\n"
+" <TR>"
+msgstr ""
+
+#: mcp_rules_update.php:49 rep_mcp_rule_hits.php:95 rep_sa_rule_hits.php:98
+msgid "Rule"
+msgstr ""
+
+#: msconfig.php:29 mysql_status.php:33
+msgid "Not Authorized"
+msgstr ""
+
+#: msconfig.php:32
+msgid "Configuration"
+msgstr ""
+
+#: msconfig.php:36
+msgid "MailScanner Configuration"
+msgstr ""
+
+#: ms_lint.php:28 ms_lint.php:39
+msgid "MailScanner Lint"
+msgstr ""
+
+#: ms_lint.php:53 sa_lint.php:50
+#, php-format
+msgid "<!-- Timer: %s, Line Start: %s -->\n"
+msgstr ""
+
+#: ms_lint.php:74 sa_lint.php:71
+msgid "Finish - Total Time"
+msgstr ""
+
+#: msrule.php:28
+msgid "Rules"
+msgstr ""
+
+#: msrule.php:51
+msgid "Unable to open file.\n"
+msgstr ""
+
+#: mysql_status.php:28
+msgid "MySQL Status"
+msgstr ""
+
+#: other.php:31 other.php:38
+msgid "Tools"
+msgstr ""
+
+#: other.php:41 user_manager.php:296
+msgid "User Management"
+msgstr ""
+
+#: other.php:44
+msgid " Sophos Status"
+msgstr ""
+
+#: other.php:47
+msgid "F-Secure Status"
+msgstr ""
+
+#: other.php:53
+msgid "McAfee Status"
+msgstr ""
+
+#: other.php:56
+msgid "F-Port Status"
+msgstr ""
+
+#: other.php:59
+msgid "MySQL Database Status"
+msgstr ""
+
+#: other.php:62
+msgid "View MailScanner Configuration"
+msgstr ""
+
+#: other.php:66
+msgid "SpamAssassin Lint (Test)"
+msgstr ""
+
+#: other.php:67
+msgid "MailScanner Lint (Test)"
+msgstr ""
+
+#: other.php:68
+msgid "Update SpamAssasin Rule Descriptions"
+msgstr ""
+
+#: other.php:71
+msgid "Update MCP Rule Descriptions"
+msgstr ""
+
+#: other.php:74
+msgid "Update GeoIP Database"
+msgstr ""
+
+#: other.php:78
+msgid "Links"
+msgstr ""
+
+#: postfixmailq.php:30
+msgid "Combined mail queue (Inbound and Outbound)"
+msgstr ""
+
+#: quarantine_action.php:65
+msgid "Close Window"
+msgstr ""
+
+#: quarantine_action.php:74
+msgid "Error: No Message ID"
+msgstr ""
+
+#: quarantine_action.php:77
+msgid "Error: No action"
+msgstr ""
+
+#: quarantine_action.php:84
+msgid "Error: Message not found in quarantine"
+msgstr ""
+
+#: quarantine_action.php:120
+msgid "Delete: Are you sure?"
+msgstr ""
+
+#: quarantine_action.php:121 user_manager.php:264
+msgid "Yes"
+msgstr ""
+
+#: quarantine_action.php:121 user_manager.php:264
+msgid "No"
+msgstr ""
+
+#: quarantine_action.php:149
+msgid "Unknown action: "
+msgstr ""
+
+#: quarantine.php:30
+msgid "Quarantine Viewer"
+msgstr ""
+
+#: quarantine.php:38 quarantine.php:59 quarantine.php:160
+msgid "Folder"
+msgstr ""
+
+#: quarantine.php:46
+#, php-format
+msgid " - %02d items"
+msgstr ""
+
+#: quarantine.php:72
+msgid "No quarantine directories found\n"
+msgstr ""
+
+#: quarantine.php:114
+msgid "Folder: "
+msgstr ""
+
+#: quarantine.php:162
+msgid "No quarantined messages found\n"
+msgstr ""
+
+#: rep_audit_log.php:38 rep_audit_log.php:61 reports.php:107
+msgid "Audit Log"
+msgstr ""
+
+#: rep_mcp_rule_hits.php:32 reports.php:104
+msgid "MCP Rule Hits"
+msgstr ""
+
+#: rep_mcp_rule_hits.php:50 rep_sa_rule_hits.php:47 rep_top_mail_relays.php:65
+#: rep_top_recipient_domains_by_quantity.php:66
+#: rep_top_recipient_domains_by_volume.php:66
+#: rep_top_recipients_by_quantity.php:66 rep_top_recipients_by_volume.php:66
+#: rep_top_sender_domains_by_quantity.php:66
+#: rep_top_sender_domains_by_volume.php:66 rep_top_senders_by_quantity.php:72
+#: rep_top_senders_by_volume.php:66 rep_total_mail_by_date.php:91
+#: rep_viruses.php:127
+msgid "Error: no rows retrieved from database\n"
+msgstr ""
+
+#: rep_mcp_rule_hits.php:97 rep_sa_rule_hits.php:100
+msgid "Total"
+msgstr ""
+
+#: rep_mcp_score_dist.php:32 rep_mcp_score_dist.php:89 reports.php:103
+msgid "MCP Score Distribution"
+msgstr ""
+
+#: rep_mcp_score_dist.php:66 rep_mrtg_style.php:75 rep_sa_score_dist.php:66
+msgid "Error: Needs 2 or more rows of data to be retrieved from database\n"
+msgstr ""
+
+#: rep_mcp_score_dist.php:90 rep_sa_score_dist.php:89
+msgid "Score (rounded)"
+msgstr ""
+
+#: rep_mcp_score_dist.php:93 rep_mrtg_style.php:119 rep_sa_score_dist.php:93
+#: rep_total_mail_by_date.php:152
+msgid "No. of messages"
+msgstr ""
+
+#: rep_mcp_score_dist.php:112 rep_mrtg_style.php:159 rep_sa_score_dist.php:116
+#: rep_top_mail_relays.php:123 rep_top_recipient_domains_by_quantity.php:105
+#: rep_top_recipient_domains_by_volume.php:105
+#: rep_top_recipients_by_volume.php:109
+#: rep_top_sender_domains_by_quantity.php:106
+#: rep_top_sender_domains_by_volume.php:106
+#: rep_top_senders_by_quantity.php:116 rep_top_senders_by_volume.php:109
+#: rep_top_viruses.php:115 rep_total_mail_by_date.php:201
+msgid "File isn't readable. Please make sure that "
+msgstr ""
+
+#: rep_mcp_score_dist.php:112 rep_mrtg_style.php:159 rep_sa_score_dist.php:116
+#: rep_top_mail_relays.php:123 rep_top_recipient_domains_by_quantity.php:105
+#: rep_top_recipient_domains_by_volume.php:105
+#: rep_top_recipients_by_volume.php:109
+#: rep_top_sender_domains_by_quantity.php:106
+#: rep_top_sender_domains_by_volume.php:106
+#: rep_top_senders_by_quantity.php:116 rep_top_senders_by_volume.php:109
+#: rep_top_viruses.php:115 rep_total_mail_by_date.php:201
+msgid " is readable and writable by Mailwatch."
+msgstr ""
+
+#: rep_mcp_score_dist.php:122 rep_sa_score_dist.php:125
+#: rep_top_recipient_domains_by_quantity.php:114
+#: rep_top_recipient_domains_by_volume.php:114
+#: rep_top_recipients_by_volume.php:118
+#: rep_top_sender_domains_by_quantity.php:115
+#: rep_top_sender_domains_by_volume.php:115
+#: rep_top_senders_by_quantity.php:125 rep_top_senders_by_volume.php:118
+#: rep_top_viruses.php:124 rep_viruses.php:167
+msgid "Count"
+msgstr ""
+
+#: rep_message_listing.php:34 rep_message_listing.php:93
+#: rep_message_ops.php:34 reports.php:77
+msgid "Message Listing"
+msgstr ""
+
+#: rep_message_ops.php:79 reports.php:78
+msgid "Message Operations"
+msgstr ""
+
+#: rep_mrtg_style.php:32
+msgid "MRTG Style Mail Report"
+msgstr ""
+
+#: rep_mrtg_style.php:114
+msgid "Last 24 Hrs"
+msgstr ""
+
+#: rep_mrtg_style.php:168 rep_total_mail_by_date.php:158
+#: rep_total_mail_by_date.php:210
+msgid "Mail"
+msgstr ""
+
+#: rep_mrtg_style.php:171 rep_top_mail_relays.php:137
+#: rep_total_mail_by_date.php:144 rep_total_mail_by_date.php:173
+#: rep_total_mail_by_date.php:217
+msgid "Volume"
+msgstr ""
+
+#: reports.php:47
+msgid "add"
+msgstr ""
+
+#: reports.php:57
+msgid "save"
+msgstr ""
+
+#: reports.php:66
+msgid "load"
+msgstr ""
+
+#: reports.php:69
+msgid "delete"
+msgstr ""
+
+#: reports.php:80
+msgid "Total Messages by Date"
+msgstr ""
+
+#: reports.php:81 rep_top_mail_relays.php:32
+msgid "Top Mail Relays"
+msgstr ""
+
+#: reports.php:83 rep_top_viruses.php:32
+msgid "Top Viruses"
+msgstr ""
+
+#: reports.php:84 rep_viruses.php:32
+msgid "Virus Report"
+msgstr ""
+
+#: reports.php:86 rep_top_senders_by_quantity.php:32
+msgid "Top Senders by Quantity"
+msgstr ""
+
+#: reports.php:87 rep_top_senders_by_volume.php:32
+msgid "Top Senders by Volume"
+msgstr ""
+
+#: reports.php:88 rep_top_recipients_by_quantity.php:32
+msgid "Top Recipients by Quantity"
+msgstr ""
+
+#: reports.php:89 rep_top_recipients_by_volume.php:32
+msgid "Top Recipients by Volume"
+msgstr ""
+
+#: reports.php:93 rep_top_sender_domains_by_quantity.php:32
+msgid "Top Sender Domains by Quantity"
+msgstr ""
+
+#: reports.php:94 rep_top_sender_domains_by_volume.php:32
+msgid "Top Sender Domains by Volume"
+msgstr ""
+
+#: reports.php:95
+msgid "Top Recipient Domains by Quantity"
+msgstr ""
+
+#: reports.php:96 rep_top_recipient_domains_by_volume.php:32
+msgid "Top Recipient Domains by Volume"
+msgstr ""
+
+#: reports.php:99 rep_sa_score_dist.php:32 rep_sa_score_dist.php:88
+msgid "SpamAssassin Score Distribution"
+msgstr ""
+
+#: reports.php:100 rep_sa_rule_hits.php:32
+msgid "SpamAssassin Rule Hits"
+msgstr ""
+
+#: rep_top_mail_relays.php:74
+msgid "Hostname lookup failed"
+msgstr ""
+
+#: rep_top_mail_relays.php:82
+msgid "GeoIP lookup failed"
+msgstr ""
+
+#: rep_top_mail_relays.php:92
+msgid "Top 10 Mail Relays"
+msgstr ""
+
+#: rep_top_mail_relays.php:134
+msgid "Messages"
+msgstr ""
+
+#: rep_top_recipient_domains_by_quantity.php:32
+msgid "Top Recipients Domains by Quantity"
+msgstr ""
+
+#: rep_top_recipient_domains_by_quantity.php:78
+msgid "Top 10 Recipient Domains by Quantity"
+msgstr ""
+
+#: rep_top_recipient_domains_by_quantity.php:113
+#: rep_top_recipient_domains_by_volume.php:113
+#: rep_top_sender_domains_by_quantity.php:114
+#: rep_top_sender_domains_by_volume.php:114
+msgid "Domain"
+msgstr ""
+
+#: rep_top_recipient_domains_by_volume.php:78
+msgid "Top 10 Recipient Domains by Volume"
+msgstr ""
+
+#: rep_top_recipients_by_quantity.php:80
+msgid "Top 10 Recipients by Quantity"
+msgstr ""
+
+#: rep_top_recipients_by_volume.php:81
+msgid "Top 10 Recipients by Volume"
+msgstr ""
+
+#: rep_top_recipients_by_volume.php:117 rep_top_senders_by_quantity.php:124
+#: rep_top_senders_by_volume.php:117
+msgid "E-Mail Address"
+msgstr ""
+
+#: rep_top_sender_domains_by_quantity.php:78
+msgid "Top 10 Sender Domains by Quantity"
+msgstr ""
+
+#: rep_top_sender_domains_by_volume.php:78
+msgid "Top 10 Sender Domains by Volume"
+msgstr ""
+
+#: rep_top_senders_by_quantity.php:87
+msgid "Top 10 Senders by Quantity"
+msgstr ""
+
+#: rep_top_senders_by_volume.php:81
+msgid "Top 10 Senders by Volume"
+msgstr ""
+
+#: rep_top_viruses.php:60
+msgid "Error: no rows retrieved from database..."
+msgstr ""
+
+#: rep_top_viruses.php:87
+msgid "Top 10 Viruses"
+msgstr ""
+
+#: rep_total_mail_by_date.php:32
+msgid "Total Mail by Date"
+msgstr ""
+
+#: rep_total_mail_by_date.php:148
+msgid "Total Mail Processed by Date"
+msgstr ""
+
+#: rep_total_mail_by_date.php:219
+msgid "Unknown<BR>Users"
+msgstr ""
+
+#: rep_total_mail_by_date.php:220
+msgid "Can't<BR>Resolve"
+msgstr ""
+
+#: rep_total_mail_by_date.php:243
+msgid "Totals"
+msgstr ""
+
+#: rep_viruses.php:165
+msgid "Scanner"
+msgstr ""
+
+#: rep_viruses.php:166
+msgid "First Seen"
+msgstr ""
+
+#: sa_lint.php:28 sa_lint.php:38
+msgid "SpamAssassin Lint"
+msgstr ""
+
+#: sa_rules_update.php:32
+msgid "SpamAssassin Rule Description Update"
+msgstr ""
+
+#: sa_rules_update.php:39
+msgid ""
+"   This utility is used to update the SQL database with up-to-date "
+"descriptions of the SpamAssassin rules which are displayed on the Message "
+"Detail screen.<BR>"
+msgstr ""
+
+#: sa_rules_update.php:41
+msgid ""
+"   This utility should generally be run after a SpamAssassin update, however "
+"it is safe to run at any time as it only replaces the existing values and "
+"inserts only new values in the table (therefore preserving descriptions from "
+"potentially deprecated or removed rules).<BR>"
+msgstr ""
+
+#: status.php:64
+msgid "Last "
+msgstr ""
+
+#: status.php:64
+#, php-format
+msgid " Messages (Refreshing every %s seconds)"
+msgstr ""
+
+#: user_manager.php:28
+msgid "User Manager"
+msgstr ""
+
+#: user_manager.php:32
+msgid "This utility is not used in DefenderMX.\n"
+msgstr ""
+
+#: user_manager.php:43
+msgid "Are you sure you want to delete user "
+msgstr ""
+
+#: user_manager.php:52 user_manager.php:61
+msgid "Are you sure?"
+msgstr ""
+
+#: user_manager.php:79 user_manager.php:298
+msgid "New User"
+msgstr ""
+
+#: user_manager.php:79
+msgid ""
+"For all users other than Administrator you must use an email address for the "
+"username"
+msgstr ""
+
+#: user_manager.php:81 user_manager.php:153 user_manager.php:315
+msgid "Name"
+msgstr ""
+
+#: user_manager.php:84 user_manager.php:155
+msgid "User Type"
+msgstr ""
+
+#: user_manager.php:86 user_manager.php:159
+msgid "User"
+msgstr ""
+
+#: user_manager.php:87 user_manager.php:158
+msgid "Domain Administrator"
+msgstr ""
+
+#: user_manager.php:88 user_manager.php:157
+msgid "Administrator"
+msgstr ""
+
+#: user_manager.php:90 user_manager.php:162 user_manager.php:319
+msgid "Quarantine Report"
+msgstr ""
+
+#: user_manager.php:90 user_manager.php:162 user_manager.php:319
+msgid "Send Daily Report?"
+msgstr ""
+
+#: user_manager.php:91 user_manager.php:163 user_manager.php:320
+msgid "Quarantine Report Recipient"
+msgstr ""
+
+#: user_manager.php:91
+msgid "Override quarantine report recipient?<BR>(uses your username if blank)"
+msgstr ""
+
+#: user_manager.php:92 user_manager.php:164 user_manager.php:321
+msgid "Scan for Spam"
+msgstr ""
+
+#: user_manager.php:92 user_manager.php:321
+msgid "Scan e-mail for Spam?"
+msgstr ""
+
+#: user_manager.php:93 user_manager.php:165 user_manager.php:322
+msgid "Spam Score"
+msgstr ""
+
+#: user_manager.php:93 user_manager.php:94 user_manager.php:165
+#: user_manager.php:166 user_manager.php:322 user_manager.php:323
+msgid "Use Default"
+msgstr ""
+
+#: user_manager.php:94 user_manager.php:166 user_manager.php:323
+msgid "High Spam Score"
+msgstr ""
+
+#: user_manager.php:95
+msgid "Create"
+msgstr ""
+
+#: user_manager.php:100 user_manager.php:332
+msgid "Passwords do not match"
+msgstr ""
+
+#: user_manager.php:125
+msgid "administrator"
+msgstr ""
+
+#: user_manager.php:128
+msgid "domain administrator"
+msgstr ""
+
+#: user_manager.php:131
+msgid "user"
+msgstr ""
+
+#: user_manager.php:151 user_manager.php:313
+msgid "Edit User "
+msgstr ""
+
+#: user_manager.php:160
+msgid "User (Regexp)"
+msgstr ""
+
+#: user_manager.php:163 user_manager.php:320
+msgid "Override quarantine report recipient?<br>(uses your username if blank)"
+msgstr ""
+
+#: user_manager.php:164
+msgid "Scan eMail for Spam?"
+msgstr ""
+
+#: user_manager.php:167
+msgid "Update"
+msgstr ""
+
+#: user_manager.php:251
+msgid "Activate/Deactivate"
+msgstr ""
+
+#: user_manager.php:257
+#, php-format
+msgid "User Filters for %s"
+msgstr ""
+
+#: user_manager.php:258
+msgid "Filter"
+msgstr ""
+
+#: user_manager.php:258
+msgid "Active"
+msgstr ""
+
+#: user_manager.php:258
+msgid "Actions"
+msgstr ""
+
+#: user_manager.php:290
+msgid "Edit"
+msgstr ""
+
+#: user_manager.php:290
+msgid "Filters"
+msgstr ""
+
+#: user_manager.php:309
+msgid "edit"
+msgstr ""
+
+#: viewmail.php:30
+msgid "Message Viewer"
+msgstr ""
+
+#: viewmail.php:90 viewpart.php:72
+msgid "No input filename"
+msgstr ""
+
+#: viewmail.php:96 viewpart.php:78
+msgid "Error: file not found\n"
+msgstr ""
+
+#: viewmail.php:134
+msgid "Date:"
+msgstr ""
+
+#: viewmail.php:167
+msgid "Actions:"
+msgstr ""
+
+#: viewmail.php:167
+msgid "Release this message"
+msgstr ""
+
+#: viewmail.php:167
+msgid "Delete this message"
+msgstr ""
+
+#: viewmail.php:201
+msgid "Download"
+msgstr ""
+
+#: viewpart.php:32
+msgid "No input Message ID"
+msgstr ""
+
+#: viewpart.php:36
+#, php-format
+msgid "Message %s not found\n"
+msgstr ""
+
+#: viewpart.php:96
+#, php-format
+msgid "Part %s not found\n"
+msgstr ""
+
+#: viewpart.php:109
+msgid "Quarantined E-Mail Viewer"
+msgstr ""
+
+#: clamav.awk:36
+msgid "Version"
+msgstr ""
+
+#: clamav.awk:37
+msgid "Virus Identities"
+msgstr ""
+
+#: clamav.awk:38
+msgid "Database Timestamp"
+msgstr ""
+
+msgid "remove"
+msgstr ""
+
+msgid "is equal to"
+msgstr ""
+
+msgid "is not equal to"
+msgstr ""
+
+msgid "is greater than or equal to"
+msgstr ""
+
+msgid "is less than"
+msgstr ""
+
+msgid "is less than or equal to"
+msgstr ""
+
+msgid "contains"
+msgstr ""
+
+msgid "does not contain"
+msgstr ""
+
+msgid "matches the regular expression"
+msgstr ""
+
+msgid "does not match the regular expression"
+msgstr ""
+
+msgid "is null"
+msgstr ""
+
+msgid "is not null"
+msgstr ""
+
+msgid "is greater than"
+msgstr ""
+
+msgid "Headers"
+msgstr ""
+
+msgid "Message ID"
+msgstr ""
+
+msgid "Size (bytes)"
+msgstr ""
+
+msgid "From Domain"
+msgstr ""
+
+msgid "To Domain"
+msgstr ""
+
+msgid "Received from (IP Address)"
+msgstr ""
+
+msgid "is Spam (>0 = TRUE)"
+msgstr ""
+
+msgid "is High Scoring Spam (>0 = TRUE)"
+msgstr ""
+
+msgid "is Spam according to SpamAssassin (>0 = TRUE)"
+msgstr ""
+
+msgid "is Listed in one or more RBL's (>0 = TRUE)"
+msgstr ""
+
+msgid "is Whitelisted (>0 = TRUE)"
+msgstr ""
+
+msgid "is Blacklisted (>0 = TRUE)"
+msgstr ""
+
+msgid "SpamAssassin Score"
+msgstr ""
+
+msgid "is MCP (>0 = TRUE)"
+msgstr ""
+
+msgid "is High Scoring MCP (>0 = TRUE)"
+msgstr ""
+
+msgid "is MCP accoding to SpamAssassin (>0 = TRUE)"
+msgstr ""
+
+msgid "is MCP Whitelisted (>0 = TRUE)"
+msgstr ""
+
+msgid "is MCP Blacklisted (>0 = TRUE)"
+msgstr ""
+
+msgid "contained a Virus (>0 = TRUE)"
+msgstr ""
+
+msgid "contained an Unacceptable Attachment (>0 = TRUE)"
+msgstr ""
+
+msgid "contained other infections (>0 = TRUE)"
+msgstr ""
+
+msgid "MailScanner Hostname"
+msgstr ""
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Spam Check"
+msgstr ""
+
+#: quarantine_report.php:60
+#, php-format
+msgid "Quarantine Report for %s"
+msgstr ""
+
+#: quarantine_report.php:61
+#, php-format
+msgid ""
+"In the last %s day(s) you have received %s e-mails that have been "
+"quarantined and are listed below.  All messages in the quarantine are "
+"automatically deleted %s days after the date that they were received."
+msgstr ""
+
+#: quarantine_report.php:73
+msgid "Received"
+msgstr ""
+
+#: quarantine_report.php:76
+msgid "Reason"
+msgstr ""
+
+#: quarantine_report.php:95
+#, php-format
+msgid ""
+"Quarantine Report for %s\n"
+"\n"
+"In the last %s day(s) you have received %s e-mails that have been "
+"quarantined and are listed below.  All messages in the quarantine are "
+"automatically deleted %s days after the date that they were received.\n"
+"\n"
+"%s"
+msgstr ""
+
+#: quarantine_report.php:101
+#, php-format
+msgid ""
+"Received: %s\n"
+"From: %s\n"
+"Subject: %s\n"
+"Reason: %s\n"
+"Action:\n"
+"%s\n"
+"\n"
+msgstr ""
+
+#: quarantine_report.php:163 quarantine_report.php:164
+#: quarantine_report.php:165 quarantine_report.php:166
+#: quarantine_report.php:196 quarantine_report.php:197
+#: quarantine_report.php:198 quarantine_report.php:199
+msgid "Policy"
+msgstr ""
+
+#: quarantine_report.php:168 quarantine_report.php:201
+msgid "UNKNOWN"
+msgstr ""

@@ -1,0 +1,1885 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-20 13:57+0800\n"
+"PO-Revision-Date: 2013-06-21 14:00+0800\n"
+"Last-Translator: James C.C. Chien<james@mindman.com.tw>\n"
+"Language-Team: MailWatch <mailwatch-users@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bayes_info.php:32 other.php:64
+msgid "SpamAssassin Bayes Database Info"
+msgstr "SpamAssassin Bayes 资料库资讯"
+
+#: bayes_info.php:40
+msgid "Bayes Database Information"
+msgstr "Bayes 资料库资讯"
+
+#: bayes_info.php:63 bayes_info.php:103
+msgid "Number of Spam Messages"
+msgstr "垃圾邮件数量"
+
+#: bayes_info.php:66 bayes_info.php:107
+msgid "Number of Ham Messages"
+msgstr "正常邮件数量"
+
+#: bayes_info.php:69 bayes_info.php:111
+msgid "Number of Tokens"
+msgstr "Token 数量"
+
+#: bayes_info.php:72 bayes_info.php:115
+msgid "Oldest Token"
+msgstr "最旧的 Token"
+
+#: bayes_info.php:75 bayes_info.php:119
+msgid "Newest Token"
+msgstr "最新的 Token"
+
+#: bayes_info.php:78 bayes_info.php:127
+msgid "Last Expiry"
+msgstr "最近逾期清除"
+
+#: bayes_info.php:81 bayes_info.php:131
+msgid "Last Expiry Reduction Count"
+msgstr "最近逾期清除数量"
+
+#: bayes_info.php:86 bayes_info.php:138
+msgid "Database Type"
+msgstr "资料库种类"
+
+#: bayes_info.php:123
+msgid "Last Journal Sync"
+msgstr "最近日志同步"
+
+#: bayes_info.php:138
+msgid "Spamassassin Build-In"
+msgstr "SpamAssassin 内建"
+
+#: checklogin.php:52 checklogin.php:64
+msgid "Invalid query: "
+msgstr "错误的查询: "
+
+#: checklogin.php:53 checklogin.php:65
+msgid "Whole query: "
+msgstr "完整查询: "
+
+#: checklogin.php:155 login.php:34 login.php:91
+msgid "MailWatch Login Page"
+msgstr "MailWatch 登入页面"
+
+#: checklogin.php:151 login.php:52 login.php:104
+msgid "MailWatch Login"
+msgstr "MailWatch 登入"
+
+#: checklogin.php:154
+msgid "Bad username or Password"
+msgstr "错误的使用者或密码"
+
+#: checklogin.php:159 login.php:55 user_manager.php:80 user_manager.php:152
+#: user_manager.php:315
+msgid "Username"
+msgstr "使用者帐号"
+
+#: checklogin.php:166 login.php:60 user_manager.php:82 user_manager.php:83
+#: user_manager.php:154 user_manager.php:155 user_manager.php:317
+#: user_manager.php:318
+msgid "Password"
+msgstr "密码"
+
+#: checklogin.php:175 login.php:67
+msgid "Login"
+msgstr "登入"
+
+#: checklogin.php:175 lists.php:301 login.php:67 user_manager.php:95
+#: user_manager.php:168
+msgid "Reset"
+msgstr "重置"
+
+#: checklogin.php:175 login.php:67 login.php:110
+msgid "Back"
+msgstr "返回"
+
+#: detail.php:45
+msgid "yes"
+msgstr "是"
+
+#: detail.php:46
+msgid "no"
+msgstr "否"
+
+#: detail.php:54
+msgid "Received on:"
+msgstr "收信时间:"
+
+#: detail.php:55
+msgid "Received by:"
+msgstr "收信主机:"
+
+#: detail.php:56 detail.php:111
+msgid "Received from:"
+msgstr "寄信主机:"
+
+#: detail.php:57 detail.php:118
+msgid "Received Via:"
+msgstr "路由主机:"
+
+#: detail.php:59 detail.php:225
+msgid "Message Headers:"
+msgstr "邮件档头:"
+
+#: detail.php:60 lists.php:239 viewmail.php:156 viewmail.php:158
+#: viewmail.php:160
+msgid "From:"
+msgstr "寄件者:"
+
+#: detail.php:61 detail.php:179 detail.php:191 lists.php:243 viewmail.php:176
+#: viewmail.php:178 viewmail.php:180
+msgid "To:"
+msgstr "收件者:"
+
+#: detail.php:62 detail.php:179 detail.php:195 viewmail.php:196
+#: viewmail.php:198 viewmail.php:200
+msgid "Subject:"
+msgstr "主旨:"
+
+#: detail.php:63 detail.php:222
+msgid "Size:"
+msgstr "大小:"
+
+#: detail.php:64
+msgid "Archive:"
+msgstr "存档:"
+
+#: detail.php:65
+msgid "Anti-Virus/Dangerous Content Protection"
+msgstr "病毒/恶意内容 反制防护"
+
+#: detail.php:65 detail.php:70 detail.php:80 detail.php:263
+msgid "HEADER"
+msgstr "邮件档头"
+
+#: detail.php:66
+msgid "Virus:"
+msgstr "病毒:"
+
+#: detail.php:67
+msgid "Blocked File:"
+msgstr "拦截的档案:"
+
+#: detail.php:68
+msgid "Other Infection:"
+msgstr "其它感染:"
+
+#: detail.php:69 detail.php:167
+msgid "Report:"
+msgstr "报告:"
+
+#: detail.php:71 detail.php:247
+msgid "Spam:"
+msgstr "垃圾邮件:"
+
+#: detail.php:72 detail.php:255
+msgid "High Scoring Spam:"
+msgstr "高分垃圾邮件:"
+
+#: detail.php:73
+msgid "SpamAssassin Spam:"
+msgstr "SpamAssassin 垃圾邮件:"
+
+#: detail.php:74
+msgid "Listed in RBL:"
+msgstr "列在 RBL:"
+
+#: detail.php:75
+msgid "Spam Whitelisted:"
+msgstr "垃圾邮件白名单:"
+
+#: detail.php:76
+msgid "Spam Blacklisted:"
+msgstr "垃圾邮件黑名单:"
+
+#: detail.php:77 detail.php:240
+msgid "SpamAssassin Autolearn:"
+msgstr "SpamAssassin 自动学习:"
+
+#: detail.php:78
+msgid "SpamAssassin Score:"
+msgstr "SpamAssassin 分数:"
+
+#: detail.php:79 detail.php:219
+msgid "Spam Report:"
+msgstr "垃圾邮件报告:"
+
+#: detail.php:80
+msgid "Message Content Protection (MCP)"
+msgstr "邮件内容防护 (MCP)"
+
+#: detail.php:81
+msgid "MCP:"
+msgstr "MCP:"
+
+#: detail.php:82
+msgid "High Scoring MCP:"
+msgstr "高分 MCP:"
+
+#: detail.php:83
+msgid "SpamAssassin MCP:"
+msgstr "SpamAssassin MCP:"
+
+#: detail.php:84
+msgid "MCP Whitelisted:"
+msgstr "MCP 白名单:"
+
+#: detail.php:85
+msgid "MCP Blacklisted:"
+msgstr "MCP 黑名单:"
+
+#: detail.php:86
+msgid "MCP Score:"
+msgstr "MCP 分数:"
+
+#: detail.php:87 detail.php:259
+msgid "MCP Report:"
+msgstr "MCP 报告:"
+
+#: detail.php:101
+#, php-format
+msgid "Message ID '%s' not found!"
+msgstr "找不到邮件ID '%s'!"
+
+#: detail.php:113 detail.php:174
+msgid "Add to Whitelist"
+msgstr "加至白名单"
+
+#: detail.php:113 detail.php:174
+msgid "Add to Blacklist"
+msgstr "加至黑名单"
+
+#: detail.php:122 rep_top_mail_relays.php:133
+msgid "IP Address"
+msgstr "IP 位址"
+
+#: detail.php:123 rep_top_mail_relays.php:132
+msgid "Hostname"
+msgstr "主机名称"
+
+#: detail.php:124 rep_top_mail_relays.php:134
+msgid "Country"
+msgstr "国家"
+
+#: detail.php:126 functions.php:257 functions.php:591 functions.php:1877
+#: rep_mrtg_style.php:169 rep_sa_rule_hits.php:103 rep_top_mail_relays.php:137
+#: rep_total_mail_by_date.php:163 rep_total_mail_by_date.php:211
+#: quarantine_report.php:160 quarantine_report.php:161
+#: quarantine_report.php:162 quarantine_report.php:164
+#: quarantine_report.php:169 quarantine_report.php:193
+#: quarantine_report.php:194 quarantine_report.php:195
+#: quarantine_report.php:197 quarantine_report.php:202
+msgid "Spam"
+msgstr "垃圾邮件"
+
+#: detail.php:127 rep_mrtg_style.php:170 rep_top_viruses.php:123
+#: rep_total_mail_by_date.php:209 rep_viruses.php:164
+#: quarantine_report.php:157 quarantine_report.php:190
+msgid "Virus"
+msgstr "病毒"
+
+#: detail.php:128
+msgid "All"
+msgstr "所有"
+
+#: detail.php:139 detail.php:142
+msgid "Reverse Lookup Failed"
+msgstr "反解失败"
+
+#: detail.php:148
+msgid "GeoIP Lookup Failed"
+msgstr "GeoIP 解析失败"
+
+#: detail.php:284 detail.php:301
+msgid "Relayed by"
+msgstr "转寄者"
+
+#: detail.php:285 detail.php:302
+msgid "Relayed to"
+msgstr "转寄至"
+
+#: detail.php:286 detail.php:303
+msgid "Delay"
+msgstr "延迟"
+
+#: detail.php:287 detail.php:304 functions.php:274 functions.php:1548
+msgid "Status"
+msgstr "状态"
+
+#: detail.php:300 functions.php:1431 functions.php:1435
+msgid "Date/Time"
+msgstr "日期/时间"
+
+#: detail.php:318
+msgid "Relay Information"
+msgstr "转寄资讯"
+
+#: detail.php:375
+msgid "Quarantine Command Results"
+msgstr "隔离指令结果"
+
+#: detail.php:379
+msgid "Result Messages"
+msgstr "结果讯息"
+
+#: detail.php:389
+msgid "Error Messages"
+msgstr "错误讯息"
+
+#: detail.php:398 functions.php:167 geoip_update.php:199
+msgid "Error"
+msgstr "错误"
+
+#: detail.php:406 functions.php:601
+msgid "Quarantine"
+msgstr "隔离"
+
+#: detail.php:409 functions.php:1877
+msgid "Release"
+msgstr "释放"
+
+#: detail.php:410 filter.inc:267 lists.php:222 user_manager.php:252
+#: user_manager.php:291
+msgid "Delete"
+msgstr "删除"
+
+#: detail.php:411
+msgid "SA Learn"
+msgstr "SA 学习"
+
+#: detail.php:412 msrule.php:36
+msgid "File"
+msgstr "档案"
+
+#: detail.php:413
+msgid "Type"
+msgstr "种类"
+
+#: detail.php:414
+msgid "Path"
+msgstr "路径"
+
+#: detail.php:415
+msgid "Dangerous"
+msgstr "危险"
+
+#: detail.php:430
+msgid "As Ham"
+msgstr "视为正常邮件"
+
+#: detail.php:430
+msgid "As Spam"
+msgstr "视为垃圾邮件"
+
+#: detail.php:430 functions.php:1877
+msgid "Forget"
+msgstr "遗忘"
+
+#: detail.php:430
+msgid "As Spam+Report"
+msgstr "视为垃圾邮件+提报"
+
+#: detail.php:430
+msgid "As Ham+Revoke"
+msgstr "视为正常邮件+撤回"
+
+#: detail.php:468
+msgid "Alternate Recipient(s)"
+msgstr "替换的收件人"
+
+#: docs.php:27 docs.php:35 functions.php:605
+msgid "Documentation"
+msgstr "文件"
+
+#: docs.php:36
+msgid ""
+"This page does require authentication, so you can put links to your site "
+"documentation here and allow your users to access it if you wish."
+msgstr ""
+"本页面不需要验证, 所以如果您有需要可将网站文件连结置放於此并允许使用者存取."
+
+#: do_message_ops.php:31
+msgid "Operation Results"
+msgstr "操作结果"
+
+#: do_message_ops.php:35
+msgid "Spam Learn Results"
+msgstr "垃圾邮件学习结果"
+
+#: do_message_ops.php:82
+#, php-format
+msgid "Message %s not found in quarantine"
+msgstr "隔离区中找不到邮件 %s"
+
+#: filter.inc:103
+msgid "Active Filters"
+msgstr "有效的过滤器"
+
+#: filter.inc:108
+msgid "Remove"
+msgstr "移除"
+
+#: filter.inc:111 filter.inc:312
+msgid "None"
+msgstr "无"
+
+#: filter.inc:115
+msgid "Add Filter"
+msgstr "增加过滤器"
+
+#: filter.inc:117
+msgid "Statistics (Filtered)"
+msgstr "统计 (已过滤的)"
+
+#: filter.inc:130
+msgid "Oldest record"
+msgstr "最旧的纪录"
+
+#: filter.inc:131
+msgid "Newest record"
+msgstr "最新的纪录"
+
+#: filter.inc:132
+msgid "Message count"
+msgstr "邮件数量"
+
+#: filter.inc:134 functions.php:602 reports.php:40
+msgid "Reports"
+msgstr "报表"
+
+#: filter.inc:262 lists.php:301
+msgid "Add"
+msgstr "新增"
+
+#: filter.inc:263
+msgid "To set date you must use YYYY-mm-dd format"
+msgstr "设定的日期格式必须是 YYYY-mm-dd"
+
+#: filter.inc:264
+msgid "Load/Save Filter"
+msgstr "载入/储存 过滤器"
+
+#: filter.inc:265 filter.inc:267
+msgid "Save"
+msgstr "储存"
+
+#: filter.inc:267
+msgid "Load"
+msgstr "载入"
+
+#: functions.php:28
+msgid ""
+"Cannot read conf.php - please create it by copying conf.php.example and "
+"modifying the parameters to suit.\n"
+msgstr ""
+"无法读取 config.conf - 请复制 config.conf.example 并修改相关参数以建立该档"
+"案.\n"
+
+#: functions.php:165
+msgid ""
+"You are running MailWatch in distributed mode therefore MailWatch cannot "
+"read your MailScanner configuration files to acertain your primary virus "
+"scanner - please edit functions.php and manually set the VIRUS_REGEX "
+"constant for your primary scanner."
+msgstr ""
+"您的 MailWatch 在分散模式下执行, 所以 MailWatch 无法读取您的 MailScanner 设定"
+"档来确认主要的扫毒引擎 - 请修改 function.php 及 手动设定 VIRUS_REGEX 参数为您"
+"的主要扫毒引擎."
+
+#: functions.php:204
+msgid "MailWatch Filter Report"
+msgstr "MailWatch 过滤器报告"
+
+#: functions.php:242
+msgid "Jump to message"
+msgstr "跳到邮件(填入邮件ID)"
+
+#: functions.php:246
+msgid "Current User"
+msgstr "目前使用者"
+
+#: functions.php:246
+msgid "Current Sytem Time"
+msgstr "目前系统时间"
+
+#: functions.php:246
+#msgid "Welcome"
+#msgstr "欢迎"
+
+#: functions.php:255
+msgid "Color Codes"
+msgstr "颜色代码"
+
+#: functions.php:256 quarantine_report.php:158 quarantine_report.php:191
+msgid "Bad Content"
+msgstr "不良内容"
+
+#: functions.php:256 quarantine_report.php:159 quarantine_report.php:192
+msgid "Infected"
+msgstr "感染"
+
+#: functions.php:258
+msgid "High Spam"
+msgstr "高分垃圾邮件"
+
+#: functions.php:260
+msgid "High MCP"
+msgstr "高分 MCP"
+
+#: functions.php:261
+msgid "Whitelisted"
+msgstr "白名单"
+
+#: functions.php:262 quarantine_report.php:163 quarantine_report.php:196
+msgid "Blacklisted"
+msgstr "黑名单"
+
+#: functions.php:263
+msgid "Not Scanned"
+msgstr "未扫描"
+
+#: functions.php:264 functions.php:586 rep_mcp_rule_hits.php:97
+msgid "Clean"
+msgstr "干净邮件"
+
+#: functions.php:278
+msgid "NO"
+msgstr "否"
+
+#: functions.php:279
+msgid "YES"
+msgstr "是"
+
+#: functions.php:283
+msgid "children"
+msgstr "子程序"
+
+#: functions.php:286 functions.php:299
+msgid "proc(s)"
+msgstr "程序"
+
+#: functions.php:310
+msgid "Load Average"
+msgstr "平均负载"
+
+#: functions.php:324
+msgid "Mail Queues"
+msgstr "邮件驻列"
+
+#: functions.php:325 functions.php:335
+msgid "Inbound"
+msgstr "内寄"
+
+#: functions.php:326 functions.php:336
+msgid "Outbound"
+msgstr "外送"
+
+#: functions.php:328
+#, php-format
+msgid "Please verify read permissions on %s and %s"
+msgstr "请确认 %s 及 %s 读取权限"
+
+#: functions.php:341
+msgid "Free Drive Space"
+msgstr "剩余磁碟空间"
+
+#: functions.php:584
+msgid "Today's Totals"
+msgstr "今日统计"
+
+#: functions.php:585
+msgid "Processed"
+msgstr "处理"
+
+#: functions.php:587 rep_top_mail_relays.php:136
+#: rep_total_mail_by_date.php:160
+msgid "Viruses"
+msgstr "病毒"
+
+#: functions.php:588
+msgid "Top Virus"
+msgstr "最高病毒"
+
+#: functions.php:589
+msgid "Blocked files"
+msgstr "拦截的档案"
+
+#: functions.php:590
+msgid "Others"
+msgstr "其它"
+
+#: functions.php:592
+msgid "High Scoring Spam"
+msgstr "高分垃圾邮件"
+
+#: functions.php:594
+msgid "High Scoring MCP"
+msgstr "高分 MCP"
+
+#: functions.php:599 status.php:28
+msgid "Recent Messages"
+msgstr "最近邮件"
+
+#: functions.php:600
+msgid "Lists"
+msgstr "黑/白名单"
+
+#: functions.php:603
+msgid "Tools/Links"
+msgstr "工具/键结"
+
+#: functions.php:604
+msgid "Software Versions"
+msgstr "软体版本"
+
+#: functions.php:606
+msgid "Logout"
+msgstr "登出"
+
+#: functions.php:733
+msgid "Could not connect to database"
+msgstr "无法连结资料库"
+
+#: functions.php:734
+msgid "Could not select db"
+msgstr "无法选择资料库"
+
+#: functions.php:761
+msgid "Error executing query"
+msgstr "查询执行错误"
+
+#: functions.php:818 functions.php:878 rep_mcp_score_dist.php:121
+#: rep_sa_score_dist.php:124
+msgid "Score"
+msgstr "分数"
+
+#: functions.php:818 functions.php:878
+msgid "Matching Rule"
+msgstr "符合规则"
+
+#: functions.php:818 functions.php:878 mcp_rules_update.php:49
+#: rep_mcp_rule_hits.php:95 rep_sa_rule_hits.php:99
+msgid "Description"
+msgstr "说明"
+
+#: functions.php:1026
+msgid "Cannot open ruleset file"
+msgstr "无法开启规则集档案"
+
+#: functions.php:1070 functions.php:1184
+#, php-format
+msgid "Cannot find configuration value: %s in %s\n"
+msgstr "无法找到设定值: %s 於 %s\n"
+
+#: functions.php:1194
+msgid "Cannot open MailScanner configuration file"
+msgstr "无法开启 MailScanner 设定档"
+
+#: functions.php:1360 functions.php:1913 functions.php:1976 functions.php:2067
+#, php-format
+msgid "Displaying page %s of %s - Records %s to %s of %s"
+msgstr "第 %s 页 共 %s 页 - 记录 %s 至 %s 共 %s 笔"
+
+#: functions.php:1409
+msgid "Ops"
+msgstr "操作"
+
+#: functions.php:1423 functions.php:1519
+msgid "Host"
+msgstr "主机"
+
+#: functions.php:1449 rep_top_recipient_domains_by_quantity.php:115
+#: rep_top_recipient_domains_by_volume.php:115
+#: rep_top_recipients_by_quantity.php:118 rep_top_recipients_by_volume.php:119
+#: rep_top_sender_domains_by_quantity.php:116
+#: rep_top_sender_domains_by_volume.php:116
+#: rep_top_senders_by_quantity.php:126 rep_top_senders_by_volume.php:119
+msgid "Size"
+msgstr "大小"
+
+#: functions.php:1453 lists.php:214 quarantine_report.php:76
+msgid "From"
+msgstr "寄件者"
+
+#: functions.php:1456 lists.php:215
+msgid "To"
+msgstr "收件者"
+
+#: functions.php:1459 quarantine_report.php:77
+msgid "Subject"
+msgstr "主旨"
+
+#: functions.php:1523 rep_mrtg_style.php:115 rep_mrtg_style.php:167
+#: rep_total_mail_by_date.php:148 rep_total_mail_by_date.php:207
+msgid "Date"
+msgstr "日期"
+
+#: functions.php:1526
+msgid "Time"
+msgstr "时间"
+
+#: functions.php:1533
+msgid "SA Score"
+msgstr "SA 分数"
+
+#: functions.php:1541
+msgid "MCP Score"
+msgstr "MCP 分数"
+
+#: functions.php:1552
+msgid "Message"
+msgstr "讯息"
+
+#: functions.php:1555
+msgid "Tries"
+msgstr "重试"
+
+#: functions.php:1559
+msgid "Last"
+msgstr "最后"
+
+#: functions.php:1774
+msgid "(Hostname lookup failed)"
+msgstr "(主机名称无法解析)"
+
+#: functions.php:1746
+#msgid "or"
+#msgstr "或"
+
+#: functions.php:1874
+msgid "Clear"
+msgstr "清除"
+
+#: functions.php:1874
+msgid "all"
+msgstr "所有"
+
+#: functions.php:1875
+msgid "Learn"
+msgstr "学习"
+
+#: functions.php:1877 rep_sa_rule_hits.php:101
+msgid "Ham"
+msgstr "正常邮件"
+
+#: functions.php:2031
+msgid "No rows retrieved!\n"
+msgstr "无法取得资料列!\n"
+
+#: functions.php:2100
+msgid "No rows retrieved."
+msgstr "无法取得资料列."
+
+#: functions.php:2120
+#, php-format
+msgid "Page generated in %f seconds\n"
+msgstr "本页在 %f 秒内产生\n"
+
+#: functions.php:2283 functions.php:2317
+msgid "Error: could not connect to LDAP directory on"
+msgstr "错误: 无法连结到 LDAP目录到"
+
+#: functions.php:2286 functions.php:2320
+msgid "Error: unable to bind to LDAP directory"
+msgstr "错误: 无法 BIND 到 LDAP目录"
+
+#: functions.php:2668 functions.php:2681
+msgid "Release: message released to "
+msgstr "释放: 邮件释放给 "
+
+#: functions.php:2684
+msgid "Release: error code "
+msgstr "释放: 错误码 "
+
+#: functions.php:2684
+msgid "returned from Sendmail"
+msgstr "自 sendmail 返回"
+
+#: functions.php:2788
+msgid "SpamAssassin: error code "
+msgstr "SpamAssassin 学习: 错误码"
+
+#: functions.php:2788
+msgid "returned from SpamAssassin"
+msgstr "自 SpamAssassin 返回"
+
+#: functions.php:2801
+msgid "SA Learn: "
+msgstr "SA 学习: "
+
+#: functions.php:2804
+msgid "SA Learn: error code "
+msgstr "SA 学习: 错误码 "
+
+#: functions.php:2804
+msgid "returned from sa-learn"
+msgstr "自 sa-learn 返回"
+
+#: functions.php:2843
+msgid "Invalid argument"
+msgstr "错误的参数"
+
+#: functions.php:2852
+msgid "Delete: deleted file "
+msgstr "删除: 删除档案"
+
+#: functions.php:2856
+msgid "Delete: error deleting file "
+msgstr "删除: 删除档时发生错误"
+
+#: geoip_update.php:30
+msgid "GeoIP Database Update"
+msgstr "GeoIP 资料库更新"
+
+#: geoip_update.php:39
+msgid ""
+"This utility is used to update the SQL database with up-to-date GeoIP data "
+"from <a href=\"http://dev.maxmind.com/app/geoip_country\" target=\"_maxmind"
+"\">MaxMind</a> which is used to work out the country of origin for any given "
+"IP address and is displayed on the Message Detail page."
+msgstr ""
+"本工具是用来将 <a href=\"http://dev.maxmind.com/app/geoip_country\" target="
+"\"_maxmind\">MaxMind</a> 上最新的 GeoIP 资料更新至 SQL 资料库. 该资料是用来查"
+"询邮件详细资讯页面中显示IP位址的所属国家别."
+
+#: geoip_update.php:44 mcp_rules_update.php:45 sa_rules_update.php:45
+msgid "Run Now"
+msgstr "立即执行"
+
+#: geoip_update.php:51
+msgid "Downloading file, please wait...."
+msgstr "下载档案中, 请稍候...."
+
+#: geoip_update.php:191
+msgid "Download complete ... "
+msgstr "下载完成 ..."
+
+#: geoip_update.php:191
+msgid " rows imported."
+msgstr "列 成功汇入."
+
+#: geoip_update.php:199
+msgid "Unzip failed"
+msgstr "解压缩失败"
+
+#: geoip_update.php:204
+msgid "Unable to download GeoIP data file."
+msgstr "无法下载 GeoIP 资料档."
+
+#: geoip_update.php:212
+msgid "Unable to read or write to the"
+msgstr "无法读或写至"
+
+#: geoip_update.php:218
+msgid "Files still exist for some reason"
+msgstr "档案因为某些原因仍保留"
+
+#: lists.php:28
+msgid "Whitelist/Blacklist"
+msgstr "白/黑名单"
+
+#: lists.php:34
+#msgid "Username is not in the correct format to use this utility."
+#msgstr "使用者帐号格式错误无法使用此工具"
+
+#: lists.php:149
+msgid "You must select a list to create the entry."
+msgstr "您必须选择一种名单以建立项目"
+
+#: lists.php:152
+msgid "You must enter a from address (user@domain, domain or IP)."
+msgstr "您必须输入一个寄件者位址 (user@domain, 网域或者 IP)"
+
+#: lists.php:95
+#msgid "To address does not match current username."
+#msgstr "收件者地址与使用者帐号不符"
+
+#: lists.php:111
+#msgid "To domain does not match the current username."
+#msgstr "收件者网域与使用者帐号不符"
+
+#: lists.php:216 user_manager.php:95 user_manager.php:168 user_manager.php:325
+msgid "Action"
+msgstr "操作"
+
+#: lists.php:227
+msgid "No entries found."
+msgstr "找不到项目."
+
+#: lists.php:236
+msgid "Add to Whitelist/Blacklist"
+msgstr "加至白/黑名单"
+
+#: lists.php:283
+msgid "List:"
+msgstr "黑/白名单:"
+
+#: lists.php:294 lists.php:316
+msgid "Whitelist"
+msgstr "白名单"
+
+#: lists.php:295 lists.php:317
+msgid "Blacklist"
+msgstr "黑名单"
+
+#: lists.php:300
+msgid "Action:"
+msgstr "操作:"
+
+#: lists.php:305
+msgid "Errors:"
+msgstr "错误:"
+
+#: login.function.php:31
+msgid "Not authenticated"
+msgstr "未通过验证"
+
+#: login.function.php:32
+msgid "Authentication Required"
+msgstr "需要经过验证"
+
+#: login.function.php:33
+msgid "Your username and/or password are incorrect"
+msgstr "您的帐号 及/或 密码有误"
+
+#: login.php:106
+msgid ""
+"Sorry the Server is missing config.conf. Please create the file by copying "
+"config.conf.example and making the required changes."
+msgstr ""
+"抱歉 伺服器找不到 config.conf .请复制 config.conf.example 并修改相关参数以建"
+"立该档案."
+
+#: mailq.php:28 postfixmailq.php:28
+msgid "Mail Queue Viewer"
+msgstr "邮件伫列检视器"
+
+#: mailq.php:40
+msgid "No queue specified"
+msgstr "未指定伫列"
+
+#: mailscanner_relay.php:39 ms_lint.php:32 sa_lint.php:31
+msgid "Cannot open pipe"
+msgstr "无法开启 pipe"
+
+#: mcafee_status.php:39 other.php:51
+msgid "McAfee Status"
+msgstr "McAfee 状态"
+
+#: mcp_rules_update.php:32
+msgid "MCP Rule Description Update"
+msgstr "MCP 规则说明更新"
+
+#: mcp_rules_update.php:39
+msgid ""
+"This utility is used to update the SQL database with up-to-date descriptions "
+"of the MCP rules which are displayed on the Message Detail screen."
+msgstr ""
+"本工具是用来将最新的 MCP 规则说明资料更新至 SQL 资料库以用来显示邮件详细资讯页面."
+
+#: mcp_rules_update.php:41
+msgid ""
+"This utility should generally be run after an update to your MCP rules, "
+"however it is safe to run at any time as it only replaces the existing "
+"values and inserts only new values in the table (therefore preserving "
+"descriptions from potentially deprecated or removed rules)."
+msgstr ""
+"    本工具通常在您更新 MCP 规则后执行, 然而任何时间执行都是安全的, 因为只会更"
+"新现有值并插入新的值到资料表 (失效的说明或的移除的规则仍会保留)."
+
+#: mcp_rules_update.php:49 rep_mcp_rule_hits.php:94 rep_sa_rule_hits.php:98
+msgid "Rule"
+msgstr "规则"
+
+#: msconfig.php:32
+msgid "Configuration"
+msgstr "设定"
+
+#: msconfig.php:39
+msgid "MailScanner Configuration"
+msgstr "MailScanner 设定档"
+
+#: ms_lint.php:28 ms_lint.php:39
+msgid "MailScanner Lint"
+msgstr "MailScanner 状态检测"
+
+#: ms_lint.php:53 sa_lint.php:50
+#, php-format
+msgid "<!-- Timer: %s, Line Start: %s -->\n"
+msgstr "<!-- 计时器: %s, 状态检测开始: %s -->\n"
+
+#: ms_lint.php:76 sa_lint.php:71
+msgid "Finish - Total Time"
+msgstr "完成 - 总耗时"
+
+#: msrule.php:28
+msgid "Rules"
+msgstr "规则"
+
+#: msrule.php:51
+msgid "Unable to open file."
+msgstr "无法开启档案."
+
+#: mysql_status.php:28
+msgid "MySQL Status"
+msgstr "MySQL 资料库状态"
+
+#: mysql_status.php:33
+msgid "Not Authorized"
+msgstr "尚未通过验证"
+
+#: other.php:30 other.php:36
+msgid "Tools"
+msgstr "工具"
+
+#: other.php:39 user_manager.php:297
+msgid "User Management"
+msgstr "使用者管理"
+
+#: other.php:42
+msgid "Sophos Status"
+msgstr "Sophos 状态"
+
+#: other.php:45
+msgid "F-Secure Status"
+msgstr "F-Secure 状态"
+
+#: other.php:48 clamav.awk:28
+msgid "ClamAV Status"
+msgstr "ClamAV 状态"
+
+#: other.php:53
+#msgid "McAfee Status"
+#msgstr "McAfee 状态"
+
+#: other.php:54
+msgid "F-Prot Status"
+msgstr "F-Prot 状态"
+
+#: other.php:57
+msgid "MySQL Database Status"
+msgstr "MySQL 资料库状态"
+
+#: other.php:60
+msgid "View MailScanner Configuration"
+msgstr "检视 MailScanner 设定档"
+
+#: other.php:65
+msgid "SpamAssassin Lint (Test)"
+msgstr "SpamAssassin 状态检测 (测试)"
+
+#: other.php:66
+msgid "MailScanner Lint (Test)"
+msgstr "MailScanner 状态检测 (测试)"
+
+#: other.php:67
+msgid "Update SpamAssasin Rule Descriptions"
+msgstr "更新 SpamAssassin 规则说明"
+
+#: other.php:70
+msgid "Update MCP Rule Descriptions"
+msgstr "更新 MCP 规则说明"
+
+#: other.php:73
+msgid "Update GeoIP Database"
+msgstr "更新 GeoIP 资料库"
+
+#: other.php:78
+msgid "Links"
+msgstr "连结"
+
+#: postfixmailq.php:30
+msgid "Combined mail queue (Inbound and Outbound)"
+msgstr "合并的邮件伫列 (内寄及外送)"
+
+#: quarantine_action.php:51
+msgid "Result"
+msgstr "结果"
+
+#: quarantine_action.php:53
+msgid "Close Window"
+msgstr "关闭视窗"
+
+#: quarantine_action.php:62
+msgid "Error: No Message ID"
+msgstr "错误: 无此邮件 ID"
+
+#: quarantine_action.php:65
+msgid "Error: No action"
+msgstr "错误: 无此操作"
+
+#: quarantine_action.php:72
+msgid "Error: Message not found in quarantine"
+msgstr "错误: 隔离区中找不到此邮件"
+
+#: quarantine_action.php:108
+msgid "Delete: Are you sure?"
+msgstr "删除: 您确定吗?"
+
+#: quarantine_action.php:109 user_manager.php:265
+msgid "Yes"
+msgstr "是"
+
+#: quarantine_action.php:109 user_manager.php:265
+msgid "No"
+msgstr "否"
+
+#: quarantine_action.php:137
+msgid "Unknown action: "
+msgstr "不明的操作: "
+
+#: quarantine.php:30
+msgid "Quarantine Viewer"
+msgstr "隔离检视器"
+
+#: quarantine.php:38 quarantine.php:56 quarantine.php:111 quarantine.php:157
+msgid "Folder"
+msgstr "资料夹"
+
+#: quarantine.php:45
+#, php-format
+msgid " - %02d items"
+msgstr " - %02d 项目"
+
+#: quarantine.php:69
+msgid "No quarantine directories found"
+msgstr "找不到隔离资料夹"
+
+#: quarantine.php:159
+msgid "No quarantined messages found"
+msgstr "找不到隔离的邮件"
+
+#: rep_audit_log.php:38 rep_audit_log.php:61 reports.php:107
+msgid "Audit Log"
+msgstr "稽核纪录"
+
+#: rep_mcp_rule_hits.php:32 reports.php:104
+msgid "MCP Rule Hits"
+msgstr "MCP 规则命中"
+
+#: rep_mcp_rule_hits.php:50 rep_sa_rule_hits.php:47 rep_top_mail_relays.php:65
+#: rep_top_recipient_domains_by_quantity.php:66
+#: rep_top_recipient_domains_by_volume.php:66
+#: rep_top_recipients_by_quantity.php:66 rep_top_recipients_by_volume.php:66
+#: rep_top_sender_domains_by_quantity.php:66
+#: rep_top_sender_domains_by_volume.php:66 rep_top_senders_by_quantity.php:72
+#: rep_top_senders_by_volume.php:66 rep_total_mail_by_date.php:91
+#: rep_viruses.php:127
+msgid "Error: no rows retrieved from database"
+msgstr "错误: 资料库未传回任何资料列"
+
+#: rep_mcp_rule_hits.php:96 rep_sa_rule_hits.php:100
+msgid "Total"
+msgstr "总计"
+
+#: rep_mcp_score_dist.php:32 rep_mcp_score_dist.php:89 reports.php:103
+msgid "MCP Score Distribution"
+msgstr "MCP 分数分布"
+
+#: rep_mcp_score_dist.php:66 rep_mrtg_style.php:75 rep_sa_score_dist.php:66
+msgid "Error: Needs 2 or more rows of data to be retrieved from database"
+msgstr "错误: 至少需要资料库传回 2 笔以上的资料"
+
+#: rep_mcp_score_dist.php:90 rep_sa_score_dist.php:89
+msgid "Score (rounded)"
+msgstr "分数 (四舍五入)"
+
+#: rep_mcp_score_dist.php:93 rep_mrtg_style.php:119 rep_sa_score_dist.php:93
+#: rep_total_mail_by_date.php:151
+msgid "No. of messages"
+msgstr "邮件数量"
+
+#: rep_mcp_score_dist.php:112 rep_mrtg_style.php:159 rep_sa_score_dist.php:116
+#: rep_top_mail_relays.php:124 rep_top_recipient_domains_by_quantity.php:105
+#: rep_top_recipient_domains_by_volume.php:105
+#: rep_top_recipients_by_quantity.php:108 rep_top_recipients_by_volume.php:109
+#: rep_top_sender_domains_by_quantity.php:106
+#: rep_top_sender_domains_by_volume.php:106
+#: rep_top_senders_by_quantity.php:116 rep_top_senders_by_volume.php:109
+#: rep_top_viruses.php:115 rep_total_mail_by_date.php:199
+msgid "File isn't readable. Please make sure that "
+msgstr "无法读取档案. 请确定 "
+
+#: rep_mcp_score_dist.php:112 rep_mrtg_style.php:159 rep_sa_score_dist.php:116
+#: rep_top_mail_relays.php:124 rep_top_recipient_domains_by_quantity.php:105
+#: rep_top_recipient_domains_by_volume.php:105
+#: rep_top_recipients_by_quantity.php:108 rep_top_recipients_by_volume.php:109
+#: rep_top_sender_domains_by_quantity.php:106
+#: rep_top_sender_domains_by_volume.php:106
+#: rep_top_senders_by_quantity.php:116 rep_top_senders_by_volume.php:109
+#: rep_top_viruses.php:115 rep_total_mail_by_date.php:199
+msgid " is readable and writable by Mailwatch."
+msgstr " 能被 Mailwatch 读写."
+
+#: rep_mcp_score_dist.php:122 rep_sa_score_dist.php:125
+#: rep_top_recipient_domains_by_quantity.php:114
+#: rep_top_recipient_domains_by_volume.php:114
+#: rep_top_recipients_by_quantity.php:117 rep_top_recipients_by_volume.php:118
+#: rep_top_sender_domains_by_quantity.php:115
+#: rep_top_sender_domains_by_volume.php:115
+#: rep_top_senders_by_quantity.php:125 rep_top_senders_by_volume.php:118
+#: rep_top_viruses.php:124 rep_viruses.php:167
+msgid "Count"
+msgstr "次数"
+
+#: rep_message_listing.php:34 rep_message_listing.php:93
+#: rep_message_ops.php:34 reports.php:77
+msgid "Message Listing"
+msgstr "邮件列表"
+
+#: rep_message_ops.php:79 reports.php:78
+msgid "Message Operations"
+msgstr "邮件操作"
+
+#: rep_mrtg_style.php:32
+msgid "MRTG Style Mail Report"
+msgstr "MRTG 格式邮件报表 "
+
+#: rep_mrtg_style.php:114
+msgid "Last 24 Hrs"
+msgstr "最近 24 小时"
+
+#: rep_mrtg_style.php:168 rep_total_mail_by_date.php:156
+#: rep_total_mail_by_date.php:208
+msgid "Mail"
+msgstr "邮件"
+
+#: rep_mrtg_style.php:171 rep_top_mail_relays.php:138
+#: rep_total_mail_by_date.php:143 rep_total_mail_by_date.php:171
+#: rep_total_mail_by_date.php:215
+msgid "Volume"
+msgstr "大小"
+
+#: reports.php:47
+msgid "add"
+msgstr "新增"
+
+#: reports.php:57
+msgid "save"
+msgstr "储存"
+
+#: reports.php:66
+msgid "load"
+msgstr "载入"
+
+#: reports.php:69
+msgid "delete"
+msgstr "删除"
+
+#: reports.php:80
+msgid "Total Messages by Date"
+msgstr "邮件总量排名 - 依日期"
+
+#: reports.php:81 rep_top_mail_relays.php:32
+msgid "Top Mail Relays"
+msgstr "邮件转寄排名"
+
+#: reports.php:83 rep_top_viruses.php:32
+msgid "Top Viruses"
+msgstr "病毒排名"
+
+#: reports.php:84 rep_viruses.php:32
+msgid "Virus Report"
+msgstr "病毒报表"
+
+#: reports.php:86 rep_top_senders_by_quantity.php:32
+msgid "Top Senders by Quantity"
+msgstr "寄件者排名 - 依数量"
+
+#: reports.php:87 rep_top_senders_by_volume.php:32
+msgid "Top Senders by Volume"
+msgstr "寄件者排名 - 依大小"
+
+#: reports.php:88 rep_top_recipients_by_quantity.php:32
+msgid "Top Recipients by Quantity"
+msgstr "收件者排名 - 依数量"
+
+#: reports.php:89 rep_top_recipients_by_volume.php:32
+msgid "Top Recipients by Volume"
+msgstr "收件者排名 - 依大小"
+
+#: reports.php:93 rep_top_sender_domains_by_quantity.php:32
+msgid "Top Sender Domains by Quantity"
+msgstr "寄件网域排名 - 依数量"
+
+#: reports.php:94 rep_top_sender_domains_by_volume.php:32
+msgid "Top Sender Domains by Volume"
+msgstr "寄件网域排名 - 依大小"
+
+#: reports.php:95
+msgid "Top Recipient Domains by Quantity"
+msgstr "收件网域排名 - 依数量"
+
+#: reports.php:96 rep_top_recipient_domains_by_volume.php:32
+msgid "Top Recipient Domains by Volume"
+msgstr "收件网域排名 - 依大小"
+
+#: reports.php:99 rep_sa_score_dist.php:32 rep_sa_score_dist.php:88
+msgid "SpamAssassin Score Distribution"
+msgstr "SpamAssassin 分数分布"
+
+#: reports.php:100 rep_sa_rule_hits.php:32
+msgid "SpamAssassin Rule Hits"
+msgstr "SpamAssassin 规则命中"
+
+#: rep_top_mail_relays.php:74
+msgid "Hostname lookup failed"
+msgstr "主机名称无法解析"
+
+#: rep_top_mail_relays.php:82
+msgid "GeoIP lookup failed"
+msgstr "GeoIP 解析失败"
+
+#: rep_top_mail_relays.php:92
+msgid "Top 10 Mail Relays"
+msgstr "前 10 大邮件转寄"
+
+#: rep_top_mail_relays.php:135
+msgid "Messages"
+msgstr "邮件"
+
+#: rep_top_recipient_domains_by_quantity.php:32
+msgid "Top Recipients Domains by Quantity"
+msgstr "收件网域排名 - 依数量"
+
+#: rep_top_recipient_domains_by_quantity.php:78
+msgid "Top 10 Recipient Domains by Quantity"
+msgstr "前 10 大收件网域 - 依数量"
+
+#: rep_top_recipient_domains_by_quantity.php:113
+#: rep_top_recipient_domains_by_volume.php:113
+#: rep_top_sender_domains_by_quantity.php:114
+#: rep_top_sender_domains_by_volume.php:114
+msgid "Domain"
+msgstr "网域"
+
+#: rep_top_recipient_domains_by_volume.php:78
+msgid "Top 10 Recipient Domains by Volume"
+msgstr "前 10 大收件网域 - 依大小"
+
+#: rep_top_recipients_by_quantity.php:80
+msgid "Top 10 Recipients by Quantity"
+msgstr "前 10 大收件者 - 依数量"
+
+#: rep_top_recipients_by_quantity.php:116 rep_top_recipients_by_volume.php:117
+#: rep_top_senders_by_quantity.php:124 rep_top_senders_by_volume.php:117
+msgid "E-Mail Address"
+msgstr "邮件位址"
+
+#: rep_top_recipients_by_volume.php:81
+msgid "Top 10 Recipients by Volume"
+msgstr "前 10 大收件者 - 依大小"
+
+#: rep_top_sender_domains_by_quantity.php:78
+msgid "Top 10 Sender Domains by Quantity"
+msgstr "前 10 大寄件网域 - 依数量"
+
+#: rep_top_sender_domains_by_volume.php:78
+msgid "Top 10 Sender Domains by Volume"
+msgstr "前 10 大寄件网域 - 依大小"
+
+#: rep_top_senders_by_quantity.php:87
+msgid "Top 10 Senders by Quantity"
+msgstr "前 10 大寄件者 - 依数量"
+
+#: rep_top_senders_by_volume.php:81
+msgid "Top 10 Senders by Volume"
+msgstr "前 10 大寄件者 - 依大小"
+
+#: rep_top_viruses.php:60
+msgid "Error: no rows retrieved from database..."
+msgstr "错误: 资料库未传回任何资料列..."
+
+#: rep_top_viruses.php:87
+msgid "Top 10 Viruses"
+msgstr "前 10 大病毒"
+
+#: rep_total_mail_by_date.php:32
+msgid "Total Mail by Date"
+msgstr "邮件统计 - 依日期"
+
+#: rep_total_mail_by_date.php:147
+msgid "Total Mail Processed by Date"
+msgstr "已处理邮件统计 - 依日期"
+
+#: rep_total_mail_by_date.php:217
+msgid "Unknown<BR>Users"
+msgstr "未知的<BR>使用者"
+
+#: rep_total_mail_by_date.php:218
+msgid "Can't<BR>Resolve"
+msgstr "无法<BR>解析"
+
+#: rep_total_mail_by_date.php:241
+msgid "Totals"
+msgstr "总计"
+
+#: rep_viruses.php:165
+msgid "Scanner"
+msgstr "扫毒引擎"
+
+#: rep_viruses.php:166
+msgid "First Seen"
+msgstr "初次发现"
+
+#: sa_lint.php:28 sa_lint.php:38
+msgid "SpamAssassin Lint"
+msgstr "SpamAssassin 状态检测"
+
+#: sa_rules_update.php:32
+msgid "SpamAssassin Rule Description Update"
+msgstr "SpamAssassin 规则说明更新"
+
+#: sa_rules_update.php:39
+msgid ""
+"This utility is used to update the SQL database with up-to-date descriptions "
+"of the SpamAssassin rules which are displayed on the Message Detail screen."
+msgstr ""
+"本工具是用来将最新的 SpamAssassin 规则说明更新至 SQL 资料库以用来显示邮件"
+"详细资讯页面."
+
+#: sa_rules_update.php:41
+msgid ""
+"This utility should generally be run after a SpamAssassin update, however it "
+"is safe to run at any time as it only replaces the existing values and "
+"inserts only new values in the table (therefore preserving descriptions from "
+"potentially deprecated or removed rules)."
+msgstr ""
+"本工具通常在您更新 SpamAssassin 规则后执行, 然而任何时间执行都是安全的, "
+"因为只会更新现有值并插入新的值到资料表 (失效的说明或的移除的规则仍会保留.)"
+
+#: status.php:64
+msgid "Last "
+msgstr "最后 "
+
+#: status.php:64
+#, php-format
+msgid " Messages (Refreshing every %s seconds)"
+msgstr " 封邮件 (每 %s 秒更新一次)"
+
+#: user_manager.php:28
+msgid "User Manager"
+msgstr "使用管理"
+
+#: user_manager.php:32
+msgid "This utility is not used in DefenderMX"
+msgstr "本工具不适用於 DefenderMX"
+
+#: user_manager.php:43
+msgid "Are you sure you want to delete user "
+msgstr "您确定要删除使用者"
+
+#: user_manager.php:52 user_manager.php:61
+msgid "Are you sure?"
+msgstr "您确定?"
+
+#: user_manager.php:79 user_manager.php:299
+msgid "New User"
+msgstr "新增使用者"
+
+#: user_manager.php:79
+msgid ""
+"For all users other than Administrator you must use an email address for the "
+"username"
+msgstr "除了管理员外所有使用者必须以邮件帐号作为使用者帐号"
+
+#: user_manager.php:81 user_manager.php:153 user_manager.php:316
+msgid "Name"
+msgstr "使用者名称"
+
+#: user_manager.php:84 user_manager.php:156
+msgid "User Type"
+msgstr "使用者类别"
+
+#: user_manager.php:86 user_manager.php:160
+msgid "User"
+msgstr "使用者"
+
+#: user_manager.php:87 user_manager.php:159
+msgid "Domain Administrator"
+msgstr "网域管理员"
+
+#: user_manager.php:88 user_manager.php:158
+msgid "Administrator"
+msgstr "管理员"
+
+#: user_manager.php:90 user_manager.php:163 user_manager.php:320
+msgid "Quarantine Report"
+msgstr "隔离报表"
+
+#: user_manager.php:90 user_manager.php:163 user_manager.php:320
+msgid "Send Daily Report?"
+msgstr "寄送日报表?"
+
+#: user_manager.php:91 user_manager.php:164 user_manager.php:321
+msgid "Quarantine Report Recipient"
+msgstr "隔离报表收件者"
+
+#: user_manager.php:91
+msgid "Override quarantine report recipient?<BR>(uses your username if blank)"
+msgstr "覆写隔离报表收件者?<BR>(如果空白则使用使用者名称"
+
+#: user_manager.php:92 user_manager.php:165 user_manager.php:322
+msgid "Scan for Spam"
+msgstr "扫描垃圾邮件"
+
+#: user_manager.php:92 user_manager.php:322
+msgid "Scan e-mail for Spam?"
+msgstr "是否扫描垃圾邮件?"
+
+#: user_manager.php:93 user_manager.php:166 user_manager.php:323
+msgid "Spam Score"
+msgstr "垃圾邮件分数"
+
+#: user_manager.php:93 user_manager.php:94 user_manager.php:166
+#: user_manager.php:167 user_manager.php:323 user_manager.php:324
+msgid "Use Default"
+msgstr "使用预设值"
+
+#: user_manager.php:94 user_manager.php:167 user_manager.php:324
+msgid "High Spam Score"
+msgstr "高分垃圾邮件分数"
+
+#: user_manager.php:95
+msgid "Create"
+msgstr "建立"
+
+#: user_manager.php:100 user_manager.php:333
+msgid "Passwords do not match"
+msgstr "密码不符"
+
+#: user_manager.php:125
+msgid "administrator"
+msgstr "管理员"
+
+#: user_manager.php:128
+msgid "domain administrator"
+msgstr "网域管理员"
+
+#: user_manager.php:131
+msgid "user"
+msgstr "使用者"
+
+#: user_manager.php:151
+msgid "Edit User"
+msgstr "编辑使用者 "
+
+#: user_manager.php:161
+msgid "User (Regexp)"
+msgstr "使用者 (正规表示式)"
+
+#: user_manager.php:164 user_manager.php:321
+msgid "Override quarantine report recipient?<br>(uses your username if blank)"
+msgstr "覆写隔离报告收件者?<BR>(如果空白则使用使用者名称)"
+
+#: user_manager.php:165
+msgid "Scan eMail for Spam?"
+msgstr "是否扫描垃圾邮件?"
+
+#: user_manager.php:168
+msgid "Update"
+msgstr "更新"
+
+#: user_manager.php:252
+msgid "Activate/Deactivate"
+msgstr "启用/关闭"
+
+#: user_manager.php:258
+#, php-format
+msgid "User Filters for %s"
+msgstr "使用者 %s 的过滤器"
+
+#: user_manager.php:259
+msgid "Filter"
+msgstr "过滤器"
+
+#: user_manager.php:259
+msgid "Active"
+msgstr "启用"
+
+#: user_manager.php:259
+msgid "Actions"
+msgstr "操作"
+
+#: user_manager.php:291
+msgid "Edit"
+msgstr "编辑"
+
+#: user_manager.php:291
+msgid "Filters"
+msgstr "过滤器"
+
+#: user_manager.php:310
+msgid "edit"
+msgstr "编辑"
+
+#: user_manager.php:314
+msgid "Edit User "
+msgstr "编辑使用者"
+
+#: viewmail.php:30
+msgid "Message Viewer"
+msgstr "邮件检视器"
+
+#: viewmail.php:90 viewpart.php:72
+msgid "No input filename"
+msgstr "无输入的档案"
+
+#: viewmail.php:96 viewpart.php:78
+msgid "Error: file not found"
+msgstr "错误: 找不到档案"
+
+#: viewmail.php:141
+msgid "Date:"
+msgstr "日期:"
+
+#: viewmail.php:205
+msgid "Actions:"
+msgstr "操作:"
+
+#: viewmail.php:205
+msgid "Release this message"
+msgstr "释放这个邮件"
+
+#: viewmail.php:205
+msgid "Delete this message"
+msgstr "删除这个邮件"
+
+#: viewmail.php:244
+msgid "Download"
+msgstr "下载"
+
+#: viewpart.php:32
+msgid "No input Message ID"
+msgstr "无此输入的邮件 ID"
+
+#: viewpart.php:36
+#, php-format
+msgid "Message %s not found\n"
+msgstr "找不到邮件 %s\n"
+
+#: viewpart.php:97
+#, php-format
+msgid "Part %s not found\n"
+msgstr "找不到邮件部分 %s\n"
+
+#: viewpart.php:115
+msgid "Quarantined E-Mail Viewer"
+msgstr "隔离邮件检视器"
+
+#: clamav.awk:32
+msgid "Version"
+msgstr "版本"
+
+#: clamav.awk:33
+msgid "Virus Identities"
+msgstr "病毒特徵"
+
+#: clamav.awk:38
+msgid "Database Timestamp"
+msgstr "资料库时间戳"
+
+msgid "remove"
+msgstr "移除"
+
+msgid "is equal to"
+msgstr "等於"
+
+msgid "is not equal to"
+msgstr "不等於"
+
+msgid "is greater than or equal to"
+msgstr "大於或等於"
+
+msgid "is less than"
+msgstr "小於"
+
+msgid "is less than or equal to"
+msgstr "小於或等於"
+
+msgid "contains"
+msgstr "包含"
+
+msgid "does not contain"
+msgstr "不包含"
+
+msgid "matches the regular expression"
+msgstr "合乎正规表示式"
+
+msgid "does not match the regular expression"
+msgstr "不合乎正规表示式"
+
+msgid "is null"
+msgstr "是空的"
+
+msgid "is not null"
+msgstr "不是空的"
+
+msgid "is greater than"
+msgstr "大於"
+
+msgid "Headers"
+msgstr "邮件档头"
+
+msgid "Message ID"
+msgstr "邮件 ID"
+
+msgid "Size (bytes)"
+msgstr "大小 (位元组)"
+
+msgid "From Domain"
+msgstr "寄件者网域"
+
+msgid "To Domain"
+msgstr "收件者网域"
+
+msgid "Received from (IP Address)"
+msgstr "寄信主机 (IP 位址)"
+
+msgid "is Spam (>0 = TRUE)"
+msgstr "是垃圾邮件 (>0 = TRUE)"
+
+msgid "is High Scoring Spam (>0 = TRUE)"
+msgstr "是高分垃圾邮件 (>0 = TRUE)"
+
+msgid "is Spam according to SpamAssassin (>0 = TRUE)"
+msgstr "被 SpamAssassin 归类为垃圾邮件(>0 = TRUE)"
+
+msgid "is Listed in one or more RBL's (>0 = TRUE)"
+msgstr "被列入一个或多个 RBL 名单中 (>0 = TRUE)"
+
+msgid "is Whitelisted (>0 = TRUE)"
+msgstr "是白名单 (>0 = TRUE)"
+
+msgid "is Blacklisted (>0 = TRUE)"
+msgstr "是黑名单 (>0 = TRUE)"
+
+msgid "SpamAssassin Score"
+msgstr "SpamAssassin 分数"
+
+msgid "is MCP (>0 = TRUE)"
+msgstr "是 MCP (>0 = TRUE)"
+
+msgid "is High Scoring MCP (>0 = TRUE)"
+msgstr "是高分 MCP (>0 = TRUE)"
+
+msgid "is MCP accoding to SpamAssassin (>0 = TRUE)"
+msgstr "被 SpamAssassin 归类为 MCP"
+
+msgid "is MCP Whitelisted (>0 = TRUE)"
+msgstr "是 MCP白名单 (>0 = TRUE)"
+
+msgid "is MCP Blacklisted (>0 = TRUE)"
+msgstr "是 MCP黑名单 (>0 = TRUE)"
+
+msgid "contained a Virus (>0 = TRUE)"
+msgstr "包含一个病毒(>0 = TRUE)"
+
+msgid "contained an Unacceptable Attachment (>0 = TRUE)"
+msgstr "包含不被许的附件 (>0 = TRUE)"
+
+msgid "contained other infections (>0 = TRUE)"
+msgstr "含其它感染 (>0 = TRUE)"
+
+msgid "MailScanner Hostname"
+msgstr "MailScanner 主机名称"
+
+msgid "Full Name"
+msgstr "使用者全名"
+
+msgid "Spam Check"
+msgstr "垃圾邮件检查"
+
+#: quarantine_report.php:62
+#, php-format
+msgid "Quarantine Report for %s"
+msgstr "%s 的隔离报告"
+
+#: quarantine_report.php:63
+#, php-format
+msgid ""
+"In the last %s day(s) you have received %s e-mails that have been "
+"quarantined and are listed below.  All messages in the quarantine are "
+"automatically deleted %s days after the date that they were received."
+msgstr ""
+"在过去的 %s 天 您收到 %s 封下列被隔离的邮件. 所有在隔离区的邮件将在收到"
+"后 %s 天自动删除."
+
+#: quarantine_report.php:75
+msgid "Received"
+msgstr "收信时间"
+
+#: quarantine_report.php:78
+msgid "Reason"
+msgstr "原因"
+
+#: quarantine_report.php:97
+#, php-format
+msgid ""
+"Quarantine Report for %s\n"
+"\n"
+"In the last %s day(s) you have received %s e-mails that have been "
+"quarantined and are listed below.  All messages in the quarantine are "
+"automatically deleted %s days after the date that they were received.\n"
+"\n"
+"%s"
+msgstr ""
+"%s 的隔离报告\n"
+"\n"
+"在过去的 %s 天 您收到 %s 封下列被隔离的邮件. 所有在隔离区的邮件将在收到"
+"后 %s 天自动删除.\n"
+"\n"
+"%s"
+
+#: quarantine_report.php:103
+#, php-format
+msgid ""
+"Received: %s\n"
+"From: %s\n"
+"Subject: %s\n"
+"Reason: %s\n"
+"Action:\n"
+"%s\n"
+"\n"
+msgstr ""
+"收信时间: %s\n"
+"寄件者: %s\n"
+"主旨: %s\n"
+"原因: %s\n"
+"动作:\n"
+"%s"
+"\n"
+
+#: quarantine_report.php:163 quarantine_report.php:164
+#: quarantine_report.php:165 quarantine_report.php:166
+#: quarantine_report.php:167 quarantine_report.php:168
+#: quarantine_report.php:198 quarantine_report.php:199
+#: quarantine_report.php:200 quarantine_report.php:201
+msgid "Policy"
+msgstr "政策"
+
+#: quarantine_report.php:170 quarantine_report.php:203
+msgid "UNKNOWN"
+msgstr "不明"
+
+#: detail.php:45
+msgid "Y"
+msgstr "是"
+
+#: detail.php:46
+msgid "N"
+msgstr "否"
