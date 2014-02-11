@@ -27,6 +27,7 @@
     <link rel="shortcut icon" href="images/favicon.png">
 <?php
 if (file_exists('conf.php')) {
+    require_once("./functions.php");
 ?>
     <style type="text/css">
         table.center {
@@ -63,7 +64,7 @@ if (file_exists('conf.php')) {
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
-                                <input type="submit" name="Submit" value="<?php echo _("Login");?>>
+                                <input type="submit" name="Submit" value=<?php echo _("Login");?>>
                                 <input type="reset" value=<?php echo _("Reset");?>>
                                 <input type="button" value=<?php echo _("Back");?> onClick="history.go(-1);return true;">
                             </td>
@@ -110,3 +111,4 @@ if (file_exists('conf.php')) {
 </html>
 <?php
 }
+?>
