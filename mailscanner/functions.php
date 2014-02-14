@@ -400,11 +400,7 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
                         $mounted_fs = file("/proc/mounts");
                         foreach ($mounted_fs as $fs_row) {
                             $drive = preg_split("/[\s]+/", $fs_row);
-<<<<<<< HEAD
-                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE) && !(preg_match("/\/chroot\//i", $drive[1]))) {
-=======
                             if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[1], '/chroot/') === FALSE)) {
->>>>>>> master
                                 $temp_drive['device'] = $drive[0];
                                 $temp_drive['mountpoint'] = $drive[1];
                                 $disks[] = $temp_drive;
@@ -418,11 +414,7 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
                         $data = explode("\n", $data);
                         foreach ($data as $disk) {
                             $drive = preg_split("/[\s]+/", $disk);
-<<<<<<< HEAD
-                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE) && !(preg_match("/\/chroot\//i", $drive[2]))) {
-=======
                             if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[2], '/chroot/') === FALSE)) {
->>>>>>> master
                                 $temp_drive['device'] = $drive[0];
                                 $temp_drive['mountpoint'] = $drive[2];
                                 $disks[] = $temp_drive;
@@ -1471,7 +1463,6 @@ echo $pager->links;
   }
   echo '<table cellspacing="1" width="100%" class="mail">'."\n";
   // Work out which columns to display
-<<<<<<< HEAD
   for($f=0; $f<$fields; $f++) {
    if ($f == 0 and $operations != false) {
     // Set up display for operations form elements
@@ -1708,10 +1699,6 @@ echo $pager->links;
       $row[$f] = "[<a href=\"detail.php?id=$row[$f]\">&nbsp;&nbsp;</a>]";
       //Store the link for later process
       $str_id = $row[$f];
-      break;
-     case 'datetime':
-      //add the datetime to link
-      $str_id = preg_replace('/(.*\?id=)([^>]+)(\">.*)/', '${1}${2}&datetime='.urlencode($row[$f]).'${3}', $str_id);
       break;
      case 'datetime':
       //add the datetime to link
@@ -3171,37 +3158,15 @@ function detect_charset($input) {
   //$subject = $obj->subject;
   $subject = fix_utf8_subject($input);
   preg_match('/.*=\?([^?]+)\?(q|b)\?[^?]*\?=/i', $subject, $matches);
-  $charset  = $matches[1];
+  $charset  = ck_mbstring_encoding($matches[1]);
   //$encoding = $matches[2];
   $type = 0;
-  //It's better using gbk instead of gb2312.Some emails said it's gb2312 encoding,
-  //,but actually it's gbk.GBK includes all characters in GB2312.
-  if (strtolower($charset) == "gb2312") {
-   $charset = "gbk";
-  }
-  //mb_convert_encoding does not support MS950, only CP950.
-  if (strtolower($charset) == "ms950") {
-   $charset = "cp950";
-  }
-  //mb_convert_encoding does not recognise ks_c_5601-1987, it's the same as euc-kr.
-  if (strtolower($charset) == "ks_c_5601-1987") {
-   $charset = "euc-kr";
-  }
   //If the subject was null,then use From: or To: to find out the charset. 
   if ($charset == "") {
    preg_match('/=\?([^?]+)\?(q|b)\?[^?]*\?=/i', $input, $matches);
-   $charset  = $matches[1];
+   $charset  = ck_mbstring_encoding($matches[1]);
    $type = 1;
-   if (strtolower($charset) == "gb2312") {
-    $charset = "gbk";
-   }
-   if (strtolower($charset) == "ms950") {
-    $charset = "cp950";
-   }
-   if (strtolower($charset) == "ks_c_5601-1987") {
-    $charset = "euc-kr";
-   }       
-   //$encoding = $matches[2];
+  //$encoding = $matches[2];
   }
  //$input = str_replace($charset);
  return array($charset,$type);
@@ -3238,10 +3203,21 @@ function fix_utf8_subject($input) {
 
 function check_locale() {
  //Give a default charset
- //if (SYSTEM_LOCALE == "zh_TW") {$default_charset = "big5";}
  if (SYSTEM_LOCALE == "zh_TW") {$default_charset = "cp950";}
  if (SYSTEM_LOCALE == "zh_CN") {$default_charset = "gbk";}
  return $default_charset;
+}
+
+function ck_mbstring_encoding($input) {
+  $charset = $input;
+  //It's better using gbk instead of gb2312.Some emails said it's gb2312 encoding,
+  //,but actually it's gbk.GBK includes all characters in GB2312.
+  if (strtolower($charset) == "gb2312") {$charset = "gbk";}
+  //mb_convert_encoding does not support MS950, only CP950.
+  if (strtolower($charset) == "ms950") {$charset = "cp950";}
+  //mb_convert_encoding does not recognise ks_c_5601-1987, it's the same as euc-kr.
+  if (strtolower($charset) == "ks_c_5601-1987") {$charset = "euc-kr";}
+  return $charset;
 }
 
 function sa_dbconn() {

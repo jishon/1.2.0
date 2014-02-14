@@ -110,7 +110,8 @@ function decode_structure($structure)
 {
     $type = $structure->ctype_primary . "/" . $structure->ctype_secondary;
     //Using mimeDecode to identify charset in MIME part.. If all is null,just set to "".
-    $charset = $structure->ctype_parameters['charset'];
+    $charset = ck_mbstring_encoding($structure->ctype_parameters['charset']);
+    //$charset = ck_mbstring_encoding($charset);
     switch ($type) {
         case "text/plain":
                 /*

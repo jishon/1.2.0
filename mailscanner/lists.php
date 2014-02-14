@@ -143,7 +143,6 @@ switch (true) {
         $to_address = $url_domain;
         break;
 }
-<<<<<<< HEAD
  
  // Submitted
 if($url_submit == 'Add') {
@@ -175,39 +174,6 @@ if($url_submit == 'Add') {
   unset($from);
   unset($url_list);
  }
-=======
-
-// Submitted
-if ($url_submit == 'Add') {
-    // Check input is valid
-    if (empty($url_list)) {
-        $errors[] = "You must select a list to create the entry.";
-    }
-    if (empty($from)) {
-        $errors[] = "You must enter a from address (user@domain, domain or IP).";
-    }
-
-    $to_domain = strtolower($url_domain);
-    // Insert the data
-    if (!isset($errors)) {
-        switch ($url_list) {
-            case 'w': // Whitelist
-                $list = 'whitelist';
-                break;
-            case 'b': // Blacklist
-                $list = 'blacklist';
-                break;
-        }
-        $sql = 'REPLACE INTO ' . $list . ' (to_address, to_domain, from_address) VALUES';
-        $sql .= '(\'' . mysql_real_escape_string($to_address);
-        $sql .= '\',\'' . mysql_real_escape_string($to_domain);
-        $sql .= '\',\'' . mysql_real_escape_string($from) . '\')';
-        @dbquery($sql);
-        audit_log("Added " . $from . " to " . $list . " for " . $to_address);
-        unset($from);
-        unset($url_list);
-    }
->>>>>>> master
 }
 
 // Delete
@@ -241,7 +207,6 @@ if ($url_submit == 'Delete') {
     dbquery($sql);
 }
 
-<<<<<<< HEAD
 function build_table($sql,$list) {
  $sth = dbquery($sql);
  $rows = mysql_num_rows($sth);
@@ -263,30 +228,6 @@ function build_table($sql,$list) {
  } else {
   echo _("No entries found.")."\n";
  }
-=======
-function build_table($sql, $list)
-{
-    $sth = dbquery($sql);
-    $rows = mysql_num_rows($sth);
-    if ($rows > 0) {
-        echo '<table class="blackwhitelist">' . "\n";
-        echo ' <tr>' . "\n";
-        echo '  <th>From</th>' . "\n";
-        echo '  <th>To</th>' . "\n";
-        echo '  <th>Action</th>' . "\n";
-        echo ' </tr>' . "\n";
-        while ($row = mysql_fetch_row($sth)) {
-            echo ' <tr>' . "\n";
-            echo '  <td>' . $row[1] . '</td>' . "\n";
-            echo '  <td>' . $row[2] . '</td>' . "\n";
-            echo '  <td><a href="' . $_SERVER['PHP_SELF'] . '?submit=Delete&amp;id=' . $row[0] . '&amp;to=' . $row[2] . '&amp;list=' . $list . '">Delete</a><td>' . "\n";
-            echo ' </tr>' . "\n";
-        }
-        echo '</table>' . "\n";
-    } else {
-        echo "No entries found.\n";
-    }
->>>>>>> master
 }
 
 
@@ -297,7 +238,6 @@ echo '
   <th colspan=2>'._("Add to Whitelist/Blacklist").'</th>
  </tr>
  <tr>
-<<<<<<< HEAD
   <td class="heading">'._("From:").'</td>
   <td><input type="text" name="from" size=50 value="'.$from.'"></td>
  </tr>
@@ -340,50 +280,6 @@ echo '
   }
   
   echo'
-=======
-  <td class="heading">From:</td>
-  <td><input type="text" name="from" size=50 value="' . $from . '"></td>
- </tr>
- <tr>
-  <td class="heading">To:</td>';
-
-switch ($_SESSION['user_type']) {
-    case 'A':
-        echo '<td><input type="text" name="to" size=22 value="' . $touser . '">@<input type="text" name="domain" size=25 value="' . $to_domain . '"></td>';
-        break;
-    case 'U':
-        echo '<td> <select name="to">';
-        foreach ($to_user_filter as $to_user_selection) {
-            if ($touser == $to_user_selection) {
-                echo '<option selected>' . $to_user_selection . '</option>';
-            } else {
-                echo '<option>' . $to_user_selection . '</option>';
-            }
-        }
-        echo '</select>@<select name="domain">';
-        foreach ($to_domain_filter as $to_domain_selection) {
-            if ($to_domain == $to_domain_selection) {
-                echo '<option selected>' . $to_domain_selection . '</option>';
-            } else {
-                echo '<option>' . $to_domain_selection . '</option>';
-            }
-        }
-        echo '</td>';
-        break;
-    case 'D':
-        echo '<td><input type="text" name="to" size=22 value="' . $touser . '">@<select name="domain">';
-        foreach ($to_domain_filter as $to_domain_selection) {
-            if ($to_domain == $to_domain_selection) {
-                echo '<option selected>' . $to_domain_selection . '</option>';
-            } else {
-                echo '<option>' . $to_domain_selection . '</option>';
-            }
-        }
-        break;
-}
-
-echo '
->>>>>>> master
  </tr>
  <tr>
   <td class="heading">'._("List:").'</td>
@@ -397,13 +293,8 @@ switch ($url_list) {
         $b = 'CHECKED';
         break;
 }
-<<<<<<< HEAD
 echo  '   <input type="radio" value="w" name="list" '.$w.'>'._("Whitelist").' &nbsp;&nbsp'."\n";
 echo  '   <input type="radio" value="b" name="list" '.$b.'>'._("Blacklist")."\n";
-=======
-echo '   <input type="radio" value="w" name="list" ' . $w . '>Whitelist &nbsp;&nbsp;' . "\n";
-echo '   <input type="radio" value="b" name="list" ' . $b . '>Blacklist' . "\n";
->>>>>>> master
 
 echo '  </td>
  </tr>
@@ -411,17 +302,10 @@ echo '  </td>
   <td class="heading">'._("Action:").'</td>
   <td><input type="reset" value='._("Reset").'>&nbsp;&nbsp;<input type="submit" value='._("Add").' name="submit"></td>
  </tr>';
-<<<<<<< HEAD
 if(isset($errors)){
  echo '<tr>
   <td class="heading">'._("Errors:").'</td>
   <td>'.implode("<br>",$errors).'
-=======
-if (isset($errors)) {
-    echo '<tr>
-  <td class="heading">Errors:</td>
-  <td>' . implode("<br>", $errors) . '
->>>>>>> master
   </td>
  </tr> ';
 }
