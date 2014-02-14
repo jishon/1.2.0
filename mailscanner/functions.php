@@ -21,7 +21,12 @@
 */
 
 // Set error level (some distro's have php.ini set to E_ALL)
-error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
+if (version_compare(phpversion(), '5.3.0', '<')) {
+  // E_DEPRECATED added in PHP 5.3
+  error_reporting(E_ALL ^ E_NOTICE);
+} else {
+  error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
+}
 
 // Read in MailWatch configuration file
 if(!(@include_once('conf.php'))==true) {
@@ -395,7 +400,11 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
                         $mounted_fs = file("/proc/mounts");
                         foreach ($mounted_fs as $fs_row) {
                             $drive = preg_split("/[\s]+/", $fs_row);
+<<<<<<< HEAD
                             if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE) && !(preg_match("/\/chroot\//i", $drive[1]))) {
+=======
+                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[1], '/chroot/') === FALSE)) {
+>>>>>>> master
                                 $temp_drive['device'] = $drive[0];
                                 $temp_drive['mountpoint'] = $drive[1];
                                 $disks[] = $temp_drive;
@@ -409,7 +418,11 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
                         $data = explode("\n", $data);
                         foreach ($data as $disk) {
                             $drive = preg_split("/[\s]+/", $disk);
+<<<<<<< HEAD
                             if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[0], '/chroot/') === FALSE) && !(preg_match("/\/chroot\//i", $drive[2]))) {
+=======
+                            if ((substr($drive[0], 0, 5) == '/dev/') && (stripos($drive[2], '/chroot/') === FALSE)) {
+>>>>>>> master
                                 $temp_drive['device'] = $drive[0];
                                 $temp_drive['mountpoint'] = $drive[2];
                                 $disks[] = $temp_drive;
@@ -1415,13 +1428,10 @@ if($pager) {
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
 
-echo '</ul>'."\n";
-
 echo '<table cellspacing="1" class="mail" >
     <tr>
    <th colspan=5>'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
-  <tr>
   <tr>
   <td align="center">'."\n";
 //show the links
@@ -1461,6 +1471,7 @@ echo $pager->links;
   }
   echo '<table cellspacing="1" width="100%" class="mail">'."\n";
   // Work out which columns to display
+<<<<<<< HEAD
   for($f=0; $f<$fields; $f++) {
    if ($f == 0 and $operations != false) {
     // Set up display for operations form elements
@@ -1702,6 +1713,10 @@ echo $pager->links;
       //add the datetime to link
       $str_id = preg_replace('/(.*\?id=)([^>]+)(\">.*)/', '${1}${2}&datetime='.urlencode($row[$f]).'${3}', $str_id);
       break;
+     case 'datetime':
+      //add the datetime to link
+      $str_id = preg_replace('/(.*\?id=)([^>]+)(\">.*)/', '${1}${2}&datetime='.urlencode($row[$f]).'${3}', $str_id);
+      break;
      //add headers for charset checking 090907 -- begin
      case 'headers':
       $charset = detect_charset($row[$f]);
@@ -1910,7 +1925,7 @@ echo $pager->links;
   echo '</table>'."\n";
   // Javascript function to clear radio buttons
   if ($operations != false) {
-   echo '<script language="JavaScript" type="text/javascript">
+   echo '<script type="text/javascript">
    function ClearRadios() {
    e=document.operations.elements
    for(i=0; i<e.length; i++) {
@@ -1938,7 +1953,7 @@ echo $pager->links;
 	'.$JsFunc.'
    }
    </script>
-   &nbsp; <a href="javascript:SetRadios(\'S\')">S</a>
+   <p>&nbsp; <a href="javascript:SetRadios(\'S\')">S</a>
    &nbsp; <a href="javascript:SetRadios(\'H\')">H</a>
    &nbsp; <a href="javascript:SetRadios(\'F\')">F</a>
    &nbsp; <a href=\"javascript:SetRadios(\'R\')">R</a>
@@ -1977,13 +1992,10 @@ if($pager) {
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
 
-echo '</ul>'."\n";
-
 echo '<table cellspacing="1" class="mail" >
     <tr>
    <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
-  <tr>
   <tr>
   <td align="center">'."\n";
 //show the links
@@ -2040,13 +2052,10 @@ if($pager) {
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
 
-echo '</ul>'."\n";
-
 echo '<table cellspacing="1" class="mail" >
     <tr>
    <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
-  <tr>
   <tr>
   <td align="center">'."\n";
 //show the links
@@ -2135,13 +2144,10 @@ echo $pager->links;
 	//then we fetch the relevant records for the current page
 list($from, $to) = $pager->getOffsetByPageId();
 
-echo '</ul>'."\n";
-
 echo '<table cellspacing="1" class="mail" >
     <tr>
    <th colspan="5">'.sprintf(_("Displaying page %s of %s - Records %s to %s of %s"), $pager->getCurrentPageID(), $pager->numPages(), $from, $to, $pager->numItems()).'</th>
   </tr>
-  <tr>
   <tr>
   <td align="center">'."\n";
 //show the links
@@ -2266,50 +2272,51 @@ $header=preg_replace('/IPv6\:/','', $header);
  }
 }
 
-function address_filter_sql($addresses, $type) {
- switch($type) {
-  case 'A': // Administrator - show everything
-   return "1=1";
-   break;
-  case 'U': // User - show only specific addresses
-   foreach($addresses as $address) {
-    if((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
-     $sqladdr[] = "to_address like '%$address%'";
-    } else {
-     $sqladdr[] = "to_address like '%$address%' OR from_address = '$address'";
+function address_filter_sql($addresses, $type)
+{
+    switch ($type) {
+        case 'A': // Administrator - show everything
+            return "1=1";
+            break;
+        case 'U': // User - show only specific addresses
+            foreach ($addresses as $address) {
+                if ((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
+                    $sqladdr[] = "to_address like '%$address%'";
+                } else {
+                    $sqladdr[] = "to_address like '%$address%' OR from_address = '$address'";
+                }
+            }
+            $sqladdr = join(' OR ', $sqladdr);
+            return $sqladdr;
+            break;
+        case 'D': // Domain administrator
+            foreach ($addresses as $address) {
+                if (strpos($address, '@')) {
+                    if ((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
+                        $sqladdr[] = "to_address like '%$address%'";
+                    } else {
+                        $sqladdr[] = "to_address like '%$address%' OR from_address = '$address'";
+                    }
+                } else {
+                    if ((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
+                        $sqladdr[] = "to_domain='$address'";
+                    } else {
+                        $sqladdr[] = "to_domain='$address' OR from_domain='$address'";
+                    }
+                }
+            }
+            // Join together to form a suitable SQL WHERE clause
+            $sqladdr = join(' OR ', $sqladdr);
+            return $sqladdr;
+            break;
+        case 'H': // Host
+            foreach ($addresses as $hostname) {
+                $sqladdr[] = "hostname='$hostname'";
+            }
+            $sqladdr = join(' OR ', $sqladdr);
+            return $sqladdr;
+            break;
     }
-   }
-   $sqladdr = join(' OR ',$sqladdr);
-   return $sqladdr;
-   break;
-  case 'D':  // Domain administrator
-   foreach($addresses as $address) {
-    if (strpos ($address, '@')) {
-     if ((defined ('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
-      $sqladdr[] = "to_address like '%$address%'";
-     } else {
-      $sqladdr[] = "to_address like '%$address%' OR from_address = '$address'";
-     }
-    } else {
-     if ((defined('FILTER_TO_ONLY') & FILTER_TO_ONLY)) {
-       $sqladdr[] = "to_domain='$address'";
-     } else {
-      $sqladdr[] = "to_domain='$address' OR from_domain='$address'";
-     }
-    }
-   }
-   // Join together to form a suitable SQL WHERE clause
-   $sqladdr = join(' OR ',$sqladdr);
-   return $sqladdr;
-   break;
-  case 'H': // Host
-   foreach($addresses as $hostname) {
-    $sqladdr[] = "hostname='$hostname'";
-   }
-   $sqladdr = join(' OR ',$host);
-   return $sqladdr;
-   break;
- }
 }
 
 function ldap_authenticate($USER,$PASS) {
@@ -2510,7 +2517,7 @@ AND
  return(@mysql_result($sth,0));
 }
 
-if (!function_exists('file_get_contents')) {
+/*if (!function_exists('file_get_contents')) {
  function file_get_contents($filename, $use_include_path = 0) {
   $file = @fopen($filename, 'rb', $use_include_path);
   if ($file) {
@@ -2525,44 +2532,47 @@ if (!function_exists('file_get_contents')) {
   }
   return $data;
  }
-}
+}*/
 
-function quarantine_list($input="/") {
- $quarantinedir = get_conf_var('QuarantineDir').'/';
- switch($input) {
-  case '/':
-   // Return top-level directory
-   $d = @opendir($quarantinedir);
-   while(false !== ($f = @readdir($d))) {
-    if ($f !== "." && $f !== "..") {
-     $item[] = $f;
+function quarantine_list($input = "/")
+{
+    $quarantinedir = get_conf_var('QuarantineDir') . '/';
+    $item = array();
+    switch ($input) {
+        case '/':
+            // Return top-level directory
+            $d = @opendir($quarantinedir);
+
+            while (false !== ($f = @readdir($d))) {
+                if ($f !== "." && $f !== "..") {
+                    $item[] = $f;
+                }
+            }
+            if (count($item) > 0) {
+                // Sort in reverse chronological order
+                arsort($item);
+            }
+            @closedir($d);
+            break;
+        default:
+            $current_dir = $quarantinedir . $input;
+            $dirs = array($current_dir, $current_dir . '/spam', $current_dir . '/nonspam', $current_dir . '/mcp');
+            foreach ($dirs as $dir) {
+                if (is_dir($dir) && is_readable($dir)) {
+                    $d = @opendir($dir);
+                    while (false !== ($f = readdir($d))) {
+                        if ($f !== "." && $f !== "..") {
+                            $item[] = "'$f'";
+                        }
+                    }
+                    if (count($item) > 0) {
+                        asort($item);
+                    }
+                    closedir($d);
+                }
+            }
     }
-   }
-   if(count($item)>0) {
-    // Sort in reverse chronological order
-    arsort($item);
-   }
-   @closedir($d);
-   break;
-  default:
-   $current_dir = $quarantinedir.$input;
-   $dirs = array($current_dir, $current_dir.'/spam', $current_dir.'/nonspam', $current_dir.'/mcp');
-   foreach($dirs as $dir) {
-    if(is_dir($dir) && is_readable($dir)) {
-     $d = @opendir($dir);
-     while(false !== ($f = readdir($d))) {
-      if ($f !== "." && $f !== "..") {
-       $item[] = "'$f'";
-      }
-     }
-     if(count($item)>0) {
-      asort($item);
-     }
-     closedir($d);
-    }
-   }
- }
- return $item;
+    return $item;
 }
 
 function is_local($host) {
@@ -3025,7 +3035,7 @@ function get_virus_conf($scanner) {
 function return_quarantine_dates() {
  date_default_timezone_set(TIME_ZONE);
  $array = array();
- for($d=0; $d<(QUARANTINE_DAYS_TO_KEEP+1); $d++) {
+ for($d=0; $d<(QUARANTINE_DAYS_TO_KEEP); $d++) {
   $array[] = date('Ymd', mktime(0, 0, 0, date("m"), date("d")-$d, date("Y")));
  }
  return $array;

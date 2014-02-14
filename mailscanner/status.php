@@ -31,8 +31,7 @@ $sql = "
 SELECT
  id AS id2,
  hostname AS host,
- DATE_FORMAT(timestamp, '".DATE_FORMAT." ".TIME_FORMAT."') AS datetime,
- headers,
+ DATE_FORMAT(timestamp, '" . DATE_FORMAT . " " . TIME_FORMAT . "') AS datetime,
  from_address,
  to_address,
  subject,
@@ -54,11 +53,11 @@ SELECT
 FROM
  maillog
 WHERE
- ".$_SESSION['global_filter']."
+ " . $_SESSION['global_filter'] . "
 ORDER BY
  date DESC,
  time DESC
-LIMIT ".MAX_RESULTS;
+LIMIT " . MAX_RESULTS;
 
 db_colorised_table($sql,_("Last ").MAX_RESULTS.sprintf(_(" Messages (Refreshing every %s seconds)"), $refresh));
 
