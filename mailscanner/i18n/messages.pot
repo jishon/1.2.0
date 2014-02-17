@@ -1716,7 +1716,7 @@ msgstr ""
 msgid "is High Scoring MCP (>0 = TRUE)"
 msgstr ""
 
-msgid "is MCP accoding to SpamAssassin (>0 = TRUE)"
+msgid "is MCP according to SpamAssassin (>0 = TRUE)"
 msgstr ""
 
 msgid "is MCP Whitelisted (>0 = TRUE)"

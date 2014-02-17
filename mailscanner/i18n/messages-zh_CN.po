@@ -1777,8 +1777,8 @@ msgstr "是 MCP (>0 = TRUE)"
 msgid "is High Scoring MCP (>0 = TRUE)"
 msgstr "是高分 MCP (>0 = TRUE)"
 
-msgid "is MCP accoding to SpamAssassin (>0 = TRUE)"
-msgstr "被 SpamAssassin 归类为 MCP"
+msgid "is MCP according to SpamAssassin (>0 = TRUE)"
+msgstr "被 SpamAssassin 归类为 MCP (>0 = TRUE)"
 
 msgid "is MCP Whitelisted (>0 = TRUE)"
 msgstr "是 MCP白名单 (>0 = TRUE)"
