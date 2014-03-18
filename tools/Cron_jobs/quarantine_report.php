@@ -1,4 +1,4 @@
-#!/usr/bin/php -qn
+#!/usr/bin/php -q
 <?php
 
 /*
@@ -316,52 +316,36 @@ function send_quarantine_email($email, $filter, $quarantined) {
    $charset = detect_charset($qitem['header']);
    $fix_subject = fix_utf8_subject($qitem['header']);
    $subject_charset = detect_charset($qitem['subject']);
-   if ($charset[0] === NULL) {
-    $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
-   } elseif (strtolower($charset[0]) != "utf-8") {
-    if ($charset[1] == 0) {
-     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",$charset[0]);
-    } else {
-     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
+   if (defined('UTF8SUBJECT') && UTF8SUBJECT) {
+    //$subject_charset = detect_charset($row[$f]);
+    if ($subject_charset[0] != NULL) {
+     $qitem['subject'] = mb_convert_encoding($fix_subject, "UTF-8", $subject_charset[0]);
     }
    } else {
-    if ($charset[1] == 0) {
-     $qitem['subject'] = decode_header($fix_subject);
+    //Not use utf8Subject
+    if ($subject_charset[0] != NULL) {
+     $qitem['subject'] = mb_convert_encoding($fix_subject, "UTF-8", $subject_charset[0]);
     } else {
-     $qitem['subject'] = mb_convert_encoding($qitem['subject'],"UTF-8",check_locale());
+     if ($charset[0] === NULL) {
+      $qitem['subject'] = mb_convert_encoding($qitem['subject'], "UTF-8", check_locale());
+     } elseif (strtolower($charset[0]) != "utf-8") {
+      if ($charset[1] == 0) {
+       $qitem['subject'] = mb_convert_encoding($qitem['subject'], "UTF-8", $charset[0]);
+      } else {
+       $qitem['subject'] = mb_convert_encoding($qitem['subject'], "UTF-8", check_locale());
+      }
+     } else {
+      if ($charset[1] == 0) {
+       $qitem['subject'] = decode_header($fix_subject);
+      } else {
+       $qitem['subject'] = mb_convert_encoding($qitem['subject'], "UTF-8", check_locale());
+      }
+     }
     }
    }
    $qitem['subject'] = htmlspecialchars($qitem['subject']);
    trim_output($qitem['subject'],SUBJECT_MAXLEN);
   }
-  //Localize the reason description.
-  /*
-  switch($qitem['reason']){
-   case 'Virus':
-    $qitem['reason'] = '病毒';
-    break;
-   case 'Bad Content':
-    $qitem['reason'] = '不良內容';
-    break;
-   case 'Infected':
-    $qitem['reason'] = '已感染';
-    break;
-   case 'Spam':
-    $qitem['reason'] = '垃圾郵件';
-    break;
-   case 'Blacklisted':
-    $qitem['reason'] = '黑名單';
-    break;
-   case 'Policy':
-    $qitem['reason'] = '政策';
-    break;
-   case 'UNKNOWN':
-    $qitem['reason'] = '不明';
-    break;
-   default:
-    break;
-  }
-  */
 
   // HTML Version
   $h1 .=  sprintf($html_content, $qitem['datetime'], $qitem['from'], $qitem['subject'], $qitem['reason'], '<a href="'.QUARANTINE_REPORT_HOSTURL.'/viewmail.php?id='.$qitem['id'].'">View</a>');

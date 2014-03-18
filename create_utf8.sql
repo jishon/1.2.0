@@ -7,9 +7,9 @@
 -- 伺服器版本: 5.1.60
 -- PHP 版本: 5.3.8
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ mailscanner DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 
+USE mailscanner;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `maillog` (
   `hostname` text,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
-  `headers` text,
+  `headers` text character set latin1,
   `quarantined` tinyint(1) DEFAULT '0',
   KEY `maillog_datetime_idx` (`date`,`time`),
   KEY `maillog_id_idx` (`id`(20)),

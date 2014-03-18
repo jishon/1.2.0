@@ -258,6 +258,68 @@ Edit the parser for location of mailwatch webpages
 Edit mailscanner_relay.php in the mailscanner folder
 
 
+----------------------------------------------------------
+Optional steps for UTF-8 database and UTF-8 subject
+----------------------------------------------------------
+
+If you want your data to be stored in UTF-8 format, you need some more steps.
+
+1. uncomment below line in functions.php
+   mysql_query("SET NAMES utf8");
+
+2. Change below line in MailWatch.pm
+   $msg{subject} = $message->{subject};
+   to
+   $msg{subject} = $message->{utf8subject};
+
+3. Install php-mbstring.
+
+4. If you want to fix decode problem for simple chinese(GB2312), you should modify
+   Sendmail.pm/Postfix.pm/Exim.pm/Qmail.pm(depends on your MTA) in 
+   /usr/lib/MailScanner/MailScanner as follow
+
+eval {
+ $message->{utf8subject} = Encode::decode('MIME-Header',
+                                         $message->{subject});
+};
+
+  to
+    
+eval {
+ $message->{subject} =~ /=\?([^?]+)\?(q|b)\?[^?]*\?=/i;
+ my $char = $1;
+ my $string = $message->{subject};
+ # Assume the whole subject using gb2312. This won't work if it had multiple charsets in a subject.
+ if (lc($char) eq 'gb2312') {
+  while ($string =~ /(=\?([^?]+)\?(q|b)\?([^?]*)\?=)/i) {
+   my $encoded  = $1;
+   my $charset  = $2;
+   my $encoding = $3;
+   my $text     = $4;
+   if (lc($encoding) eq 'b') {
+    $text = encode("utf8", decode("gbk", decode_base64($text)));
+   }
+   if (lc($encoding) eq 'q') {
+    $text = encode("utf8", decode("gbk", decode_qp($text)));
+   }
+   $string =~ s/\Q$encoded/$text/;
+  }
+  $message->{utf8subject} = $string;
+ } else {
+  $message->{utf8subject} = Encode::decode('MIME-Header',
+  $message->{subject});
+ }
+};
+
+  and also add two line near the top of file 
+
+use vars qw($VERSION);
+
+use MIME::Base64;
+use MIME::QuotedPrint;
+
+-- James
+
 ------------------------------------------------------------ FINISHED!! (Phew!)
 
 Please send any errors or omissions to the mailing-list or directly to me.

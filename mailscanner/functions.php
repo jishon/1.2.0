@@ -50,7 +50,7 @@ ini_set('include_path','.:'.MAILWATCH_HOME.'/pear:'.MAILWATCH_HOME.'/fpdf:'.MAIL
 
 include "postfix.inc";
 //i18n
-if (constant("SYSTEM_LOCALE") == NULL) {
+if (!defined('SYSTEM_LOCALE')) {
  $locale = 'en_US';
  //echo "current locale: $locale\n";
 } else {
@@ -799,6 +799,9 @@ function dbconn() {
  $link = mysql_connect(DB_HOST,DB_USER,DB_PASS)
         or die (_("Could not connect to database").": ".mysql_error());
  mysql_select_db(DB_NAME) or die(_("Could not select db").": ".mysql_error());
+ if (defined('UTF8SUBJECT') && UTF8SUBJECT) {
+  mysql_query("SET NAMES utf8");
+ }
  return $link;
 }
 
@@ -1745,28 +1748,36 @@ echo $pager->links;
       //It seems MailWath.pm(or MailScanner?) decoded UTF-8 subject as latin1 and wrote 
       //it into mysql, we can't do anything with it. But we can use undecoded header to
       //find out the correct subject instead !!
-      if ($charset[0] === NULL) {
-       //mailq.php can handle subject with correct encoding,therefore we convert it directly.
-       $subject_charset = detect_charset($row[$f]);
+      $subject_charset = detect_charset($row[$f]);
+      if (defined('UTF8SUBJECT') && UTF8SUBJECT) {
        if ($subject_charset[0] != NULL) {
-        $row[$f] = mb_convert_encoding(decode_header($row[$f]),"UTF-8",$subject_charset[0]);
-       } else {
-        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
-       }
-      } elseif (strtolower($charset[0]) != "utf-8") {
-       if ($charset[1] == 0) {
-        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",$charset[0]);
-       } else {
-        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
-       }
+        $row[$f] = mb_convert_encoding(decode_header($row[$f]),"UTF-8", $subject_charset[0]);//TEST1
+       } /*else {
+        $row[$f] = $row[$f];//TEST2
+       }*/
       } else {
-       if ($charset[1] == 0) {
-        $row[$f] = decode_header($fix_subject);
+       //Not use utf8Subject
+       if ($subject_charset[0] != NULL) {
+        //mailq.php can handle subject with correct encoding,therefore we convert it directly.
+        $row[$f] = mb_convert_encoding(decode_header($row[$f]), "UTF-8", $subject_charset[0]);//TEST3
        } else {
-        $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
+        if ($charset[0] === NULL) {
+         $row[$f] = mb_convert_encoding($row[$f], "UTF-8", check_locale());//TEST4
+        } elseif (strtolower($charset[0]) != "utf-8") {
+         if ($charset[1] == 0) {
+          $row[$f] = mb_convert_encoding($row[$f], "UTF-8", $charset[0]);//TEST5
+         } else {
+          $row[$f] = mb_convert_encoding($row[$f], "UTF-8", check_locale());//TEST6
+         }
+        } else {
+         if ($charset[1] == 0) {
+          $row[$f] = decode_header($fix_subject);//TEST7
+         } else {
+          $row[$f] = mb_convert_encoding($row[$f], "UTF-8", check_locale());//TEST8
+         }
+        }
        }
       }
-       //end
       $row[$f] = htmlspecialchars($row[$f]);
       if(SUBJECT_MAXLEN>0) {
        $row[$f] = trim_output($row[$f], SUBJECT_MAXLEN);
@@ -3213,6 +3224,7 @@ function ck_mbstring_encoding($input) {
   //It's better using gbk instead of gb2312.Some emails said it's gb2312 encoding,
   //,but actually it's gbk.GBK includes all characters in GB2312.
   if (strtolower($charset) == "gb2312") {$charset = "gbk";}
+  if (strtolower($charset) == "gb18030") {$charset = "gbk";}
   //mb_convert_encoding does not support MS950, only CP950.
   if (strtolower($charset) == "ms950") {$charset = "cp950";}
   //mb_convert_encoding does not recognise ks_c_5601-1987, it's the same as euc-kr.

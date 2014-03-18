@@ -84,6 +84,8 @@ define('TEMP_DIR', '/tmp/');
 //define('PWAUTH_BIN','/usr/local/sbin/pwauth');
 //You can use en_US,zh_TW or zh_CN as default language
 define('SYSTEM_LOCALE','zh_TW');
+//Using below setting only when you used both utf8subject and utf8 database.
+define('UTF8SUBJECT', false);
 
 // Log file location
 define('MS_LOG', '/var/log/mail.log');

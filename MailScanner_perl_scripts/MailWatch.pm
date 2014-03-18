@@ -82,7 +82,8 @@ my($db_pass) = '';
     MailScanner::Log::WarnLog("Unable to initialise database connection: %s", $DBI::errstr);
    }
    # Use UTF-8 for connections character & collations
-   $dbh->do('SET NAMES utf8');
+   # Uncomment below line if you sure the database is using UTF-8
+   #$dbh->do('SET NAMES utf8');
 
    $sth = $dbh->prepare("INSERT INTO maillog (timestamp, id, size, from_address, from_domain, to_address, to_domain, subject, clientip, archive, isspam, ishighspam, issaspam, isrblspam, spamwhitelisted, spamblacklisted, sascore, spamreport, virusinfected, nameinfected, otherinfected, report, ismcp, ishighmcp, issamcp, mcpwhitelisted, mcpblacklisted, mcpsascore, mcpreport, hostname, date, time, headers, quarantined) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)") or 
    MailScanner::Log::WarnLog($DBI::errstr);
@@ -282,7 +283,7 @@ my($db_pass) = '';
    $msg{from_domain} = $message->{fromdomain};
    $msg{to} = join(",", @{$message->{to}});
    $msg{to_domain} = $todomain;
-   $msg{subject} = $message->{utf8subject};
+   $msg{subject} = $message->{subject};
    $msg{clientip} = $clientip;
    $msg{archiveplaces} = join(",", @{$message->{archiveplaces}});
    $msg{isspam} = $message->{isspam};
@@ -311,9 +312,9 @@ my($db_pass) = '';
    $msg{quarantined} = $quarantined;
 
    # Replace the malformed Return-Path. Otherwise, It will be cut off when inserted
-   # into mysql as "Return-Path: <".
+   # into mysql as "Return-Path: <" if you use UTF-8 database.
    # The null Return-Path should be "Return-Path: <.g>"
-   $msg{headers} =~ s/Return-Path: \<.{1}g\>/Return-Path: \<\.g\>/;
+   #$msg{headers} =~ s/Return-Path: \<.{1}g\>/Return-Path: \<\.g\>/;
 
    # Prepare data for transmission
    my $f = freeze \%msg;
