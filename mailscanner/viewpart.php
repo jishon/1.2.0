@@ -111,7 +111,7 @@ function decode_structure($structure)
     $type = $structure->ctype_primary . "/" . $structure->ctype_secondary;
     //Using mimeDecode to identify charset in MIME part.. If all is null,just set to "".
     $charset = ck_mbstring_encoding($structure->ctype_parameters['charset']);
-    //$charset = ck_mbstring_encoding($charset);
+    //echo "GLOBAL CHARSET :".$_GET['charset']." CHARSET:".$charset."\n";
     switch ($type) {
         case "text/plain":
                 /*
@@ -126,12 +126,16 @@ function decode_structure($structure)
  </head>
  <body>
  <pre>';
- //' . htmlentities(wordwrap($structure->body)) . '
+   //' . htmlentities(wordwrap($structure->body)) . '
    //Convet the body using charset we found.If none,convert as default locale.
    if ($charset == "") {
-    echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)),"UTF-8",check_locale());
+    if (!isset($_GET['charset'])) {
+     echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)), "UTF-8", check_locale());
+    } else {
+     echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)), "UTF-8", $_GET['charset']);
+    }
    } elseif (strtolower($charset) != 'utf-8'){
-    echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)),"UTF-8",$charset);
+    echo mb_convert_encoding(htmlspecialchars(wordwrap($structure->body)), "UTF-8", $charset);
    } else {
     echo htmlspecialchars(wordwrap($structure->body));
    }
@@ -145,25 +149,51 @@ function decode_structure($structure)
     $structure->body = utf8_encode ($structure->body);
    }
    */
-   if (STRIP_HTML) {
+   //echo $structure->body;
+   preg_match('/charset=([-a-z0-9_]+)/i',$structure->body,$body_charset);
+   if (STRIP_HTML) {    
+    //echo "BODY CHARSET:"."\n";
+    //foreach ($body_charset as $value) {
+    // echo "LANG: ".$value." \n";
+    //}
+    //echo "BODY Content:".$structure->body."\n";
     //Convet the body using charset we found.If none,convert as default locale.
     if ($charset == "") {
-     echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",check_locale());
-    } elseif (strtolower($charset) != "utf-8") {
-     echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",$charset);
+     // ctype_parameters is not always correct. We can search the meta in html before striping.
+     if ($body_charset[1] == NULL) {
+      echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",check_locale());
+     } else {
+      if (strtolower($body_charset[1]) != "utf-8") {
+       echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",ck_mbstring_encoding($body_charset[1]));
+      } else {
+       echo strip_tags($structure->body, ALLOWED_TAGS);
+      }
+     }
     } else {
-      echo strip_tags($structure->body, ALLOWED_TAGS);
+     if ($body_charset[1] == NULL) {
+      if (strtolower($charset) != "utf-8") {
+       echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",ck_mbstring_encoding($charset));
+      } else {
+       echo strip_tags($structure->body, ALLOWED_TAGS);
+      }
+     } else {
+      echo mb_convert_encoding(strip_tags($structure->body, ALLOWED_TAGS),"UTF-8",$body_charset[1]);
+     }
     }
-    //echo strip_tags($structure->body, ALLOWED_TAGS);
    } else {
     if ($charset == "") {
-     echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
-    } elseif (strtolower($charset) != "utf-8") {
-     echo mb_convert_encoding($structure->body,"UTF-8",$charset);
+     if ($body_charset[1] == NULL) {
+      echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
+     } else {
+      echo $structure->body;
+     }
     } else {
-     echo $structure->body;
-    }   
-    //echo $structure->body;
+     if ($body_charset[1] == NULL) {
+      echo mb_convert_encoding($structure->body,"UTF-8",$charset);
+     } else {
+      echo $structure->body;
+     }
+    }
    }
    break;
   case "multipart/alternative":
@@ -173,7 +203,11 @@ function decode_structure($structure)
    header("Content-Disposition: ".$structure->headers['content-disposition']);
    //Convet the body using charset we found.If none,convert as default locale.
    if ($charset == "") {
-   echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
+    if (defined('UTF8SUBJECT') && UTF8SUBJECT) {
+     echo $structure->body;
+    } else {
+     echo mb_convert_encoding($structure->body,"UTF-8",check_locale());
+    }
    } elseif (strtolower($charset) != "utf-8") {
     echo mb_convert_encoding($structure->body,"UTF-8",$charset);
    } else {

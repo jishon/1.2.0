@@ -192,6 +192,7 @@ switch(true) {
   lazy("Subject:",$structure->headers['subject']);
    */
   $charset = detect_charset($structure->headers['subject']);
+  $subject_charset = $charset[0];
   //lazy("Subject:",$structure->headers['subject']);
   if ($charset[0] == "") {
    lazy(_("Subject:"),mb_convert_encoding(decode_header($structure->headers['subject']),"UTF-8",check_locale()));
@@ -211,7 +212,11 @@ foreach($mime_struct as $key=>$part) {
  //Check attachment charset
  $filename_charset = detect_charset($part->d_parameters['filename']);
  if (strtolower($filename_charset[0]) == "") {
-  $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8",check_locale());
+  if ($subject_charset != NULL) {
+   $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8", $subject_charset);
+  } else {
+   $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8",check_locale());
+  }
  } elseif (strtolower($filename_charset[0]) != "utf-8") {
   $fname = mb_convert_encoding(decode_header($part->d_parameters['filename']),"UTF-8",$filename_charset[0]);
  } else {
@@ -226,7 +231,11 @@ foreach($mime_struct as $key=>$part) {
   case "text/html":
    echo " <tr>\n";
    echo "  <td colspan=2>\n";
-   echo "   <iframe frameborder=0 width=\"100%\" height=300 src=\"viewpart.php?id=".$_GET['id']."&filename=".$_GET['filename']."&part=".$part->mime_id."\"></iframe>\n";
+   if ($subject_charset != NULL) {
+    echo "   <iframe frameborder=0 width=\"100%\" height=300 src=\"viewpart.php?id=".$_GET['id']."&filename=".$_GET['filename']."&part=".$part->mime_id."&charset=".$subject_charset."\"></iframe>\n";
+   } else {
+    echo "   <iframe frameborder=0 width=\"100%\" height=300 src=\"viewpart.php?id=".$_GET['id']."&filename=".$_GET['filename']."&part=".$part->mime_id."\"></iframe>\n";
+   }
    echo "  </td>\n";
    echo " </tr>\n";
    break;

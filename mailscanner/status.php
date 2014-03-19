@@ -32,6 +32,7 @@ SELECT
  id AS id2,
  hostname AS host,
  DATE_FORMAT(timestamp, '" . DATE_FORMAT . " " . TIME_FORMAT . "') AS datetime,
+ headers,
  from_address,
  to_address,
  subject,

@@ -252,7 +252,11 @@ function html_start($title, $refresh = 0, $cacheable = true, $report = false)
     echo '</table>' . "\n";
     echo '<table cellspacing="1" class="mail">' . "\n";
     echo '<tr><td class="heading" align="center">'._("Current User").'</td><td class="heading" align="center">'._("Current Sytem Time").'</td></tr>'."\n";
-    echo '<tr><td>' . $_SESSION['fullname'] . '</td><td><span id="clock">&nbsp;</span></td></tr>' . "\n";
+    //if ((constant("UTF8SUBJECT") != NULL) && UTF8SUBJECT) {
+    // echo '<tr><td>' . $_SESSION['fullname'] . '</td><td><span id="clock">&nbsp;</span></td></tr>' . "\n";
+    //} else {
+     echo '<tr><td>' . $_SESSION['fullname'] . '</td><td><span id="clock">&nbsp;</span></td></tr>' . "\n";
+    //}
     echo '</table>' . "\n";
     echo '</td>' . "\n";
 

@@ -209,18 +209,28 @@ while($row=mysql_fetch_array($result,MYSQL_BOTH)) {
      $row[$f] = mb_convert_encoding($row[$f], 'UTF-8');
     }
     */
-   if (strtolower($charset[0]) != "utf-8") {
-    if ($charset[1] == 0) {
-     $row[$f] = mb_convert_encoding($row[$f],"UTF-8",$charset[0]);
-    } else {
-     $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());
+   if (defined('UTF8SUBJECT') && UTF8SUBJECT) {
+    $subject_charset = detect_charset($row[$f]);
+    if ($subject_charset[0] != NULL) {
+     $row[$f] = mb_convert_encoding(decode_header($row[$f]),"UTF-8", $subject_charset[0])." TEST1";//TEST1
     }
    } else {
-    //$row[$f] = utf8_encode ($row[$f]);
-    if ($charset[1] == 0) {
-     $row[$f] = decode_header($fix_subject);//."test5";
+    //Not use utf8Subject
+    if ($charset[0] === NULL) {
+     //mailq.php can handle subject with correct encoding,therefore we convert it directly.
+     $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());//TEST3
+    } elseif (strtolower($charset[0]) != "utf-8") {
+     if ($charset[1] == 0) {
+      $row[$f] = mb_convert_encoding($row[$f],"UTF-8",$charset[0]);//TEST4
+     } else {
+      $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());//TEST5
+     }
     } else {
-     $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());//." test6";
+     if ($charset[1] == 0) {
+      $row[$f] = decode_header($fix_subject);//TEST6
+     } else {
+      $row[$f] = mb_convert_encoding($row[$f],"UTF-8",check_locale());//TEST7
+     }
     }
    }
    $row[$f] = htmlspecialchars($row[$f]);
